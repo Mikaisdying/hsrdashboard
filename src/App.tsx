@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import routes from './routes/appRoutes'
+import './App.css'
 
 const App: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const App: React.FC = () => {
       <Routes>
         {routes.map(({ path, element }) => {
           const Page = (
-            <div style={{ maxWidth: 1440, margin: '0 auto', width: '100%' }}>
+            <div style={{ width: '100%' }}>
               <MainLayout>{element}</MainLayout>
             </div>
           )
