@@ -1,0 +1,7 @@
+{
+  "projects": [
+    { "id": 1, "name": "Dự án HRM", "status": "Đang triển khai" },
+    { "id": 2, "name": "App Quản lý Task", "status": "Hoàn thành" }
+  ],
+  "users": [{ "id": 1, "name": "Nguyễn Văn A", "role": "admin" }]
+}
