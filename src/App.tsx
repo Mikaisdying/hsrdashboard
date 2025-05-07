@@ -1,11 +1,21 @@
-// src/App.tsx
-import ProjectList from './pages/ProjectList'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import MainLayout from './layouts/MainLayout'
+import routes from './routes/appRoutes'
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <ProjectList />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {routes.map(({ path, element }) => {
+          const Page = (
+            <div style={{ maxWidth: 1440, margin: '0 auto', width: '100%' }}>
+              <MainLayout>{element}</MainLayout>
+            </div>
+          )
+          return <Route key={path} path={path} element={Page} />
+        })}
+      </Routes>
+    </BrowserRouter>
   )
 }
 
