@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import routes from '../routes/appRoutes'
 import type { FC } from 'react'
 
-interface SidebarMenuProps {
+interface SidebarProps {
   onNavigate?: () => void
   className?: string
 }
 
-const SidebarMenu: FC<SidebarMenuProps> = ({ onNavigate }) => {
+const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
   const navigate = useNavigate()
   const userRole = 'user'
 
@@ -17,12 +17,12 @@ const SidebarMenu: FC<SidebarMenuProps> = ({ onNavigate }) => {
     .map(({ key, icon, label }) => ({ key, icon, label }))
 
   const handleMenuClick = ({ key }: { key: string }) => {
-    if (onNavigate) onNavigate()
+    onNavigate?.()
     navigate(key)
   }
 
   return (
-    <div className={`flex h-screen w-full flex-col`}>
+    <div className="flex h-screen w-full flex-col">
       <div className="p-4 text-xl font-bold text-white">VEXA</div>
       <Menu
         theme="dark"
@@ -35,4 +35,4 @@ const SidebarMenu: FC<SidebarMenuProps> = ({ onNavigate }) => {
   )
 }
 
-export default SidebarMenu
+export default Sidebar
