@@ -1,5 +1,5 @@
 import { Drawer, Button } from 'antd'
-import { MenuOutlined, CloseOutlined } from '@ant-design/icons'
+import { MenuOutlined } from '@ant-design/icons'
 import Sidebar from '../components/Sidebar'
 import Topbar from '../components/Topbar'
 import type { ReactNode, FC } from 'react'
@@ -52,17 +52,12 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     )
 
   // Sidebar toggle button for desktop
-  const renderDesktopSidebarToggle = () =>
-    !isMobile && (
+  const renderDesktopSidebarToggle = () => {
+    if (isMobile) return null
+    return (
       <Button
         type="text"
-        icon={
-          sidebarOpen ? (
-            <CloseOutlined style={{ fontSize: 24, color: '#fff' }} />
-          ) : (
-            <MenuOutlined style={{ fontSize: 24, color: '#fff' }} />
-          )
-        }
+        icon={<MenuOutlined style={{ fontSize: 24, color: '#fff' }} />}
         onClick={() => setSidebarOpen((v) => !v)}
         style={{
           position: 'fixed',
@@ -71,10 +66,13 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           zIndex: 1100,
           background: 'transparent',
           border: 'none',
+          boxShadow: 'none',
+          outline: 'none',
           transition: 'left 0.2s',
         }}
       />
     )
+  }
 
   // Sidebar rendering for mobile (Drawer)
   const renderMobileSidebar = () =>
@@ -102,7 +100,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           title={
             <Button
               type="text"
-              icon={<CloseOutlined style={{ fontSize: 24, color: '#fff' }} />}
+              icon={<MenuOutlined style={{ fontSize: 24, color: '#fff' }} />}
               onClick={() => setSidebarOpen(false)}
               style={{
                 background: 'transparent',
@@ -140,11 +138,12 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       {renderMobileSidebar()}
       {/* Main area: Topbar + Content */}
       <div
-        className="flex min-w-0 flex-1 flex-col overflow-auto"
+        className="flex min-w-0 flex-1 flex-col"
         style={{
           marginLeft: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
           transition: 'margin-left 0.2s',
           width: '100%',
+          overflowX: 'hidden',
         }}
       >
         <Topbar />

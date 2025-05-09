@@ -3,8 +3,8 @@ import {
   ProjectOutlined,
   UserOutlined,
   TeamOutlined,
-  BulbOutlined,
-  LogoutOutlined,
+  // BulbOutlined,
+  // LogoutOutlined,
 } from '@ant-design/icons'
 import Dashboard from '../pages/Dashboard'
 import ProjectsPage from '../pages/ProjectsPage'
