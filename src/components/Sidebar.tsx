@@ -2,6 +2,8 @@ import { Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import routes from '../routes/appRoutes'
 import type { FC } from 'react'
+import { useTheme } from '../theme/ThemeContext'
+import { themeColors } from '../theme/colors'
 
 interface SidebarProps {
   onNavigate?: () => void
@@ -11,6 +13,8 @@ interface SidebarProps {
 const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
   const navigate = useNavigate()
   const userRole = 'user'
+  const { theme } = useTheme()
+  const color = themeColors[theme]
 
   const menuItems = routes
     .filter((route) => route.role.includes(userRole))
@@ -23,13 +27,13 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
 
   return (
     <div className="flex h-screen w-full flex-col">
-      <div className="p-4 text-xl font-bold text-white">VEXA</div>
+      <div className="p-4 text-xl font-bold" style={{ color: color.text }}>VEXA</div>
       <Menu
-        theme="dark"
+        theme={theme}
         mode="inline"
         onClick={handleMenuClick}
         items={menuItems}
-        style={{ height: '100%', background: '#1f1f1f' }}
+        style={{ height: '100%', background: color.sidebarBg }}
       />
     </div>
   )

@@ -1,4 +1,4 @@
-import { Card, Progress } from 'antd'
+import HRMCard from './HRMCard'
 import type { ReactNode, FC } from 'react'
 
 interface DashboardStatsCardProps {
@@ -10,49 +10,11 @@ interface DashboardStatsCardProps {
   highlightClass?: string
   style?: React.CSSProperties
   className?: string
+  theme?: 'dark' | 'light'
 }
 
-const cardStyle = {
-  background: '#23272f',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 12,
-}
-
-const headStyle = {
-  background: '#23272f',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 12,
-}
-
-const bodyStyle = {
-  color: '#fff',
-  border: 'none',
-  borderRadius: 12,
-}
-
-const DashboardStatsCard: FC<DashboardStatsCardProps> = ({
-  title,
-  value,
-  description,
-  progressPercent,
-  progressColor,
-  highlightClass,
-  style,
-  className,
-}) => (
-  <Card
-    title={title}
-    style={{ ...cardStyle, ...style }}
-    headStyle={headStyle}
-    bodyStyle={bodyStyle}
-    className={className}
-  >
-    <p>{description}</p>
-    <Progress percent={progressPercent} showInfo={false} strokeColor={progressColor} />
-    <div className={`text-right font-bold ${highlightClass || ''}`}>{value}</div>
-  </Card>
+const DashboardStatsCard: FC<DashboardStatsCardProps> = (props) => (
+  <HRMCard {...props} />
 )
 
 export default DashboardStatsCard

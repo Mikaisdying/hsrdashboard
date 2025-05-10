@@ -3,6 +3,7 @@ import {
   ProjectOutlined,
   UserOutlined,
   TeamOutlined,
+  MessageOutlined,
   // BulbOutlined,
   // LogoutOutlined,
 } from '@ant-design/icons'
@@ -10,6 +11,7 @@ import Dashboard from '../pages/Dashboard'
 import ProjectsPage from '../pages/ProjectsPage'
 import YourWorksPage from '../pages/YourWorksPage.tsx'
 import CommunityPage from '../pages/CommunityPage'
+import ChatPage from '../pages/ChatPage'
 
 const routes = [
   {
@@ -46,6 +48,15 @@ const routes = [
     icon: <TeamOutlined />,
     element: <CommunityPage />,
     breadcrumb: 'Community',
+    role: ['user', 'admin'],
+  },
+  {
+    path: '/chat',
+    key: '/chat',
+    label: 'Chat',
+    icon: <MessageOutlined />,
+    element: <ChatPage />,
+    breadcrumb: 'Chat',
     role: ['user', 'admin'],
   },
 ]
