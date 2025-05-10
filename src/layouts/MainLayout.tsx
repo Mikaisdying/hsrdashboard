@@ -30,7 +30,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     setSidebarOpen(!isMobile)
   }, [isMobile])
 
-  // Sidebar rendering for desktop
   const renderDesktopSidebar = () =>
     !isMobile &&
     sidebarOpen && (
@@ -51,7 +50,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       </div>
     )
 
-  // Sidebar toggle button for desktop
   const renderDesktopSidebarToggle = () => {
     if (isMobile) return null
     return (
@@ -74,7 +72,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     )
   }
 
-  // Sidebar rendering for mobile (Drawer)
   const renderMobileSidebar = () =>
     isMobile && (
       <>
@@ -87,15 +84,17 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           mask={true}
           maskClosable={true}
           style={{ position: 'relative', height: '100vh' }}
-          bodyStyle={{ padding: 0, background: '#1f1f1f', height: '100vh' }}
-          headerStyle={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: '8px 16px',
-            background: '#1f1f1f',
-            borderBottom: 'none',
-            minHeight: 56,
+          styles={{
+            body: { padding: 0, background: '#1f1f1f', height: '100vh' },
+            header: {
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              padding: '8px 16px',
+              background: '#1f1f1f',
+              borderBottom: 'none',
+              minHeight: 56,
+            },
           }}
           title={
             <Button
