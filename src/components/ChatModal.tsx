@@ -41,7 +41,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ open, onClose }) => {
         content: {
           background: color.headerBg,
           borderRadius: 12,
-          padding: 5,
+          padding: 0,
         },
         body: {
           padding: 0,

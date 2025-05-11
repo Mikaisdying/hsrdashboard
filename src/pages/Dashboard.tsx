@@ -19,7 +19,7 @@ const Dashboard = () => {
     <div
       style={{
         position: 'fixed',
-        top: 80, // cách topbar một chút (topbar height 64px + 16px margin)
+        top: 108.5,
         right: 32,
         zIndex: 999,
         display: 'flex',
@@ -52,7 +52,9 @@ const Dashboard = () => {
             title: 'Total Projects Done',
             value: 0,
             description: (
-              <>Working on <span className="text-blue-400">0</span> projects</>
+              <>
+                Working on <span className="text-blue-400">0</span> projects
+              </>
             ),
             progressPercent: 0,
             progressColor: '#69c0ff',
@@ -61,7 +63,9 @@ const Dashboard = () => {
             title: 'Total Task Done',
             value: 0,
             description: (
-              <><span className="text-green-400">0</span> Tasks are left</>
+              <>
+                <span className="text-green-400">0</span> Tasks are left
+              </>
             ),
             progressPercent: 0,
             progressColor: '#95de64',

@@ -28,6 +28,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
         width: '100%',
         borderRadius: 12,
         overflow: 'hidden',
+        height: 500,
+        background: color.headerBg,
       }}
     >
       {/* TopBar */}
@@ -39,7 +41,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
           alignItems: 'center',
           padding: '0 16px',
           gap: 12,
-          background: color.headerBg, // fix: header bg theo theme
+          background: color.headerBg,
         }}
       >
         <ArrowLeftOutlined

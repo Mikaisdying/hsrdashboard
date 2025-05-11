@@ -42,7 +42,7 @@ const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
         alignItems: 'center',
         padding: '0 16px',
         gap: 12,
-        background: contactBg, 
+        background: color.headerBg, 
       }}>
         <Avatar src="https://i.pravatar.cc/150?img=3" size={46} />
         <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 8 }}>
@@ -87,9 +87,9 @@ const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
         background: contactBg,
         borderBottomLeftRadius: 10,
       }}>
-        {contacts.map((c, idx) => (
+        {contacts.map((c) => (
           <div
-            key={idx}
+            key={c.name}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -100,7 +100,6 @@ const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
               background: contactBg,
             }}
             onClick={() => onSelectContact({ name: c.name, img: c.img })}
-            onKeyDown={e => { if (e.key === 'Enter') onSelectContact({ name: c.name, img: c.img }) }}
             tabIndex={0}
           >
             <Avatar src={c.img} size={46} icon={<UserOutlined />} />

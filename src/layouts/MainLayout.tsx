@@ -76,8 +76,8 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         onClick={() => setSidebarOpen((v) => !v)}
         style={{
           position: 'fixed',
-          top: 16,
-          left: sidebarOpen ? SIDEBAR_WIDTH + 16 : 16,
+          top: 26,
+          left: sidebarOpen ? SIDEBAR_WIDTH + 25 : 25, // +5px khi sidebar mở
           zIndex: 2100,
           background: 'transparent',
           border: 'none',
@@ -166,13 +166,10 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           marginLeft: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
           transition: 'margin-left 0.2s',
           overflowX: 'hidden',
-          paddingTop: 64, 
         }}
       >
-        <div style={{
-          position: 'relative',
-          zIndex: isMobile ? 1000 : 2000,
-        }}>
+        {/* Topbar occupies its own space, main content below */}
+        <div style={{ width: '100%' }}>
           <Topbar />
         </div>
         <main style={{ padding: 24, minHeight: 280 }}>{children}</main>
