@@ -1,5 +1,7 @@
 import { Card, Progress } from 'antd'
 import type { ReactNode, FC } from 'react'
+import { useTheme } from '../theme/ThemeContext'
+import { themeColors } from '../theme/colors'
 
 interface HRMCardProps {
   title: string
@@ -13,26 +15,6 @@ interface HRMCardProps {
   theme?: 'dark' | 'light'
 }
 
-const getThemeStyle = (theme: 'dark' | 'light') => ({
-  card: {
-    background: theme === 'dark' ? '#23272f' : '#fff',
-    color: theme === 'dark' ? '#fff' : '#23272f',
-    border: 'none',
-    borderRadius: 12,
-  },
-  head: {
-    background: theme === 'dark' ? '#23272f' : '#fff',
-    color: theme === 'dark' ? '#fff' : '#23272f',
-    border: 'none',
-    borderRadius: 12,
-  },
-  body: {
-    color: theme === 'dark' ? '#fff' : '#23272f',
-    border: 'none',
-    borderRadius: 12,
-  },
-})
-
 const HRMCard: FC<HRMCardProps> = ({
   title,
   value,
@@ -42,14 +24,35 @@ const HRMCard: FC<HRMCardProps> = ({
   highlightClass,
   style,
   className,
-  theme = 'dark',
+  theme,
 }) => {
-  const themeStyle = getThemeStyle(theme)
+  const { theme: contextTheme } = useTheme()
+  const currentTheme = theme || contextTheme
+  const color = themeColors[currentTheme]
+
   return (
     <Card
       title={title}
-      style={{ ...themeStyle.card, ...style }}
-      styles={{ header: themeStyle.head, body: themeStyle.body }}
+      style={{
+        background: color.cardBg,
+        color: color.cardText,
+        border: color.cardBorder,
+        borderRadius: 12,
+        ...style,
+      }}
+      styles={{
+        header: {
+          background: color.cardHeadBg,
+          color: color.cardHeadText,
+          border: color.cardBorder,
+          borderRadius: 12,
+        },
+        body: {
+          color: color.cardBodyText,
+          border: color.cardBodyBorder,
+          borderRadius: 12,
+        },
+      }}
       className={className}
     >
       <p>{description}</p>

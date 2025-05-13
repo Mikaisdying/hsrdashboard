@@ -51,10 +51,12 @@ const Topbar: React.FC = () => {
             <Input
               placeholder="Search"
               allowClear
-              prefix={<SearchOutlined style={{ color: color.icon, fontSize: 18, marginRight: 6 }} />}
+              prefix={
+                <SearchOutlined style={{ color: color.icon, fontSize: 18, marginRight: 6 }} />
+              }
               style={{
                 width: '100%',
-                minWidth: 100,
+                minWidth: 50,
                 maxWidth: 500,
                 borderRadius: 32,
                 margin: '0 auto',
@@ -85,7 +87,7 @@ const Topbar: React.FC = () => {
                 <Badge count={chatCount} size="small">
                   <MessageOutlined
                     style={{ color: color.icon, fontSize: 20, cursor: 'pointer' }}
-                    onClick={() => setChatOpen(open => !open)}
+                    onClick={() => setChatOpen((open) => !open)}
                   />
                 </Badge>
                 <Badge count={notificationCount} size="small">
@@ -94,7 +96,12 @@ const Topbar: React.FC = () => {
                 <Avatar
                   src={currentUser.img}
                   alt={currentUser.name}
-                  style={{ marginLeft: 8, cursor: 'pointer', background: color.avatarBg, color: color.text }}
+                  style={{
+                    marginLeft: 8,
+                    cursor: 'pointer',
+                    background: color.avatarBg,
+                    color: color.text,
+                  }}
                 >
                   {currentUser.name.charAt(0)}
                 </Avatar>

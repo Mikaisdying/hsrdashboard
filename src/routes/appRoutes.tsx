@@ -12,6 +12,10 @@ import ProjectsPage from '../pages/ProjectsPage'
 import YourWorksPage from '../pages/YourWorksPage.tsx'
 import CommunityPage from '../pages/CommunityPage'
 import ChatPage from '../pages/ChatPage'
+import AdminDashboard from '../pages/AdminDashboard'
+import AdminEmployees from '../pages/AdminEmployees'
+import AdminTeams from '../pages/AdminTeams'
+import AdminProjects from '../pages/AdminProjects'
 
 const routes = [
   {
@@ -58,6 +62,42 @@ const routes = [
     element: <ChatPage />,
     breadcrumb: 'Chat',
     role: ['user', 'admin'],
+  },
+  {
+    path: '/admin',
+    key: '/admin',
+    label: 'Admin Dashboard',
+    icon: <DashboardOutlined />,
+    element: <AdminDashboard />,
+    breadcrumb: 'Admin Dashboard',
+    role: ['admin'],
+  },
+  {
+    path: '/admin/employees',
+    key: '/admin/employees',
+    label: 'Employees',
+    icon: <UserOutlined />,
+    element: <AdminEmployees />,
+    breadcrumb: 'Employees',
+    role: ['admin'],
+  },
+  {
+    path: '/admin/teams',
+    key: '/admin/teams',
+    label: 'Teams',
+    icon: <TeamOutlined />,
+    element: <AdminTeams />,
+    breadcrumb: 'Teams',
+    role: ['admin'],
+  },
+  {
+    path: '/admin/projects',
+    key: '/admin/projects',
+    label: 'Projects',
+    icon: <ProjectOutlined />,
+    element: <AdminProjects />,
+    breadcrumb: 'Projects',
+    role: ['admin'],
   },
 ]
 
