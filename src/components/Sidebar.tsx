@@ -1,5 +1,5 @@
 import { Menu } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import routes from '../routes/appRoutes'
 import type { FC } from 'react'
 import { useTheme } from '../theme/ThemeContext'
@@ -12,6 +12,7 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
   const navigate = useNavigate()
+  const location = useLocation()
   const userRole = 'user'
   const { theme } = useTheme()
   const color = themeColors[theme]
@@ -25,15 +26,46 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
     navigate(key)
   }
 
+  // Determine the selected key based on current location
+  const selectedKey = menuItems.find((item) => location.pathname === item.key)
+    ? location.pathname
+    : menuItems.find((item) => location.pathname.startsWith(item.key))?.key || '/'
+
   return (
-    <div className="flex h-screen w-full flex-col">
-      <div className="p-4 text-xl font-bold" style={{ color: color.text }}>VEXA</div>
+    <div
+      className="flex h-screen w-full flex-col"
+      style={{
+        background: color.sidebarBg,
+        borderRight: color.border,
+        borderTopRightRadius: 18,
+        borderBottomRightRadius: 18,
+        boxShadow: '2px 0 8px rgba(0,0,0,0.06)',
+      }}
+    >
+      <div
+        className="p-4 text-xl font-bold"
+        style={{
+          color: color.text,
+          letterSpacing: 2,
+          fontSize: 28,
+          marginBottom: 8,
+          textAlign: 'center',
+        }}
+      >
+        VEXA
+      </div>
       <Menu
         theme={theme}
         mode="inline"
         onClick={handleMenuClick}
         items={menuItems}
-        style={{ height: '100%', background: color.sidebarBg }}
+        style={{
+          height: '100%',
+          background: color.sidebarBg,
+          border: 'none',
+          padding: '12px 0',
+        }}
+        selectedKeys={[selectedKey]}
       />
     </div>
   )

@@ -6,7 +6,6 @@ const MOBILE_WIDTH = 1007
 
 const Dashboard = () => {
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < MOBILE_WIDTH)
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < MOBILE_WIDTH)
@@ -82,7 +81,7 @@ const Dashboard = () => {
               display: 'flex',
             }}
           >
-            <HRMCard {...card} theme={theme} style={{ width: '100%' }} />
+            <HRMCard {...card} style={{ width: '100%' }} />
           </div>
         ))}
       </div>
@@ -110,7 +109,7 @@ const Dashboard = () => {
             overflowX: 'hidden',
           }}
         >
-          {[1, 2, 3, 4].map((i) => (
+          {[1, 2, 3, 4, 6, 5, 8, 7].map((i) => (
             <Card
               key={i}
               style={{

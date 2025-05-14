@@ -1,8 +1,8 @@
 import React from 'react'
 import { Table, Button, Avatar } from 'antd'
 import { UserOutlined, PlusOutlined } from '@ant-design/icons'
-import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
+import { useTheme } from '../../theme/ThemeContext'
+import { themeColors } from '../../theme/colors'
 
 const data = [
   { key: 1, name: 'Alice', email: 'alice@company.com', team: 'Design', status: 'Active' },

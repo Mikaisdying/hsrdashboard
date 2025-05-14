@@ -1,7 +1,8 @@
 import React from 'react'
-import { Modal, Avatar } from 'antd'
+import { Avatar } from 'antd'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
+import BaseModal from './BaseModal'
 
 interface NotificationItem {
   type: string
@@ -25,31 +26,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   const color = themeColors[theme]
 
   return (
-    <Modal
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      width={360}
-      style={{
-        top: 72,
-        right: 32,
-        position: 'fixed',
-        zIndex: 3000,
-        padding: 0,
-      }}
-      bodyStyle={{
-        padding: 0,
-        borderRadius: 12,
-        minHeight: 200,
-        background: color.headerBg,
-        overflow: 'hidden',
-        transition: 'background 0.2s',
-      }}
-      closeIcon={null}
-      mask={true}
-      maskClosable={true}
-      destroyOnClose
-    >
+    <BaseModal open={open} onClose={onClose} width={360}>
       <div
         style={{
           width: '100%',
@@ -59,64 +36,65 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           display: 'flex',
           flexDirection: 'column',
           position: 'relative',
-          padding: '6px 2px',
+          padding: '10px 0',
           background: color.headerBg,
+          borderRadius: 16,
         }}
       >
         <div
           style={{
             fontSize: 22,
-            fontWeight: 500,
+            fontWeight: 600,
             color: color.text,
-            margin: '4px 0 12px 12px',
+            margin: '8px 0 18px 18px',
+            letterSpacing: 1,
           }}
         >
           Notifications
         </div>
-        {notification.map((item, idx) => (
-          <div
-            key={idx}
-            style={{
-              display: 'flex',
-              gap: 10,
-              padding: '4px 12px 0 12px',
-            }}
-          >
-            <Avatar
-              src={currentUser.img}
-              style={{ width: 32, height: 32 }}
-            >
-              {currentUser.name.charAt(0)}
-            </Avatar>
+        <div
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            minHeight: 0,
+          }}
+        >
+          {notification.map((item, idx) => (
             <div
+              key={idx}
               style={{
-                width: '100%',
                 display: 'flex',
-                flexDirection: 'column',
-                gap: 4,
-                padding: 0,
+                gap: 10,
+                padding: '8px 18px',
+                alignItems: 'center',
+                borderBottom:
+                  idx !== notification.length - 1 ? `1px solid ${color.border}33` : 'none',
               }}
             >
-              <div style={{ fontSize: 14, fontWeight: 500, color: color.text }}>
-                {item.type} invitation
-              </div>
-              <div style={{ fontSize: 12, fontWeight: 400, color: color.text + '99' }}>
-                {item.message}
-              </div>
-              <hr
+              <Avatar src={currentUser.img} style={{ width: 32, height: 32 }}>
+                {currentUser.name.charAt(0)}
+              </Avatar>
+              <div
                 style={{
-                  background: color.border + '99',
-                  border: 'none',
                   width: '100%',
-                  height: 1,
-                  marginTop: 4,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 2,
+                  padding: 0,
                 }}
-              />
+              >
+                <div style={{ fontSize: 15, fontWeight: 500, color: color.text }}>
+                  {item.type} invitation
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 400, color: color.text + '99' }}>
+                  {item.message}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </Modal>
+    </BaseModal>
   )
 }
 

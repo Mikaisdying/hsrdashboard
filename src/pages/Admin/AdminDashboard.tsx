@@ -1,8 +1,8 @@
 import React from 'react'
-import DashboardStatsCard from '../components/DashboardStatsCard'
+import DashboardStatsCard from '../../components/DashboardStatsCard'
 import { UserOutlined, TeamOutlined, ProjectOutlined } from '@ant-design/icons'
-import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
+import { useTheme } from '../../theme/ThemeContext'
+import { themeColors } from '../../theme/colors'
 
 const stats = [
   {

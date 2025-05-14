@@ -12,10 +12,10 @@ import ProjectsPage from '../pages/ProjectsPage'
 import YourWorksPage from '../pages/YourWorksPage.tsx'
 import CommunityPage from '../pages/CommunityPage'
 import ChatPage from '../pages/ChatPage'
-import AdminDashboard from '../pages/AdminDashboard'
-import AdminEmployees from '../pages/AdminEmployees'
-import AdminTeams from '../pages/AdminTeams'
-import AdminProjects from '../pages/AdminProjects'
+import AdminDashboard from '../pages/Admin/AdminDashboard'
+import AdminEmployees from '../pages/Admin/AdminEmployees'
+import AdminTeams from '../pages/Admin/AdminTeams'
+import AdminProjects from '../pages/Admin/AdminProjects'
 
 const routes = [
   {

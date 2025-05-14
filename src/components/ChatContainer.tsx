@@ -27,9 +27,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
         flexDirection: 'column',
         width: '100%',
         borderRadius: 12,
-        overflow: 'hidden',
-        height: 500,
+        height: '100%',
         background: color.headerBg,
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       {/* TopBar */}
@@ -42,6 +43,9 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
           padding: '0 16px',
           gap: 12,
           background: color.headerBg,
+          position: 'sticky',
+          top: 0,
+          zIndex: 2,
         }}
       >
         <ArrowLeftOutlined
@@ -54,7 +58,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
           <span style={{ fontSize: 12, color: color.text }}>Online</span>
         </div>
       </div>
-      {/* Chat */}
+      {/* Chat - scrollable */}
       <div
         style={{
           flex: 1,
@@ -65,7 +69,15 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
       >
         {messages.map((msg, idx) =>
           msg.type === 'received' ? (
-            <div key={idx} style={{ margin: '16px 0 0 0', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <div
+              key={idx}
+              style={{
+                margin: '16px 0 0 0',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+              }}
+            >
               <div
                 style={{
                   background: theme === 'dark' ? '#23272f' : '#e6e6e6',
@@ -82,7 +94,15 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
               <span style={{ fontSize: 12, color: '#aaa', marginLeft: 8 }}>{msg.time}</span>
             </div>
           ) : (
-            <div key={idx} style={{ margin: '16px 0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <div
+              key={idx}
+              style={{
+                margin: '16px 0 0 auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+              }}
+            >
               <div
                 style={{
                   background: theme === 'dark' ? '#7265e6' : '#dbeafe',
@@ -101,23 +121,29 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
           )
         )}
       </div>
-      {/* Send Message */}
+      {/* Footer fixed */}
       <div
         style={{
-          minHeight: 64,
+          height: 64,
           borderTop: `1px solid ${color.border === 'none' ? '#222' : color.border}`,
           display: 'flex',
           alignItems: 'center',
           padding: '0 16px',
           gap: 10,
           background: color.headerBg,
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 2,
         }}
       >
-        <Button type="text" icon={<PaperClipOutlined />} style={{ color: color.icon, fontSize: 20 }} />
+        <Button
+          type="text"
+          icon={<PaperClipOutlined style={{ color: color.icon, fontSize: 20 }} />}
+        />
         <Input
           placeholder="Type a message"
           value={input}
-          onChange={e => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
           style={{
             borderRadius: 12,
             background: theme === 'dark' ? '#23272f' : '#f5f5f5',
@@ -127,7 +153,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
             marginRight: 8,
           }}
         />
-        <Button type="text" icon={<SendOutlined />} style={{ color: color.icon, fontSize: 22 }} />
+        <Button type="text" icon={<SendOutlined style={{ color: color.icon, fontSize: 22 }} />} />
       </div>
     </div>
   )

@@ -37,7 +37,8 @@ const HRMCard: FC<HRMCardProps> = ({
         background: color.cardBg,
         color: color.cardText,
         border: color.cardBorder,
-        borderRadius: 12,
+        borderRadius: 16,
+        boxShadow: '0 2px 12px 0 rgba(0,0,0,0.06)',
         ...style,
       }}
       styles={{
@@ -45,17 +46,22 @@ const HRMCard: FC<HRMCardProps> = ({
           background: color.cardHeadBg,
           color: color.cardHeadText,
           border: color.cardBorder,
-          borderRadius: 12,
+          borderRadius: 16,
+          fontWeight: 600,
+          fontSize: 18,
+          padding: '16px 20px',
         },
         body: {
           color: color.cardBodyText,
           border: color.cardBodyBorder,
-          borderRadius: 12,
+          borderRadius: 16,
+          padding: 18,
         },
       }}
       className={className}
+      headStyle={{ fontWeight: 600, fontSize: 18 }}
     >
-      <p>{description}</p>
+      <p style={{ marginBottom: 12 }}>{description}</p>
       <Progress percent={progressPercent} showInfo={false} strokeColor={progressColor} />
       <div className={`text-right font-bold ${highlightClass || ''}`}>{value}</div>
     </Card>

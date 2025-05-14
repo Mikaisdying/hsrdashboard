@@ -49,9 +49,11 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           top: 0,
           zIndex: 2001,
           transition: 'all 0.2s',
-          boxShadow: '2px 0 8px rgba(0,0,0,0.08)',
+          boxShadow: '2px 0 12px rgba(0,0,0,0.08)',
           display: 'flex',
           flexDirection: 'column',
+          borderTopRightRadius: 18,
+          borderBottomRightRadius: 18,
         }}
       >
         <Sidebar onNavigate={() => {}} />
@@ -77,7 +79,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         style={{
           position: 'fixed',
           top: 26,
-          left: sidebarOpen ? SIDEBAR_WIDTH + 25 : 25, // +5px khi sidebar mở
+          left: sidebarOpen ? SIDEBAR_WIDTH + 25 : 25,
           zIndex: 2100,
           background: 'transparent',
           border: 'none',
@@ -161,18 +163,32 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       {renderDesktopSidebar()}
       {renderDesktopSidebarToggle()}
       {renderMobileSidebar()}
+      {/* Topbar fixed */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
+          right: 0,
+          width: !isMobile && sidebarOpen ? `calc(100% - ${SIDEBAR_WIDTH}px)` : '100%',
+          zIndex: 2000,
+          transition: 'left 0.2s, width 0.2s',
+          borderTopLeftRadius: 18,
+          borderTopRightRadius: 18,
+        }}
+      >
+        <Topbar />
+      </div>
       <div
         style={{
           marginLeft: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
           transition: 'margin-left 0.2s',
           overflowX: 'hidden',
+          height: '100vh',
+          overflow: 'auto',
         }}
       >
-        {/* Topbar occupies its own space, main content below */}
-        <div style={{ width: '100%' }}>
-          <Topbar />
-        </div>
-        <main style={{ padding: 24, minHeight: 280 }}>{children}</main>
+        <main style={{ padding: 32, minHeight: 280, paddingTop: 92 }}>{children}</main>
       </div>
     </div>
   )
