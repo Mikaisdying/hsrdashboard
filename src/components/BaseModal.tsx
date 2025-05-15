@@ -14,6 +14,7 @@ interface BaseModalProps {
   maskClosable?: boolean
   footer?: ReactNode
   closeIcon?: ReactNode
+  position?: 'center' | 'corner'
 }
 
 const BaseModal: FC<BaseModalProps> = ({
@@ -27,9 +28,31 @@ const BaseModal: FC<BaseModalProps> = ({
   maskClosable = true,
   footer = null,
   closeIcon = null,
+  position = 'center',
 }) => {
   const { theme } = useTheme()
   const color = themeColors[theme]
+
+  const modalStyle: React.CSSProperties =
+    position === 'corner'
+      ? {
+          top: 80,
+          right: 32,
+          position: 'fixed',
+          zIndex: 3000,
+          borderRadius: 12,
+          background: color.headerBg,
+          boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25)',
+          padding: 0,
+          ...style,
+        }
+      : {
+          background: color.headerBg,
+          borderRadius: 12,
+          boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25)',
+          padding: 0,
+          ...style,
+        }
 
   return (
     <Modal
@@ -37,27 +60,19 @@ const BaseModal: FC<BaseModalProps> = ({
       onCancel={onClose}
       footer={footer}
       width={width}
-      style={{
-        top: 80,
-        right: 32,
-        position: 'fixed',
-        zIndex: 3000,
-        background: color.headerBg,
-        borderRadius: 16,
-        boxShadow: '0 8px 32px 0 rgba(0,0,0,0.18)',
-        padding: 0,
-        ...style,
-      }}
+      style={modalStyle}
       styles={{
-        content: { padding: 0, borderRadius: 16, background: color.headerBg },
         body: {
-          padding: 5,
-          borderRadius: 16,
+          padding: 0,
           minHeight: 200,
+          borderRadius: 12,
           background: color.headerBg,
-          overflow: 'auto',
           transition: 'background 0.2s',
           ...bodyStyle,
+        },
+        content: {
+          padding: 0,
+          borderRadius: 20,
         },
       }}
       closeIcon={closeIcon}

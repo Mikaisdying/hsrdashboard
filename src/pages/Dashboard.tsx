@@ -1,6 +1,8 @@
-import { Button, Card } from 'antd'
 import HRMCard from '../components/HRMCard'
+import BaseCard from '../components/BaseCard'
 import { useState, useEffect } from 'react'
+import BaseButton from '../components/BaseButton'
+import { PlusOutlined } from '@ant-design/icons'
 
 const MOBILE_WIDTH = 1007
 
@@ -25,12 +27,12 @@ const Dashboard = () => {
         gap: 8,
       }}
     >
-      <Button type="primary" className="bg-purple-500">
+      <BaseButton type="primary" icon={<PlusOutlined />}>
         Create New Project
-      </Button>
-      <Button type="primary" className="border-none bg-yellow-400 text-black">
+      </BaseButton>
+      <BaseButton type="primary" className="border-none bg-yellow-400 text-black">
         Create New Team
-      </Button>
+      </BaseButton>
     </div>
   )
 
@@ -39,8 +41,8 @@ const Dashboard = () => {
       {ActionButtons}
       <div
         style={{
-          display: 'flex',
-          flexWrap: 'wrap',
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
           gap: 10,
           marginBottom: 24,
           width: '100%',
@@ -73,9 +75,8 @@ const Dashboard = () => {
           <div
             key={idx}
             style={{
-              flex: isMobile ? '0 0 100%' : '1 1 25%',
               minWidth: isMobile ? 170 : 220,
-              maxWidth: isMobile ? '100%' : '25%',
+              maxWidth: isMobile ? '100%' : '100%',
               margin: '5px 0',
               boxSizing: 'border-box',
               display: 'flex',
@@ -88,43 +89,35 @@ const Dashboard = () => {
 
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-white">Recent Projects</h2>
-        {/* Xóa nút ở đây, đã fixed lên trên */}
       </div>
 
       {/* Thẻ f section */}
       <div
         style={{
           width: '100%',
-          display: 'flex',
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+          gap: 10,
           justifyContent: 'flex-start',
+          overflowX: 'hidden',
         }}
       >
-        <div
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 10,
-            justifyContent: 'flex-start',
-            overflowX: 'hidden',
-          }}
-        >
-          {[1, 2, 3, 4, 6, 5, 8, 7].map((i) => (
-            <Card
-              key={i}
-              style={{
-                flex: '1 1 100px',
-                minWidth: 180,
-                maxWidth: 300,
-                margin: '5px 0',
-              }}
-            >
-              <p className="text-white">f</p>
-              <p className="text-white">f</p>
-              <small className="text-gray-400">Updated 22 hours ago</small>
-            </Card>
-          ))}
-        </div>
+        {[1, 2, 3, 4, 6, 5, 7, 8].map((i) => (
+          <BaseCard
+            key={i}
+            style={{
+              minWidth: 0,
+              margin: '5px 0',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+            }}
+          >
+            <p className="text-white">f</p>
+            <p className="text-white">f</p>
+            <small className="text-gray-400">Updated 22 hours ago</small>
+          </BaseCard>
+        ))}
       </div>
     </div>
   )

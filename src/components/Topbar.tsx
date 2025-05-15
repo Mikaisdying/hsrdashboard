@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { Layout, Input, Avatar, Space, Badge, Button } from 'antd'
-import { BellOutlined, MessageOutlined, UserOutlined, SearchOutlined } from '@ant-design/icons'
+import {
+  BellOutlined,
+  MessageOutlined,
+  UserOutlined,
+  SearchOutlined,
+  MenuOutlined,
+} from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
 import ChatModal from './ChatModal'
@@ -13,7 +19,13 @@ const mockUser = {
   img: 'https://i.pravatar.cc/150?img=3',
 }
 
-const Topbar: React.FC = () => {
+interface TopbarProps {
+  onSidebarToggle?: () => void
+  sidebarOpen?: boolean
+  isMobile?: boolean
+}
+
+const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
   const [currentUser, setCurrentUser] = useState(mockUser)
   const [notificationCount] = useState(2)
   const [chatCount] = useState(1)
@@ -29,14 +41,15 @@ const Topbar: React.FC = () => {
         padding: '0 24px',
         height: 64,
         lineHeight: '64px',
-        width: '100%',
+        width: '98%',
         boxSizing: 'border-box',
         borderBottom: color.border,
         borderRadius: 18,
         margin: 10,
-        boxShadow: '0 2px 12px 0 rgba(0,0,0,0.06)',
+        boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.19)',
         display: 'flex',
         alignItems: 'center',
+        zIndex: 2000,
       }}
     >
       <div
@@ -45,19 +58,48 @@ const Topbar: React.FC = () => {
           alignItems: 'center',
           width: '100%',
           height: '100%',
+          position: 'relative',
         }}
       >
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center' }}>
+        {/* Sidebar toggle button bên trái */}
+        {onSidebarToggle && (
+          <Button
+            type="text"
+            icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
+            onClick={onSidebarToggle}
+            style={{
+              marginRight: 16,
+              background: 'transparent',
+              border: 'none',
+              boxShadow: 'none',
+              outline: 'none',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          />
+        )}
+        {/* Search input ở giữa topbar */}
+        <div
+          style={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '70%',
+            maxWidth: isMobile ? '250px' : '600px',
+            minWidth: 100,
+            display: 'flex',
+            alignItems: 'center',
+            zIndex: 2,
+          }}
+        >
           <Input
             placeholder="Search"
             allowClear
             prefix={<SearchOutlined style={{ color: color.icon, fontSize: 18, marginRight: 6 }} />}
             style={{
               width: '100%',
-              minWidth: 50,
-              maxWidth: 500,
               borderRadius: 32,
-              margin: '0 auto',
               background: color.searchBg,
               color: color.searchColor,
               border: 'none',
@@ -65,6 +107,7 @@ const Topbar: React.FC = () => {
               paddingRight: 20,
               height: 40,
               boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
+              transition: 'all 0.2s',
             }}
             className={`topbar-search-input topbar-search-${theme}`}
           />
@@ -79,7 +122,8 @@ const Topbar: React.FC = () => {
             `}
           </style>
         </div>
-        <Space size="large" style={{ marginLeft: 24, flexShrink: 0 }}>
+        {/* ctct bên phải */}
+        <Space size="large" style={{ marginLeft: 'auto', flexShrink: 0, zIndex: 3 }}>
           {currentUser ? (
             <>
               <Badge count={chatCount} size="small">

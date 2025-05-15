@@ -1,7 +1,53 @@
 {
-  "projects": [
-    { "id": 1, "name": "Dự án HRM", "status": "Đang triển khai" },
-    { "id": 2, "name": "App Quản lý Task", "status": "Hoàn thành" }
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "avatar": "https://i.pravatar.cc/150?img=3"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "avatar": "https://i.pravatar.cc/150?img=4"
+    },
+    {
+      "id": 3,
+      "name": "Alice",
+      "email": "alice@example.com",
+      "avatar": "https://i.pravatar.cc/150?img=5"
+    },
+    {
+      "id": 4,
+      "name": "Bob",
+      "email": "bob@example.com",
+      "avatar": "https://i.pravatar.cc/150?img=6"
+    }
   ],
-  "users": [{ "id": 1, "name": "Nguyễn Văn A", "role": "admin" }]
+  "projects": [
+    {
+      "id": 1,
+      "name": "HRM Dashboard",
+      "ownerId": 1,
+      "status": "active",
+      "updatedAt": "2024-06-01T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Payroll System",
+      "ownerId": 2,
+      "status": "completed",
+      "updatedAt": "2024-05-28T14:00:00Z"
+    }
+  ],
+  "teams": [
+    { "id": 1, "name": "Frontend Team", "members": [1, 2] },
+    { "id": 2, "name": "Backend Team", "members": [3, 4] }
+  ],
+  "messages": [
+    { "id": 1, "from": 1, "to": 2, "content": "Hello Jane!", "timestamp": "2024-06-01T12:21:00Z" },
+    { "id": 2, "from": 2, "to": 1, "content": "Hi John!", "timestamp": "2024-06-01T12:22:00Z" },
+    { "id": 3, "from": 3, "to": 1, "content": "How are you?", "timestamp": "2024-06-01T10:05:00Z" }
+  ]
 }

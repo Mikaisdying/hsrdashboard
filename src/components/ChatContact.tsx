@@ -5,10 +5,30 @@ import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
 
 const contacts = [
-  { name: 'John Doe', img: 'https://i.pravatar.cc/150?img=3', lastMsg: 'Test message this is', time: '12:21 PM' },
-  { name: 'Jane Smith', img: 'https://i.pravatar.cc/150?img=4', lastMsg: 'Hello there!', time: '11:10 AM' },
-  { name: 'Alice', img: 'https://i.pravatar.cc/150?img=5', lastMsg: 'How are you?', time: '10:05 AM' },
-  { name: 'Bob', img: 'https://i.pravatar.cc/150?img=6', lastMsg: 'See you soon!', time: '09:45 AM' },
+  {
+    name: 'John Doe',
+    img: 'https://i.pravatar.cc/150?img=3',
+    lastMsg: 'Test message this is',
+    time: '12:21 PM',
+  },
+  {
+    name: 'Jane Smith',
+    img: 'https://i.pravatar.cc/150?img=4',
+    lastMsg: 'Hello there!',
+    time: '11:10 AM',
+  },
+  {
+    name: 'Alice',
+    img: 'https://i.pravatar.cc/150?img=5',
+    lastMsg: 'How are you?',
+    time: '10:05 AM',
+  },
+  {
+    name: 'Bob',
+    img: 'https://i.pravatar.cc/150?img=6',
+    lastMsg: 'See you soon!',
+    time: '09:45 AM',
+  },
 ]
 
 interface ChatContactProps {
@@ -18,47 +38,61 @@ interface ChatContactProps {
 const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
   const { theme } = useTheme()
   const color = themeColors[theme]
-  const borderColor = theme === 'dark' ? (color.border === 'none' ? '#222' : color.border) : '#e5e7eb'
+  const borderColor =
+    theme === 'dark' ? (color.border === 'none' ? '#222' : color.border) : '#e5e7eb'
   const contactBg = theme === 'dark' ? '#181a20' : '#fff'
   const contactText = theme === 'dark' ? color.text : '#23272f'
   const contactMsg = theme === 'dark' ? '#aaa' : '#888'
-  const placeholderColor = theme === 'dark' ? '#aaa' : '#888'
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-      height: 500,
-      background: color.headerBg,
-      borderRadius: 12,
-      overflow: 'hidden',
-    }}>
-      {/* TopBar */}
-      <div style={{
-        height: 64,
-        borderBottom: `1px solid ${borderColor}`,
+    <div
+      style={{
         display: 'flex',
-        alignItems: 'center',
-        padding: '0 16px',
-        gap: 12,
-        background: color.headerBg, 
-      }}>
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        background: color.headerBg,
+        borderRadius: 12,
+        overflow: 'hidden',
+      }}
+    >
+      {/* TopBar */}
+      <div
+        style={{
+          height: 64,
+          borderBottom: `1px solid ${borderColor}`,
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 16px',
+          gap: 12,
+          background: color.headerBg,
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 2,
+        }}
+      >
         <Avatar src="https://i.pravatar.cc/150?img=3" size={46} />
         <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 8 }}>
-          <span style={{ fontWeight: 600, fontSize: 16, color: contactText }}><b>Messaging</b></span>
+          <span style={{ fontWeight: 600, fontSize: 16, color: contactText }}>
+            <b>Messaging</b>
+          </span>
         </div>
       </div>
       {/* SearchBar */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 16px',
-        height: 56,
-        borderBottom: `1px solid ${borderColor}`,
-        color: color.icon,
-        background: color.headerBg,
-      }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 16px',
+          height: 56,
+          borderBottom: `1px solid ${borderColor}`,
+          color: color.icon,
+          background: color.headerBg,
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 2,
+        }}
+      >
         <SearchOutlined style={{ fontSize: 20, color: color.icon }} />
         <Input
           placeholder="Search messages"
@@ -81,12 +115,14 @@ const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
         </style>
       </div>
       {/* Contacts */}
-      <div style={{
-        flex: 1,
-        overflowY: 'auto',
-        background: contactBg,
-        borderBottomLeftRadius: 10,
-      }}>
+      <div
+        style={{
+          height: 480, // 600 - 64 - 56
+          overflowY: 'scroll',
+          background: contactBg,
+          borderBottomLeftRadius: 10,
+        }}
+      >
         {contacts.map((c) => (
           <div
             key={c.name}

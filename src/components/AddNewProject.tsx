@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Input, Button, Avatar, Select, Spin } from 'antd'
+import { Input, Avatar, Select, Spin } from 'antd'
 import { CloseOutlined, SearchOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
+import BaseButton from './BaseButton'
+import BaseModal from './BaseModal'
 
 interface AddNewProjectProps {
   setNewProject: (v: boolean) => void
@@ -23,7 +25,6 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
   const [role, setRole] = useState('')
   const [access, setAccess] = useState('')
 
-  // Dummy search, replace with real API
   useEffect(() => {
     if (search) {
       setUsers([
@@ -69,10 +70,9 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
   }
 
   return (
-    <Modal
+    <BaseModal
       open={true}
-      onCancel={() => setNewProject(false)}
-      footer={null}
+      onClose={() => setNewProject(false)}
       width={600}
       bodyStyle={{
         borderRadius: 16,
@@ -95,7 +95,17 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 name="title"
                 value={inputs.title}
                 onChange={handleInput}
-                style={{ marginBottom: 8 }}
+                style={{
+                  marginBottom: 8,
+                  background: color.primary,
+                  color: color.cardText,
+                  border:
+                    color.cardBorder === 'none'
+                      ? theme === 'dark'
+                        ? '#444'
+                        : '#d9d9d9'
+                      : color.cardBorder,
+                }}
               />
               <Input.TextArea
                 placeholder="Description (Required)*"
@@ -103,17 +113,41 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 value={inputs.desc}
                 onChange={handleInput}
                 rows={3}
-                style={{ marginBottom: 8 }}
+                style={{
+                  marginBottom: 8,
+                  background: color.cardBg,
+                  color: color.cardText,
+                  border:
+                    color.cardBorder === 'none'
+                      ? theme === 'dark'
+                        ? '#444'
+                        : '#d9d9d9'
+                      : color.cardBorder,
+                  boxShadow: theme === 'dark' ? '0 0 0 1px #444' : '0 0 0 1px #d9d9d9',
+                  transition: 'all 0.2s',
+                }}
               />
               <Input
                 placeholder="Tags: separate by , eg- Mongo Db, React JS .."
                 name="tags"
                 value={inputs.tags}
                 onChange={handleInput}
-                style={{ marginBottom: 8 }}
+                style={{
+                  marginBottom: 8,
+                  background: color.cardBg,
+                  color: color.cardText,
+                  border:
+                    color.cardBorder === 'none'
+                      ? theme === 'dark'
+                        ? '#444'
+                        : '#d9d9d9'
+                      : color.cardBorder,
+                  boxShadow: theme === 'dark' ? '0 0 0 1px #444' : '0 0 0 1px #d9d9d9',
+                  transition: 'all 0.2s',
+                }}
               />
             </div>
-            <Button
+            <BaseButton
               type="primary"
               block
               disabled={!inputs.title || !inputs.desc}
@@ -121,7 +155,7 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
               style={{ marginTop: 12 }}
             >
               Next
-            </Button>
+            </BaseButton>
           </>
         )}
         {step === 1 && (
@@ -140,24 +174,24 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                     value={tool.link}
                     onChange={(e) => handleToolChange(idx, 'link', e.target.value)}
                   />
-                  <Button
+                  <BaseButton
                     icon={<DeleteOutlined />}
                     onClick={() => setTools(tools.filter((_, i) => i !== idx))}
                     disabled={tools.length === 1}
                   />
                 </div>
               ))}
-              <Button icon={<PlusOutlined />} onClick={handleAddTool} style={{ marginTop: 4 }}>
+              <BaseButton icon={<PlusOutlined />} onClick={handleAddTool} style={{ marginTop: 4 }}>
                 Add Tool
-              </Button>
+              </BaseButton>
             </div>
             <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-              <Button onClick={() => setStep(0)} style={{ flex: 1 }}>
+              <BaseButton onClick={() => setStep(0)} style={{ flex: 1 }}>
                 Back
-              </Button>
-              <Button type="primary" onClick={() => setStep(2)} style={{ flex: 1 }}>
+              </BaseButton>
+              <BaseButton type="primary" onClick={() => setStep(2)} style={{ flex: 1 }}>
                 Next
-              </Button>
+              </BaseButton>
             </div>
           </>
         )}
@@ -198,13 +232,13 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                     onChange={(e) => setRole(e.target.value)}
                     style={{ width: 80 }}
                   />
-                  <Button
+                  <BaseButton
                     icon={<PlusOutlined />}
                     onClick={() => handleAddMember(user)}
                     disabled={!access || !role}
                   >
                     Add
-                  </Button>
+                  </BaseButton>
                 </div>
               ))}
               {members.length > 0 && (
@@ -237,30 +271,35 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                       >
                         {user.role}
                       </span>
-                      <Button
+                      <BaseButton
                         icon={<DeleteOutlined />}
                         onClick={() => handleRemoveMember(user)}
                         danger
                       >
                         Remove
-                      </Button>
+                      </BaseButton>
                     </div>
                   ))}
                 </div>
               )}
             </div>
             <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-              <Button onClick={() => setStep(1)} style={{ flex: 1 }}>
+              <BaseButton onClick={() => setStep(1)} style={{ flex: 1 }}>
                 Back
-              </Button>
-              <Button type="primary" onClick={handleCreate} style={{ flex: 1 }} disabled={loading}>
+              </BaseButton>
+              <BaseButton
+                type="primary"
+                onClick={handleCreate}
+                style={{ flex: 1 }}
+                disabled={loading}
+              >
                 {loading ? <Spin size="small" /> : 'Create Project'}
-              </Button>
+              </BaseButton>
             </div>
           </>
         )}
       </div>
-    </Modal>
+    </BaseModal>
   )
 }
 

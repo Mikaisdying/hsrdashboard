@@ -26,7 +26,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   const color = themeColors[theme]
 
   return (
-    <BaseModal open={open} onClose={onClose} width={360}>
+    <BaseModal position="corner" open={open} onClose={onClose} width={360}>
       <div
         style={{
           width: '100%',

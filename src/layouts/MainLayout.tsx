@@ -11,7 +11,7 @@ interface MainLayoutProps {
   children: ReactNode
 }
 
-const MOBILE_WIDTH = 1007
+const MOBILE_WIDTH = 1072
 const SIDEBAR_WIDTH = 240
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
@@ -47,7 +47,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           position: 'fixed',
           left: 0,
           top: 0,
-          zIndex: 2001,
           transition: 'all 0.2s',
           boxShadow: '2px 0 12px rgba(0,0,0,0.08)',
           display: 'flex',
@@ -68,102 +67,59 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       </div>
     )
 
-  // Sidebar toggle button for desktop
-  const renderDesktopSidebarToggle = () => {
-    if (isMobile) return null
-    return (
-      <Button
-        type="text"
-        icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
-        onClick={() => setSidebarOpen((v) => !v)}
-        style={{
-          position: 'fixed',
-          top: 26,
-          left: sidebarOpen ? SIDEBAR_WIDTH + 25 : 25,
-          zIndex: 2100,
-          background: 'transparent',
-          border: 'none',
-          boxShadow: 'none',
-          outline: 'none',
-          transition: 'left 0.2s',
-        }}
-      />
-    )
-  }
-
-  // Sidebar rendering for mobile (Drawer)
   const renderMobileSidebar = () =>
     isMobile && (
-      <>
-        <Drawer
-          placement="left"
-          closable={false}
-          onClose={() => setSidebarOpen(false)}
-          open={sidebarOpen}
-          width={SIDEBAR_WIDTH}
-          mask={true}
-          maskClosable={true}
-          style={{ position: 'relative', height: '100vh' }}
-          styles={{
-            body: { padding: 0, background: color.sidebarBg, height: '100vh' },
-            header: {
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              padding: '8px 16px',
-              background: color.sidebarBg,
-              borderBottom: 'none',
-              minHeight: 56,
-            },
-          }}
-          title={
-            <Button
-              type="text"
-              icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
-              onClick={() => setSidebarOpen(false)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                boxShadow: 'none',
-                marginRight: -8,
-              }}
-            />
-          }
-        >
-          <Sidebar onNavigate={() => setSidebarOpen(false)} />
-          <div style={{ padding: 16, marginTop: 'auto' }}>
-            <Switch
-              checkedChildren="🌙"
-              unCheckedChildren="☀️"
-              checked={theme === 'dark'}
-              onChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-            />
-          </div>
-        </Drawer>
-        {!sidebarOpen && (
+      <Drawer
+        placement="left"
+        closable={false}
+        onClose={() => setSidebarOpen(false)}
+        open={sidebarOpen}
+        width={SIDEBAR_WIDTH}
+        mask={true}
+        maskClosable={true}
+        style={{ position: 'relative', height: '100vh', zIndex: 4000 }}
+        styles={{
+          body: { padding: 0, background: color.sidebarBg, height: '100vh' },
+          header: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: '8px 16px',
+            background: color.sidebarBg,
+            borderBottom: 'none',
+            minHeight: 56,
+          },
+        }}
+        title={
           <Button
             type="text"
             icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
-            onClick={() => setSidebarOpen(true)}
+            onClick={() => setSidebarOpen(false)}
             style={{
-              position: 'fixed',
-              top: 16,
-              left: 16,
-              zIndex: 2100,
               background: 'transparent',
               border: 'none',
+              boxShadow: 'none',
+              marginRight: -8,
             }}
           />
-        )}
-      </>
+        }
+      >
+        <Sidebar onNavigate={() => setSidebarOpen(false)} />
+        <div style={{ padding: 16, marginTop: 'auto' }}>
+          <Switch
+            checkedChildren="🌙"
+            unCheckedChildren="☀️"
+            checked={theme === 'dark'}
+            onChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+          />
+        </div>
+      </Drawer>
     )
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', background: color.contentBg }}>
       {renderDesktopSidebar()}
-      {renderDesktopSidebarToggle()}
-      {renderMobileSidebar()}
-      {/* Topbar fixed */}
+      {/* Topbar */}
       <div
         style={{
           position: 'fixed',
@@ -171,25 +127,49 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           left: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
           right: 0,
           width: !isMobile && sidebarOpen ? `calc(100% - ${SIDEBAR_WIDTH}px)` : '100%',
-          zIndex: 2000,
+          zIndex: 1,
           transition: 'left 0.2s, width 0.2s',
           borderTopLeftRadius: 18,
           borderTopRightRadius: 18,
         }}
       >
-        <Topbar />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: 'none',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            paddingTop: 4,
+          }}
+        />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <Topbar
+            onSidebarToggle={() => setSidebarOpen((v) => !v)}
+            sidebarOpen={sidebarOpen}
+            isMobile={isMobile}
+          />
+        </div>
       </div>
       <div
         style={{
           marginLeft: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
           transition: 'margin-left 0.2s',
-          overflowX: 'hidden',
-          height: '100vh',
-          overflow: 'auto',
         }}
       >
-        <main style={{ padding: 32, minHeight: 280, paddingTop: 92 }}>{children}</main>
+        <main
+          style={{
+            padding: 32,
+            minHeight: 280,
+            paddingTop: 104,
+            overflowY: 'hidden',
+          }}
+        >
+          {children}
+        </main>
       </div>
+      {renderMobileSidebar()}
     </div>
   )
 }

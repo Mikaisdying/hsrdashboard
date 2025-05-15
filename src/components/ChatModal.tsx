@@ -11,21 +11,19 @@ interface ChatModalProps {
 const ChatModal: React.FC<ChatModalProps> = ({ open, onClose }) => {
   const [selectedContact, setSelectedContact] = useState<null | { name: string; img: string }>(null)
 
-  // Reset về contact list khi đóng modal
   const handleClose = () => {
     setSelectedContact(null)
     onClose()
   }
 
   return (
-    <BaseModal open={open} onClose={handleClose} width={420}>
+    <BaseModal open={open} onClose={handleClose} width={420} position="corner">
       <div
         style={{
           width: '100%',
           height: 420,
           minHeight: 320,
           borderRadius: 16,
-          overflow: 'auto',
           background: 'inherit',
         }}
       >

@@ -4,6 +4,8 @@ import AddNewProject from '../components/AddNewProject'
 import { PlusOutlined } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
+import BaseCard from '../components/BaseCard'
+import BaseButton from '../components/BaseButton'
 
 const mockProjects = [
   {
@@ -27,10 +29,18 @@ const mockProjects = [
     status: 'Working',
     updatedAt: '2024-05-30',
   },
+  {
+    id: 4,
+    title: 'API Integration',
+    desc: 'Integrate third-party APIs',
+    status: 'In Progress',
+    updatedAt: '2024-06-02',
+  },
 ]
 
 const statuses = [
   { status: 'Working', icon: <span style={{ color: '#7265e6' }}>●</span> },
+  { status: 'In Progress', icon: <span style={{ color: '#facc15' }}>🔆️</span> },
   { status: 'Completed', icon: <span style={{ color: '#52c41a' }}>●</span> },
 ]
 
@@ -51,9 +61,9 @@ const ProjectsPage: React.FC = () => {
     <div style={{ width: '100%' }}>
       {newProject && <AddNewProject setNewProject={setNewProject} />}
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-        <Button type="primary" icon={<PlusOutlined />} onClick={() => setNewProject(true)}>
+        <BaseButton type="primary" icon={<PlusOutlined />} onClick={() => setNewProject(true)}>
           New Project
-        </Button>
+        </BaseButton>
       </div>
       {loading ? (
         <div
@@ -62,15 +72,35 @@ const ProjectsPage: React.FC = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: 24,
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+          }}
+        >
           {statuses.map((s) => (
-            <div key={s.status} style={{ flex: 1, minWidth: 260 }}>
+            <div
+              key={s.status}
+              style={{
+                flex: '0 1 30%',
+                maxWidth: '30%',
+                minWidth: 260,
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
               <div
                 style={{
                   fontWeight: 600,
                   fontSize: 18,
                   marginBottom: 8,
                   color: color.text,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
                 }}
               >
                 {s.icon} {s.status}{' '}
@@ -88,13 +118,10 @@ const ProjectsPage: React.FC = () => {
                 .filter((item) => item.status === s.status)
                 .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
                 .map((item) => (
-                  <Card
+                  <BaseCard
                     key={item.id}
                     style={{
                       marginBottom: 12,
-                      borderRadius: 10,
-                      background: color.headerBg,
-                      color: color.text,
                     }}
                   >
                     <div style={{ fontWeight: 500, fontSize: 16 }}>{item.title}</div>
@@ -115,10 +142,10 @@ const ProjectsPage: React.FC = () => {
                     >
                       Updated {item.updatedAt}
                     </div>
-                  </Card>
+                  </BaseCard>
                 ))}
               {s.status === 'Working' && (
-                <Button
+                <BaseButton
                   type="dashed"
                   block
                   icon={<PlusOutlined />}
@@ -126,7 +153,7 @@ const ProjectsPage: React.FC = () => {
                   style={{ marginTop: 8 }}
                 >
                   New Project
-                </Button>
+                </BaseButton>
               )}
             </div>
           ))}
