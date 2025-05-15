@@ -3,8 +3,8 @@ import { Input, Avatar, Select, Spin } from 'antd'
 import { CloseOutlined, SearchOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
-import BaseButton from './BaseButton'
-import BaseModal from './BaseModal'
+import BaseButton from './Base/BaseButton'
+import BaseModal from './Base/BaseModal'
 
 interface AddNewProjectProps {
   setNewProject: (v: boolean) => void
@@ -76,14 +76,14 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
       width={600}
       bodyStyle={{
         borderRadius: 16,
-        background: color.headerBg,
+        background: color.background,
         color: color.text,
         padding: 0,
       }}
       closeIcon={<CloseOutlined style={{ color: color.text }} />}
       destroyOnClose
     >
-      <div style={{ padding: 24, borderRadius: 16, background: color.headerBg }}>
+      <div style={{ padding: 24, borderRadius: 16, background: color.background }}>
         <h2 style={{ fontSize: 22, fontWeight: 500, marginBottom: 16, color: color.text }}>
           Create a new project
         </h2>
@@ -98,13 +98,13 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 style={{
                   marginBottom: 8,
                   background: color.primary,
-                  color: color.cardText,
+                  color: color.textPrimary,
                   border:
-                    color.cardBorder === 'none'
+                    color.border === 'none'
                       ? theme === 'dark'
                         ? '#444'
                         : '#d9d9d9'
-                      : color.cardBorder,
+                      : color.border,
                 }}
               />
               <Input.TextArea
@@ -115,14 +115,14 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 rows={3}
                 style={{
                   marginBottom: 8,
-                  background: color.cardBg,
-                  color: color.cardText,
+                  background: color.secondary,
+                  color: color.textPrimary,
                   border:
-                    color.cardBorder === 'none'
+                    color.border === 'none'
                       ? theme === 'dark'
                         ? '#444'
                         : '#d9d9d9'
-                      : color.cardBorder,
+                      : color.border,
                   boxShadow: theme === 'dark' ? '0 0 0 1px #444' : '0 0 0 1px #d9d9d9',
                   transition: 'all 0.2s',
                 }}
@@ -134,14 +134,14 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 onChange={handleInput}
                 style={{
                   marginBottom: 8,
-                  background: color.cardBg,
-                  color: color.cardText,
+                  background: color.secondary,
+                  color: color.textPrimary,
                   border:
-                    color.cardBorder === 'none'
+                    color.border === 'none'
                       ? theme === 'dark'
                         ? '#444'
                         : '#d9d9d9'
-                      : color.cardBorder,
+                      : color.border,
                   boxShadow: theme === 'dark' ? '0 0 0 1px #444' : '0 0 0 1px #d9d9d9',
                   transition: 'all 0.2s',
                 }}
@@ -255,7 +255,7 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                       </span>
                       <span
                         style={{
-                          background: color.headerBg,
+                          background: color.background,
                           borderRadius: 8,
                           padding: '2px 8px',
                         }}
@@ -264,7 +264,7 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                       </span>
                       <span
                         style={{
-                          background: color.headerBg,
+                          background: color.background,
                           borderRadius: 8,
                           padding: '2px 8px',
                         }}

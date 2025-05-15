@@ -37,7 +37,7 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
   return (
     <Header
       style={{
-        background: color.sidebarBg,
+        background: color.background,
         padding: '0 24px',
         height: 64,
         lineHeight: '64px',

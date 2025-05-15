@@ -1,7 +1,7 @@
 import HRMCard from '../components/HRMCard'
-import BaseCard from '../components/BaseCard'
+import BaseCard from '../components/Base/BaseCard'
 import { useState, useEffect } from 'react'
-import BaseButton from '../components/BaseButton'
+import BaseButton from '../components/Base/BaseButton'
 import { PlusOutlined } from '@ant-design/icons'
 
 const MOBILE_WIDTH = 1007

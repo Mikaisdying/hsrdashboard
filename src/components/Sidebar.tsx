@@ -35,7 +35,7 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
     <div
       className="flex h-screen w-full flex-col"
       style={{
-        background: color.sidebarBg,
+        background: color.background,
         borderRight: color.border,
         borderTopRightRadius: 18,
         borderBottomRightRadius: 18,
@@ -61,7 +61,7 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
         items={menuItems}
         style={{
           height: '100%',
-          background: color.sidebarBg,
+          background: color.background,
           border: 'none',
           padding: '12px 0',
         }}

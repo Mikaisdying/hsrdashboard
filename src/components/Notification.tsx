@@ -2,7 +2,7 @@ import React from 'react'
 import { Avatar } from 'antd'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
-import BaseModal from './BaseModal'
+import BaseModal from './Base/BaseModal'
 
 interface NotificationItem {
   type: string
@@ -37,7 +37,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           flexDirection: 'column',
           position: 'relative',
           padding: '10px 0',
-          background: color.headerBg,
+          background: color.background,
           borderRadius: 16,
         }}
       >

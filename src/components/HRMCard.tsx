@@ -34,17 +34,17 @@ const HRMCard: FC<HRMCardProps> = ({
     <Card
       title={title}
       style={{
-        background: color.cardBg,
-        color: color.cardText,
-        border: color.cardBorder,
+        background: color.secondary,
+        color: color.textPrimary,
+        border: color.border,
         borderRadius: 16,
         boxShadow: '0 2px 12px 0 rgba(0,0,0,0.06)',
         ...style,
       }}
       styles={{
         header: {
-          color: color.cardHeadText,
-          border: color.cardBorder,
+          color: color.textPrimary,
+          border: color.border,
           borderRadius: 16,
           fontWeight: 600,
           fontSize: 18,

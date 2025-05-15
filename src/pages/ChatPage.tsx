@@ -13,18 +13,17 @@ const ChatPage: React.FC = () => {
     <div
       style={{
         maxWidth: 1200,
-        margin: '40px auto',
+        margin: 'auto',
         padding: 20,
         display: 'flex',
         gap: 24,
         minHeight: 540,
-        background: color.headerBg,
+        background: color.background,
         borderRadius: 16,
       }}
-      className="ant-modal-content"
     >
       <div style={{ width: 380, minWidth: 280, maxWidth: 400, flexShrink: 0 }}>
-        <ChatContact onSelectContact={contact => setSelectedContact(contact)} />
+        <ChatContact onSelectContact={(contact) => setSelectedContact(contact)} />
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         {selectedContact ? (
@@ -34,7 +33,7 @@ const ChatPage: React.FC = () => {
             style={{
               height: 500,
               borderRadius: 12,
-              background: color.headerBg,
+              background: color.background,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

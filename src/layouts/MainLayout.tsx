@@ -42,7 +42,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         style={{
           width: SIDEBAR_WIDTH,
           minWidth: SIDEBAR_WIDTH,
-          background: color.sidebarBg,
+          background: color.background,
           height: '100vh',
           position: 'fixed',
           left: 0,
@@ -79,13 +79,13 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         maskClosable={true}
         style={{ position: 'relative', height: '100vh', zIndex: 4000 }}
         styles={{
-          body: { padding: 0, background: color.sidebarBg, height: '100vh' },
+          body: { padding: 0, background: color.background, height: '100vh' },
           header: {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
             padding: '8px 16px',
-            background: color.sidebarBg,
+            background: color.background,
             borderBottom: 'none',
             minHeight: 56,
           },

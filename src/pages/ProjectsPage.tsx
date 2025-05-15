@@ -4,8 +4,8 @@ import AddNewProject from '../components/AddNewProject'
 import { PlusOutlined } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
-import BaseCard from '../components/BaseCard'
-import BaseButton from '../components/BaseButton'
+import BaseCard from '../components/Base/BaseCard'
+import BaseButton from '../components/Base/BaseButton'
 
 const mockProjects = [
   {
@@ -46,8 +46,8 @@ const statuses = [
 
 const getStatusColor = (color: any, type: 'secondary' | 'desc' | 'date') => {
   if (type === 'secondary') return color.textSecondary
-  if (type === 'desc') return color.textDesc
-  if (type === 'date') return color.textDate
+  if (type === 'desc') return color.textSecondary
+  if (type === 'date') return color.textMuted
   return color.textSecondary
 }
 
