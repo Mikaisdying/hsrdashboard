@@ -43,7 +43,6 @@ const HRMCard: FC<HRMCardProps> = ({
       }}
       styles={{
         header: {
-          background: color.cardHeadBg,
           color: color.cardHeadText,
           border: color.cardBorder,
           borderRadius: 16,
