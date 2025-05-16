@@ -18,15 +18,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ open, onClose }) => {
 
   return (
     <BaseModal open={open} onClose={handleClose} width={420} position="corner">
-      <div
-        style={{
-          width: '100%',
-          height: 420,
-          minHeight: 320,
-          borderRadius: 16,
-          background: 'inherit',
-        }}
-      >
+      <div className="bg-secondary h-[420px] min-h-[320px] w-full rounded-2xl">
         {!selectedContact ? (
           <ChatContact onSelectContact={(contact) => setSelectedContact(contact)} />
         ) : (

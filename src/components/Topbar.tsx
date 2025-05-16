@@ -8,7 +8,6 @@ import {
   MenuOutlined,
 } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 import ChatModal from './ChatModal'
 import NotificationModal from './Notification'
 
@@ -30,26 +29,19 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
   const [notificationCount] = useState(2)
   const [chatCount] = useState(1)
   const { theme } = useTheme()
-  const color = themeColors[theme]
   const [chatOpen, setChatOpen] = useState(false)
   const [notiOpen, setNotiOpen] = useState(false)
 
   return (
     <Header
+      className="bg-secondary border-border z-[2000] m-2.5 box-border flex items-center rounded-[18px] border-b"
       style={{
-        background: color.background,
         padding: '0 24px',
         height: 64,
         lineHeight: '64px',
         width: '98%',
-        boxSizing: 'border-box',
-        borderBottom: color.border,
-        borderRadius: 18,
-        margin: 10,
         boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.19)',
         display: 'flex',
-        alignItems: 'center',
-        zIndex: 2000,
       }}
     >
       <div
@@ -65,17 +57,9 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
         {onSidebarToggle && (
           <Button
             type="text"
-            icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
+            icon={<MenuOutlined className="text-icon text-2xl" />}
             onClick={onSidebarToggle}
-            style={{
-              marginRight: 16,
-              background: 'transparent',
-              border: 'none',
-              boxShadow: 'none',
-              outline: 'none',
-              display: 'flex',
-              alignItems: 'center',
-            }}
+            className="mr-4 flex items-center border-none bg-transparent shadow-none"
           />
         )}
         {/* Search input ở giữa topbar */}
@@ -96,20 +80,12 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
           <Input
             placeholder="Search"
             allowClear
-            prefix={<SearchOutlined style={{ color: color.icon, fontSize: 18, marginRight: 6 }} />}
+            prefix={<SearchOutlined className="text-icon mr-1.5 text-lg" />}
+            className={`topbar-search-input topbar-search-${theme} bg-searchBg text-searchColor h-10 rounded-full border-none px-5 shadow`}
             style={{
               width: '100%',
-              borderRadius: 32,
-              background: color.searchBg,
-              color: color.searchColor,
-              border: 'none',
-              paddingLeft: 20,
-              paddingRight: 20,
-              height: 40,
-              boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
               transition: 'all 0.2s',
             }}
-            className={`topbar-search-input topbar-search-${theme}`}
           />
           <style>
             {`
@@ -128,37 +104,20 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
             <>
               <Badge count={chatCount} size="small">
                 <MessageOutlined
-                  style={{
-                    color: color.icon,
-                    fontSize: 22,
-                    cursor: 'pointer',
-                    transition: 'color 0.2s',
-                  }}
+                  className="text-icon cursor-pointer text-[22px] transition-colors"
                   onClick={() => setChatOpen((open) => !open)}
                 />
               </Badge>
               <Badge count={notificationCount} size="small">
                 <BellOutlined
-                  style={{
-                    color: color.icon,
-                    fontSize: 22,
-                    cursor: 'pointer',
-                    transition: 'color 0.2s',
-                  }}
+                  className="text-icon cursor-pointer text-[22px] transition-colors"
                   onClick={() => setNotiOpen((open) => !open)}
                 />
               </Badge>
               <Avatar
                 src={currentUser.img}
                 alt={currentUser.name}
-                style={{
-                  marginLeft: 12,
-                  cursor: 'pointer',
-                  background: color.avatarBg,
-                  color: color.text,
-                  border: `2px solid ${color.border}`,
-                  boxShadow: '0 1px 4px 0 rgba(0,0,0,0.08)',
-                }}
+                className="bg-avatarBg text-text border-border ml-3 cursor-pointer border-2 shadow"
               >
                 {currentUser.name.charAt(0)}
               </Avatar>
@@ -166,14 +125,7 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
           ) : (
             <Button
               icon={<UserOutlined />}
-              style={{
-                borderRadius: 24,
-                color: '#1890ff',
-                background: 'transparent',
-                border: 'none',
-                boxShadow: 'none',
-                outline: 'none',
-              }}
+              className="rounded-full border-none bg-transparent text-[#1890ff] shadow-none"
               onClick={() => setCurrentUser(mockUser)}
             >
               Sign In

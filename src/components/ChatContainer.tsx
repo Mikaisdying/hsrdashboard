@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Avatar, Button, Input } from 'antd'
 import { ArrowLeftOutlined, PaperClipOutlined, SendOutlined } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 
 interface ChatContainerProps {
   contact: { name: string; img: string }
@@ -11,7 +10,6 @@ interface ChatContainerProps {
 
 const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
   const { theme } = useTheme()
-  const color = themeColors[theme]
   const [messages] = useState([
     { type: 'received', text: 'Hello! How can I help you?', time: 'Today at 12:40' },
     { type: 'sent', text: 'Hi! I have a question.', time: 'Today at 12:41' },
@@ -21,139 +19,58 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ contact, onBack }) => {
   const [input, setInput] = useState('')
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        borderRadius: 12,
-        height: '100%',
-        background: color.background,
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="bg-secondary relative flex h-full w-full flex-col overflow-hidden rounded-xl">
       {/* TopBar */}
-      <div
-        style={{
-          height: 64,
-          borderBottom: `1px solid ${color.border === 'none' ? '#222' : color.border}`,
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 16px',
-          gap: 12,
-          background: color.background,
-          position: 'sticky',
-          top: 0,
-          zIndex: 2,
-        }}
-      >
+      <div className="border-border bg-secondary sticky top-0 z-20 flex h-16 items-center gap-3 border-b px-4">
         <ArrowLeftOutlined
-          style={{ fontSize: 20, marginRight: 8, cursor: 'pointer', color: color.icon }}
+          style={{ fontSize: 20, marginRight: 8, cursor: 'pointer' }}
+          className="text-icon"
           onClick={onBack}
         />
         <Avatar src={contact.img} size={46} />
-        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 8 }}>
-          <span style={{ fontWeight: 600, fontSize: 16, color: color.text }}>{contact.name}</span>
-          <span style={{ fontSize: 12, color: color.text }}>Online</span>
+        <div className="ml-2 flex flex-col">
+          <span className="text-text text-base font-semibold">{contact.name}</span>
+          <span className="text-text text-xs">Online</span>
         </div>
       </div>
       {/* Chat - scrollable */}
       <div
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: 16,
-          background: theme === 'dark' ? '#181a20' : '#f7f7f7',
-        }}
+        className={`flex-1 overflow-y-auto p-4 ${theme === 'dark' ? 'bg-[#181a20]' : 'bg-[#f7f7f7]'} `}
       >
         {messages.map((msg, idx) =>
           msg.type === 'received' ? (
-            <div
-              key={idx}
-              style={{
-                margin: '16px 0 0 0',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-              }}
-            >
+            <div key={idx} className="mt-4 flex flex-col items-start">
               <div
-                style={{
-                  background: theme === 'dark' ? '#23272f' : '#e6e6e6',
-                  color: color.text,
-                  borderRadius: 12,
-                  padding: '12px 16px',
-                  maxWidth: '70%',
-                  boxShadow: '0 0 6px rgba(0,0,0,0.2)',
-                  fontSize: 14,
-                }}
+                className={` ${theme === 'dark' ? 'text-text bg-[#23272f]' : 'text-text bg-[#e6e6e6]'} max-w-[70%] rounded-xl px-4 py-3 text-sm shadow`}
               >
                 {msg.text}
               </div>
-              <span style={{ fontSize: 12, color: '#aaa', marginLeft: 8 }}>{msg.time}</span>
+              <span className="ml-2 text-xs text-[#aaa]">{msg.time}</span>
             </div>
           ) : (
-            <div
-              key={idx}
-              style={{
-                margin: '16px 0 0 auto',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-              }}
-            >
+            <div key={idx} className="mt-4 flex flex-col items-end">
               <div
-                style={{
-                  background: theme === 'dark' ? '#7265e6' : '#dbeafe',
-                  color: theme === 'dark' ? '#fff' : '#23272f',
-                  borderRadius: '12px 0 12px 12px',
-                  padding: '12px 16px',
-                  maxWidth: '70%',
-                  boxShadow: '0 0 6px rgba(0,0,0,0.4)',
-                  fontSize: 14,
-                }}
+                className={` ${
+                  theme === 'dark' ? 'bg-[#7265e6] text-white' : 'bg-blue-100 text-[#23272f]'
+                } max-w-[70%] rounded-[12px_0_12px_12px] px-4 py-3 text-sm shadow`}
               >
                 {msg.text}
               </div>
-              <span style={{ fontSize: 12, color: '#aaa', marginRight: 8 }}>{msg.time}</span>
+              <span className="mr-2 text-xs text-[#aaa]">{msg.time}</span>
             </div>
           )
         )}
       </div>
       {/* Footer fixed */}
-      <div
-        style={{
-          height: 64,
-          borderTop: `1px solid ${color.border === 'none' ? '#222' : color.border}`,
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 16px',
-          gap: 10,
-          background: color.background,
-          position: 'sticky',
-          bottom: 0,
-          zIndex: 2,
-        }}
-      >
-        <Button
-          type="text"
-          icon={<PaperClipOutlined style={{ color: color.icon, fontSize: 20 }} />}
-        />
+      <div className="border-border bg-secondary sticky bottom-0 z-20 flex h-16 items-center gap-2 border-t px-4">
+        <Button type="text" icon={<PaperClipOutlined className="text-icon text-xl" />} />
         <Input
           placeholder="Type a message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          style={{
-            borderRadius: 12,
-            background: theme === 'dark' ? '#23272f' : '#f5f5f5',
-            color: color.text,
-            border: 'none',
-            flex: 1,
-            marginRight: 8,
-          }}
+          className={`text-text mr-2 flex-1 rounded-xl border-none bg-[#f5f5f5] dark:bg-[#23272f]`}
         />
-        <Button type="text" icon={<SendOutlined style={{ color: color.icon, fontSize: 22 }} />} />
+        <Button type="text" icon={<SendOutlined className="text-icon text-[22px]" />} />
       </div>
     </div>
   )

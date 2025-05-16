@@ -1,7 +1,5 @@
 import React from 'react'
 import { Avatar } from 'antd'
-import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 import BaseModal from './Base/BaseModal'
 
 interface NotificationItem {
@@ -22,73 +20,24 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   currentUser,
   notification,
 }) => {
-  const { theme } = useTheme()
-  const color = themeColors[theme]
-
   return (
     <BaseModal position="corner" open={open} onClose={onClose} width={360}>
-      <div
-        style={{
-          width: '100%',
-          minWidth: 300,
-          maxWidth: 400,
-          height: 400,
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'relative',
-          padding: '10px 0',
-          background: color.background,
-          borderRadius: 16,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 22,
-            fontWeight: 600,
-            color: color.text,
-            margin: '8px 0 18px 18px',
-            letterSpacing: 1,
-          }}
-        >
+      <div className="bg-background relative flex h-[400px] w-full max-w-[400px] min-w-[300px] flex-col rounded-2xl py-2.5">
+        <div className="text-text my-2 ml-4 text-[22px] font-semibold tracking-wide">
           Notifications
         </div>
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            minHeight: 0,
-          }}
-        >
+        <div className="min-h-0 flex-1 overflow-y-auto">
           {notification.map((item, idx) => (
             <div
               key={idx}
-              style={{
-                display: 'flex',
-                gap: 10,
-                padding: '8px 18px',
-                alignItems: 'center',
-                borderBottom:
-                  idx !== notification.length - 1 ? `1px solid ${color.border}33` : 'none',
-              }}
+              className={`border-border flex items-center gap-2.5 border-b px-4 py-2 ${idx === notification.length - 1 ? '!border-b-0' : ''}`}
             >
               <Avatar src={currentUser.img} style={{ width: 32, height: 32 }}>
                 {currentUser.name.charAt(0)}
               </Avatar>
-              <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                  padding: 0,
-                }}
-              >
-                <div style={{ fontSize: 15, fontWeight: 500, color: color.text }}>
-                  {item.type} invitation
-                </div>
-                <div style={{ fontSize: 13, fontWeight: 400, color: color.text + '99' }}>
-                  {item.message}
-                </div>
+              <div className="flex w-full flex-col gap-0.5 p-0">
+                <div className="text-text text-[15px] font-medium">{item.type} invitation</div>
+                <div className="text-text/60 text-[13px] font-normal">{item.message}</div>
               </div>
             </div>
           ))}

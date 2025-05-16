@@ -153,16 +153,15 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         </div>
       </div>
       <div
+        className="transition-margin-left"
         style={{
           marginLeft: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
           transition: 'margin-left 0.2s',
         }}
       >
         <main
+          className="min-h-[280px] p-8 pt-[104px]"
           style={{
-            padding: 32,
-            minHeight: 280,
-            paddingTop: 104,
             overflowY: 'hidden',
           }}
         >

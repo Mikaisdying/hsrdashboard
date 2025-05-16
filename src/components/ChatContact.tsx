@@ -1,8 +1,6 @@
 import React from 'react'
 import { Avatar, Input } from 'antd'
 import { UserOutlined, SearchOutlined } from '@ant-design/icons'
-import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 
 const contacts = [
   {
@@ -36,114 +34,40 @@ interface ChatContactProps {
 }
 
 const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
-  const { theme } = useTheme()
-  const color = themeColors[theme]
-  const borderColor =
-    theme === 'dark' ? (color.border === 'none' ? '#222' : color.border) : '#e5e7eb'
-  const contactBg = theme === 'dark' ? '#181a20' : '#fff'
-  const contactText = theme === 'dark' ? color.text : '#23272f'
-  const contactMsg = theme === 'dark' ? '#aaa' : '#888'
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        height: '100%',
-        background: color.background,
-        borderRadius: 12,
-        overflow: 'hidden',
-      }}
-    >
+    <div className="bg-background flex h-full w-full flex-col overflow-hidden rounded-xl">
       {/* TopBar */}
-      <div
-        style={{
-          height: 64,
-          borderBottom: `1px solid ${borderColor}`,
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 16px',
-          gap: 12,
-          background: color.background,
-          position: 'sticky',
-          bottom: 0,
-          zIndex: 2,
-        }}
-      >
+      <div className="border-border bg-background sticky bottom-0 z-20 flex h-16 items-center gap-3 border-b px-4">
         <Avatar src="https://i.pravatar.cc/150?img=3" size={46} />
-        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 8 }}>
-          <span style={{ fontWeight: 600, fontSize: 16, color: contactText }}>
+        <div className="ml-2 flex flex-col">
+          <span className="text-text text-base font-semibold">
             <b>Messaging</b>
           </span>
         </div>
       </div>
       {/* SearchBar */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          padding: '0 16px',
-          height: 56,
-          borderBottom: `1px solid ${borderColor}`,
-          color: color.icon,
-          background: color.background,
-          position: 'sticky',
-          bottom: 0,
-          zIndex: 2,
-        }}
-      >
-        <SearchOutlined style={{ fontSize: 20, color: color.icon }} />
+      <div className="border-border bg-background text-icon sticky bottom-0 z-20 flex h-14 items-center border-b px-4">
+        <SearchOutlined className="text-icon text-xl" />
         <Input
           placeholder="Search messages"
-          style={{
-            border: 'none',
-            outline: 'none',
-            background: 'transparent',
-            fontSize: 16,
-            color: contactText,
-            marginLeft: 16,
-            flex: 1,
-          }}
-          className={`chat-search-input chat-search-${theme}`}
+          className={`chat-search-input text-text ml-4 flex-1 border-none bg-transparent text-base outline-none`}
         />
-        <style>
-          {`
-            .chat-search-dark::placeholder { color: #aaa !important; }
-            .chat-search-light::placeholder { color: #888 !important; }
-          `}
-        </style>
       </div>
       {/* Contacts */}
-      <div
-        style={{
-          height: 480, // 600 - 64 - 56
-          overflowY: 'scroll',
-          background: contactBg,
-          borderBottomLeftRadius: 10,
-        }}
-      >
+      <div className="bg-secondary h-[480px] overflow-y-scroll rounded-bl-lg">
         {contacts.map((c) => (
           <div
             key={c.name}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: '14px 12px',
-              cursor: 'pointer',
-              borderBottom: `1px solid ${borderColor}`,
-              transition: 'background 0.2s',
-              background: contactBg,
-            }}
+            className="border-border bg-secondary hover:bg-contentBg flex cursor-pointer items-center border-b px-3 py-[14px] transition-colors duration-200"
             onClick={() => onSelectContact({ name: c.name, img: c.img })}
             tabIndex={0}
           >
             <Avatar src={c.img} size={46} icon={<UserOutlined />} />
-            <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 16, gap: 4 }}>
-              <span style={{ fontWeight: 500, fontSize: 16, color: contactText }}>{c.name}</span>
-              <span style={{ fontSize: 14, color: contactMsg }}>{c.lastMsg}</span>
+            <div className="ml-4 flex flex-col gap-1">
+              <span className="text-text text-base font-medium">{c.name}</span>
+              <span className={`text-sm'}`}>{c.lastMsg}</span>
             </div>
-            <span style={{ fontSize: 12, color: contactMsg, marginLeft: 'auto' }}>{c.time}</span>
+            <span className={`ml-auto text-xs`}>{c.time}</span>
           </div>
         ))}
       </div>

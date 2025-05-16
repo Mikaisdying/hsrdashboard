@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import routes from '../routes/appRoutes'
 import type { FC } from 'react'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 
 interface SidebarProps {
   onNavigate?: () => void
@@ -14,8 +13,7 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const userRole = 'user'
-  const { theme } = useTheme()
-  const color = themeColors[theme]
+  useTheme()
 
   const menuItems = routes
     .filter((route) => route.role.includes(userRole))
@@ -32,20 +30,10 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
     : menuItems.find((item) => location.pathname.startsWith(item.key))?.key || '/'
 
   return (
-    <div
-      className="flex h-screen w-full flex-col"
-      style={{
-        background: color.background,
-        borderRight: color.border,
-        borderTopRightRadius: 18,
-        borderBottomRightRadius: 18,
-        boxShadow: '2px 0 8px rgba(0,0,0,0.06)',
-      }}
-    >
+    <div className="bg-secondary border-border flex h-screen w-full flex-col rounded-tr-[18px] rounded-br-[18px] border-r shadow">
       <div
-        className="p-4 text-xl font-bold"
+        className="text-text p-4 text-xl font-bold"
         style={{
-          color: color.text,
           letterSpacing: 2,
           fontSize: 28,
           marginBottom: 8,
@@ -55,15 +43,13 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
         VEXA
       </div>
       <Menu
-        theme={theme}
+        theme="light"
         mode="inline"
         onClick={handleMenuClick}
         items={menuItems}
+        className="bg-secondary border-none py-3"
         style={{
           height: '100%',
-          background: color.background,
-          border: 'none',
-          padding: '12px 0',
         }}
         selectedKeys={[selectedKey]}
       />

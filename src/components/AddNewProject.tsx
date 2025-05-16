@@ -76,36 +76,22 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
       width={600}
       bodyStyle={{
         borderRadius: 16,
-        background: color.background,
-        color: color.text,
         padding: 0,
       }}
       closeIcon={<CloseOutlined style={{ color: color.text }} />}
       destroyOnClose
     >
-      <div style={{ padding: 24, borderRadius: 16, background: color.background }}>
-        <h2 style={{ fontSize: 22, fontWeight: 500, marginBottom: 16, color: color.text }}>
-          Create a new project
-        </h2>
+      <div className="bg-background text-text rounded-2xl" style={{ padding: 24 }}>
+        <h2 className="text-text mb-4 text-[22px] font-medium">Create a new project</h2>
         {step === 0 && (
           <>
-            <div style={{ marginBottom: 12 }}>
+            <div className="mb-3">
               <Input
                 placeholder="Title (Required)*"
                 name="title"
                 value={inputs.title}
                 onChange={handleInput}
-                style={{
-                  marginBottom: 8,
-                  background: color.primary,
-                  color: color.textPrimary,
-                  border:
-                    color.border === 'none'
-                      ? theme === 'dark'
-                        ? '#444'
-                        : '#d9d9d9'
-                      : color.border,
-                }}
+                className="bg-primary text-textPrimary border-border mb-2"
               />
               <Input.TextArea
                 placeholder="Description (Required)*"
@@ -113,16 +99,8 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 value={inputs.desc}
                 onChange={handleInput}
                 rows={3}
+                className="bg-secondary text-textPrimary border-border mb-2"
                 style={{
-                  marginBottom: 8,
-                  background: color.secondary,
-                  color: color.textPrimary,
-                  border:
-                    color.border === 'none'
-                      ? theme === 'dark'
-                        ? '#444'
-                        : '#d9d9d9'
-                      : color.border,
                   boxShadow: theme === 'dark' ? '0 0 0 1px #444' : '0 0 0 1px #d9d9d9',
                   transition: 'all 0.2s',
                 }}
@@ -132,16 +110,8 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 name="tags"
                 value={inputs.tags}
                 onChange={handleInput}
+                className="bg-secondary text-textPrimary border-border mb-2"
                 style={{
-                  marginBottom: 8,
-                  background: color.secondary,
-                  color: color.textPrimary,
-                  border:
-                    color.border === 'none'
-                      ? theme === 'dark'
-                        ? '#444'
-                        : '#d9d9d9'
-                      : color.border,
                   boxShadow: theme === 'dark' ? '0 0 0 1px #444' : '0 0 0 1px #d9d9d9',
                   transition: 'all 0.2s',
                 }}
@@ -152,7 +122,7 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
               block
               disabled={!inputs.title || !inputs.desc}
               onClick={() => setStep(1)}
-              style={{ marginTop: 12 }}
+              className="mt-3"
             >
               Next
             </BaseButton>
@@ -160,10 +130,10 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
         )}
         {step === 1 && (
           <>
-            <div style={{ marginBottom: 12 }}>
-              <h4 style={{ marginBottom: 8 }}>Tools</h4>
+            <div className="mb-3">
+              <h4 className="mb-2">Tools</h4>
               {tools.map((tool, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                <div key={idx} className="mb-2 flex gap-2">
                   <Input
                     placeholder="Tool Name"
                     value={tool.name}
@@ -181,15 +151,15 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                   />
                 </div>
               ))}
-              <BaseButton icon={<PlusOutlined />} onClick={handleAddTool} style={{ marginTop: 4 }}>
+              <BaseButton icon={<PlusOutlined />} onClick={handleAddTool} className="mt-1">
                 Add Tool
               </BaseButton>
             </div>
-            <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-              <BaseButton onClick={() => setStep(0)} style={{ flex: 1 }}>
+            <div className="mt-4 flex gap-2">
+              <BaseButton onClick={() => setStep(0)} className="flex-1">
                 Back
               </BaseButton>
-              <BaseButton type="primary" onClick={() => setStep(2)} style={{ flex: 1 }}>
+              <BaseButton type="primary" onClick={() => setStep(2)} className="flex-1">
                 Next
               </BaseButton>
             </div>
@@ -197,20 +167,17 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
         )}
         {step === 2 && (
           <>
-            <div style={{ marginBottom: 12 }}>
-              <h4 style={{ marginBottom: 8 }}>Add Members</h4>
+            <div className="mb-3">
+              <h4 className="mb-2">Add Members</h4>
               <Input
                 placeholder="Search by email..."
                 prefix={<SearchOutlined />}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                style={{ marginBottom: 8 }}
+                className="mb-2"
               />
               {users.map((user) => (
-                <div
-                  key={user.id}
-                  style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}
-                >
+                <div key={user.id} className="mb-2 flex items-center gap-2">
                   <Avatar src={user.img}>{user.name.charAt(0)}</Avatar>
                   <span>
                     {user.name} ({user.email})
@@ -242,35 +209,16 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 </div>
               ))}
               {members.length > 0 && (
-                <div style={{ marginTop: 12 }}>
-                  <div style={{ fontWeight: 500, marginBottom: 8 }}>Added Members:</div>
+                <div className="mt-3">
+                  <div className="mb-2 font-medium">Added Members:</div>
                   {members.map((user) => (
-                    <div
-                      key={user.id}
-                      style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}
-                    >
+                    <div key={user.id} className="mb-2 flex items-center gap-2">
                       <Avatar src={user.img}>{user.name.charAt(0)}</Avatar>
                       <span>
                         {user.name} ({user.email})
                       </span>
-                      <span
-                        style={{
-                          background: color.background,
-                          borderRadius: 8,
-                          padding: '2px 8px',
-                        }}
-                      >
-                        {user.access}
-                      </span>
-                      <span
-                        style={{
-                          background: color.background,
-                          borderRadius: 8,
-                          padding: '2px 8px',
-                        }}
-                      >
-                        {user.role}
-                      </span>
+                      <span className="bg-background rounded px-2 py-0.5">{user.access}</span>
+                      <span className="bg-background rounded px-2 py-0.5">{user.role}</span>
                       <BaseButton
                         icon={<DeleteOutlined />}
                         onClick={() => handleRemoveMember(user)}
@@ -283,14 +231,14 @@ const AddNewProject: React.FC<AddNewProjectProps> = ({ setNewProject }) => {
                 </div>
               )}
             </div>
-            <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
-              <BaseButton onClick={() => setStep(1)} style={{ flex: 1 }}>
+            <div className="mt-4 flex gap-2">
+              <BaseButton onClick={() => setStep(1)} className="flex-1">
                 Back
               </BaseButton>
               <BaseButton
                 type="primary"
                 onClick={handleCreate}
-                style={{ flex: 1 }}
+                className="flex-1"
                 disabled={loading}
               >
                 {loading ? <Spin size="small" /> : 'Create Project'}

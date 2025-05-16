@@ -2,45 +2,21 @@ import React, { useState } from 'react'
 import ChatContact from '../components/ChatContact'
 import ChatContainer from '../components/ChatContainer'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 
 const ChatPage: React.FC = () => {
   const [selectedContact, setSelectedContact] = useState<{ name: string; img: string } | null>(null)
-  const { theme } = useTheme()
-  const color = themeColors[theme]
+  useTheme()
 
   return (
-    <div
-      style={{
-        maxWidth: 1200,
-        margin: 'auto',
-        padding: 20,
-        display: 'flex',
-        gap: 24,
-        minHeight: 540,
-        background: color.background,
-        borderRadius: 16,
-      }}
-    >
-      <div style={{ width: 380, minWidth: 280, maxWidth: 400, flexShrink: 0 }}>
+    <div className="bg-secondary mx-auto flex min-h-[540px] max-w-[1200px] gap-6 rounded-2xl p-5">
+      <div className="w-[380px] max-w-[400px] min-w-[280px] flex-shrink-0">
         <ChatContact onSelectContact={(contact) => setSelectedContact(contact)} />
       </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="min-w-0 flex-1">
         {selectedContact ? (
           <ChatContainer contact={selectedContact} onBack={() => setSelectedContact(null)} />
         ) : (
-          <div
-            style={{
-              height: 500,
-              borderRadius: 12,
-              background: color.background,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#aaa',
-              fontSize: 18,
-            }}
-          >
+          <div className="bg-secondary flex h-[500px] items-center justify-center rounded-xl text-lg text-[#aaa]">
             Select a contact to start chatting
           </div>
         )}

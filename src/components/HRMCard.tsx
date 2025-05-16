@@ -1,7 +1,6 @@
 import { Card, Progress } from 'antd'
 import type { ReactNode, FC } from 'react'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 
 interface HRMCardProps {
   title: string
@@ -24,43 +23,33 @@ const HRMCard: FC<HRMCardProps> = ({
   highlightClass,
   style,
   className,
-  theme,
 }) => {
-  const { theme: contextTheme } = useTheme()
-  const currentTheme = theme || contextTheme
-  const color = themeColors[currentTheme]
+  useTheme()
 
   return (
     <Card
       title={title}
       style={{
-        background: color.secondary,
-        color: color.textPrimary,
-        border: color.border,
         borderRadius: 16,
         boxShadow: '0 2px 12px 0 rgba(0,0,0,0.06)',
         ...style,
       }}
+      className={`bg-secondary text-textPrimary border-border dark:bg-secondary dark:text-textPrimary dark:border-border rounded-2xl border ${className || ''} `}
+      headStyle={{ fontWeight: 600, fontSize: 18 }}
       styles={{
         header: {
-          color: color.textPrimary,
-          border: color.border,
           borderRadius: 16,
           fontWeight: 600,
           fontSize: 18,
           padding: '16px 20px',
         },
         body: {
-          color: color.cardBodyText,
-          border: color.cardBodyBorder,
           borderRadius: 16,
           padding: 18,
         },
       }}
-      className={className}
-      headStyle={{ fontWeight: 600, fontSize: 18 }}
     >
-      <p style={{ marginBottom: 12 }}>{description}</p>
+      <p className="text-cardBodyText dark:text-dark-cardBodyText mb-3">{description}</p>
       <Progress percent={progressPercent} showInfo={false} strokeColor={progressColor} />
       <div className={`text-right font-bold ${highlightClass || ''}`}>{value}</div>
     </Card>

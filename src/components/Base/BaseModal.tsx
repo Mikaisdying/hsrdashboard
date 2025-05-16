@@ -30,8 +30,7 @@ const BaseModal: FC<BaseModalProps> = ({
   closeIcon = null,
   position = 'center',
 }) => {
-  const { theme } = useTheme()
-  const color = themeColors[theme]
+  useTheme()
 
   const modalStyle: React.CSSProperties =
     position === 'corner'
@@ -41,13 +40,11 @@ const BaseModal: FC<BaseModalProps> = ({
           position: 'fixed',
           zIndex: 3000,
           borderRadius: 12,
-          background: color.background,
           boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25)',
           padding: 0,
           ...style,
         }
       : {
-          background: color.background,
           borderRadius: 12,
           boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25)',
           padding: 0,
@@ -61,12 +58,13 @@ const BaseModal: FC<BaseModalProps> = ({
       footer={footer}
       width={width}
       style={modalStyle}
+      className="bg-secondary border-border"
       styles={{
         body: {
           padding: 0,
           minHeight: 200,
           borderRadius: 12,
-          background: color.background,
+          // màu nền đã có className, không cần background ở đây
           transition: 'background 0.2s',
           ...bodyStyle,
         },

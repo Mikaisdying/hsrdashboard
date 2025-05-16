@@ -1,26 +1,18 @@
 import React from 'react'
 import { Button, type ButtonProps } from 'antd'
-import { useTheme } from '../../theme/ThemeContext'
-import { themeColors } from '../../theme/colors'
-
 interface BaseButtonProps extends ButtonProps {
   icon?: React.ReactNode
 }
 
-const BaseButton: React.FC<BaseButtonProps> = ({ style, icon, children, ...props }) => {
-  const { themeColors: color } = useTheme()
+const BaseButton: React.FC<BaseButtonProps> = ({ className = '', icon, children, ...props }) => {
   return (
     <Button
       {...props}
       icon={icon}
+      className={`bg-secondary text-text border-border dark:bg-secondary dark:text-text dark:border-border rounded-lg font-normal shadow-sm ${className} `}
       style={{
-        borderRadius: 8,
-        fontWeight: 400,
-        boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
-        border: color.border,
-        background: props.type === 'primary' ? color.avatarBg : color.secondary,
-        color: props.type === 'primary' ? '#fff' : color.text,
-        ...style,
+        boxShadow: '0 1px 4px 0 rgba(8, 5, 5, 0.14)',
+        ...props.style,
       }}
     >
       {children}
