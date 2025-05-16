@@ -1,7 +1,5 @@
 import { Card } from 'antd'
 import type { ReactNode, FC } from 'react'
-import { useTheme } from '../../theme/ThemeContext'
-import { themeColors } from '../../theme/colors'
 
 interface BaseCardProps {
   title?: ReactNode
@@ -20,17 +18,11 @@ const BaseCard: FC<BaseCardProps> = ({
   extra,
   highlightBorder,
 }) => {
-  const { theme } = useTheme()
-  const color = themeColors[theme]
-
   return (
     <Card
       title={title}
       extra={extra}
       style={{
-        background: color.secondary,
-        color: color.textPrimary,
-        border: color.border,
         borderRadius: 12,
         boxShadow: '0 2px 12px 0 rgba(0,0,0,0.06)',
         paddingLeft: highlightBorder ? 0 : undefined,
@@ -40,8 +32,6 @@ const BaseCard: FC<BaseCardProps> = ({
       className={className}
       styles={{
         body: {
-          color: color.cardBodyText,
-          border: color.cardBodyBorder,
           borderRadius: 12,
           padding: 16,
           display: 'flex',
@@ -49,9 +39,6 @@ const BaseCard: FC<BaseCardProps> = ({
           flex: 1,
         },
         header: {
-          background: color.background,
-          color: color.textPrimary,
-          border: color.border,
           borderRadius: 12,
           fontWeight: 600,
           fontSize: 16,

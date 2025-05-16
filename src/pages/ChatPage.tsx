@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import ChatContact from '../components/ChatContact'
-import ChatContainer from '../components/ChatContainer'
+import ChatContact from '../views/ChatBox/ChatContact'
+import ChatContainer from '../views/ChatBox/ChatContainer'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
 
@@ -20,18 +20,29 @@ const ChatPage: React.FC = () => {
         minHeight: 540,
         background: color.background,
         borderRadius: 16,
+        alignItems: 'stretch',
       }}
     >
-      <div style={{ width: 380, minWidth: 280, maxWidth: 400, flexShrink: 0 }}>
+      <div
+        style={{
+          width: 380,
+          minWidth: 280,
+          maxWidth: 400,
+          flexShrink: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          height: 600,
+        }}
+      >
         <ChatContact onSelectContact={(contact) => setSelectedContact(contact)} />
       </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', height: 600 }}>
         {selectedContact ? (
           <ChatContainer contact={selectedContact} onBack={() => setSelectedContact(null)} />
         ) : (
           <div
             style={{
-              height: 500,
+              height: '100%',
               borderRadius: 12,
               background: color.background,
               display: 'flex',

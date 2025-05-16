@@ -30,7 +30,7 @@ const Dashboard = () => {
       <BaseButton type="primary" icon={<PlusOutlined />}>
         Create New Project
       </BaseButton>
-      <BaseButton type="primary" className="border-none bg-yellow-400 text-black">
+      <BaseButton type="primary" className="border-none text-black">
         Create New Team
       </BaseButton>
     </div>
@@ -57,7 +57,7 @@ const Dashboard = () => {
                 Working on <span className="text-blue-400">0</span> projects
               </>
             ),
-            progressPercent: 0,
+            progressPercent: 50,
             progressColor: '#69c0ff',
           },
           {
@@ -68,7 +68,7 @@ const Dashboard = () => {
                 <span className="text-green-400">0</span> Tasks are left
               </>
             ),
-            progressPercent: 0,
+            progressPercent: 70,
             progressColor: '#95de64',
           },
         ].map((card, idx) => (

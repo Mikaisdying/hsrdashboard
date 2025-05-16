@@ -3,3 +3,38 @@
   margin: 0;
   width: 100%;
 }
+
+.custom-sidebar-menu .ant-menu-item-selected,
+.custom-sidebar-menu .ant-menu-item-active {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/* Scrollbar styles for Webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #353b5a; /* màu thumb (kéo) */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4f46e5; /* màu khi hover */
+}
+
+/* Scrollbar styles for Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3e487c transparent;
+}
+
+.ant-input::placeholder,
+.ant-input-affix-wrapper input::placeholder,
+.ant-input-textarea::placeholder,
+.ant-select-selection-placeholder {
+  color: #a1a1aa !important;
+  opacity: 1 !important;
+}

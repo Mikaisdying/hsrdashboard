@@ -1,7 +1,6 @@
 import { Card, Progress } from 'antd'
 import type { ReactNode, FC } from 'react'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 
 interface HRMCardProps {
   title: string
@@ -26,33 +25,24 @@ const HRMCard: FC<HRMCardProps> = ({
   className,
   theme,
 }) => {
-  const { theme: contextTheme } = useTheme()
-  const currentTheme = theme || contextTheme
-  const color = themeColors[currentTheme]
+  useTheme() // chỉ để trigger re-render khi theme đổi, không dùng themeColors nữa
 
   return (
     <Card
       title={title}
       style={{
-        background: color.secondary,
-        color: color.textPrimary,
-        border: color.border,
         borderRadius: 16,
         boxShadow: '0 2px 12px 0 rgba(0,0,0,0.06)',
         ...style,
       }}
       styles={{
         header: {
-          color: color.textPrimary,
-          border: color.border,
           borderRadius: 16,
           fontWeight: 600,
           fontSize: 18,
           padding: '16px 20px',
         },
         body: {
-          color: color.cardBodyText,
-          border: color.cardBodyBorder,
           borderRadius: 16,
           padding: 18,
         },

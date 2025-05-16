@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import routes from '../routes/appRoutes'
 import type { FC } from 'react'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
+import Logo from '../assets/logo.svg'
 
 interface SidebarProps {
   onNavigate?: () => void
@@ -15,7 +15,6 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
   const location = useLocation()
   const userRole = 'user'
   const { theme } = useTheme()
-  const color = themeColors[theme]
 
   const menuItems = routes
     .filter((route) => route.role.includes(userRole))
@@ -26,42 +25,34 @@ const Sidebar: FC<SidebarProps> = ({ onNavigate }) => {
     navigate(key)
   }
 
-  // Determine the selected key based on current location
   const selectedKey = menuItems.find((item) => location.pathname === item.key)
     ? location.pathname
     : menuItems.find((item) => location.pathname.startsWith(item.key))?.key || '/'
 
   return (
-    <div
-      className="flex h-screen w-full flex-col"
-      style={{
-        background: color.background,
-        borderRight: color.border,
-        borderTopRightRadius: 18,
-        borderBottomRightRadius: 18,
-        boxShadow: '2px 0 8px rgba(0,0,0,0.06)',
-      }}
-    >
+    <div className="bg-background flex h-screen w-full flex-col shadow-[2px_0_8px_rgba(0,0,0,0.06)]">
       <div
-        className="p-4 text-xl font-bold"
+        className="flex items-center justify-center p-4"
         style={{
-          color: color.text,
-          letterSpacing: 2,
-          fontSize: 28,
           marginBottom: 8,
-          textAlign: 'center',
         }}
       >
-        VEXA
+        <img
+          src={Logo}
+          alt="Logo"
+          width={50}
+          height={55}
+          style={{ display: 'block', margin: '0 auto', marginTop: 20 }}
+        />
       </div>
       <Menu
         theme={theme}
         mode="inline"
         onClick={handleMenuClick}
         items={menuItems}
+        className="custom-sidebar-menu"
         style={{
           height: '100%',
-          background: color.background,
           border: 'none',
           padding: '12px 0',
         }}

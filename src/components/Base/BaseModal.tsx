@@ -1,6 +1,5 @@
 import { Modal } from 'antd'
 import { useTheme } from '../../theme/ThemeContext'
-import { themeColors } from '../../theme/colors'
 import type { ReactNode, FC } from 'react'
 
 interface BaseModalProps {
@@ -10,7 +9,7 @@ interface BaseModalProps {
   children: ReactNode
   style?: React.CSSProperties
   bodyStyle?: React.CSSProperties
-  destroyOnClose?: boolean
+  destroyOnHidden?: boolean
   maskClosable?: boolean
   footer?: ReactNode
   closeIcon?: ReactNode
@@ -24,14 +23,13 @@ const BaseModal: FC<BaseModalProps> = ({
   children,
   style,
   bodyStyle,
-  destroyOnClose = true,
+  destroyOnHidden = true,
   maskClosable = true,
   footer = null,
   closeIcon = null,
   position = 'center',
 }) => {
   const { theme } = useTheme()
-  const color = themeColors[theme]
 
   const modalStyle: React.CSSProperties =
     position === 'corner'
@@ -41,15 +39,11 @@ const BaseModal: FC<BaseModalProps> = ({
           position: 'fixed',
           zIndex: 3000,
           borderRadius: 12,
-          background: color.background,
-          boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25)',
           padding: 0,
           ...style,
         }
       : {
-          background: color.background,
           borderRadius: 12,
-          boxShadow: '0 8px 32px 0 rgba(0,0,0,0.25)',
           padding: 0,
           ...style,
         }
@@ -66,7 +60,6 @@ const BaseModal: FC<BaseModalProps> = ({
           padding: 0,
           minHeight: 200,
           borderRadius: 12,
-          background: color.background,
           transition: 'background 0.2s',
           ...bodyStyle,
         },
@@ -78,7 +71,7 @@ const BaseModal: FC<BaseModalProps> = ({
       closeIcon={closeIcon}
       mask={true}
       maskClosable={maskClosable}
-      destroyOnClose={destroyOnClose}
+      destroyOnHidden={destroyOnHidden}
     >
       {children}
     </Modal>

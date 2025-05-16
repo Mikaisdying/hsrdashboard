@@ -1,7 +1,6 @@
 import React from 'react'
 import { Avatar } from 'antd'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 import BaseModal from './Base/BaseModal'
 
 interface NotificationItem {
@@ -22,8 +21,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
   currentUser,
   notification,
 }) => {
-  const { theme } = useTheme()
-  const color = themeColors[theme]
+  useTheme() // chỉ để trigger re-render khi theme đổi
 
   return (
     <BaseModal position="corner" open={open} onClose={onClose} width={360}>
@@ -37,7 +35,6 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           flexDirection: 'column',
           position: 'relative',
           padding: '10px 0',
-          background: color.background,
           borderRadius: 16,
         }}
       >
@@ -45,7 +42,6 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
           style={{
             fontSize: 22,
             fontWeight: 600,
-            color: color.text,
             margin: '8px 0 18px 18px',
             letterSpacing: 1,
           }}
@@ -67,8 +63,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                 gap: 10,
                 padding: '8px 18px',
                 alignItems: 'center',
-                borderBottom:
-                  idx !== notification.length - 1 ? `1px solid ${color.border}33` : 'none',
+                borderBottom: idx !== notification.length - 1 ? `1px solid #eee` : 'none',
               }}
             >
               <Avatar src={currentUser.img} style={{ width: 32, height: 32 }}>
@@ -83,12 +78,8 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
                   padding: 0,
                 }}
               >
-                <div style={{ fontSize: 15, fontWeight: 500, color: color.text }}>
-                  {item.type} invitation
-                </div>
-                <div style={{ fontSize: 13, fontWeight: 400, color: color.text + '99' }}>
-                  {item.message}
-                </div>
+                <div style={{ fontSize: 15, fontWeight: 500 }}>{item.type} invitation</div>
+                <div style={{ fontSize: 13, fontWeight: 400 }}>{item.message}</div>
               </div>
             </div>
           ))}

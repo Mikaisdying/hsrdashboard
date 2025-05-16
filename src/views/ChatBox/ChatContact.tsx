@@ -1,8 +1,7 @@
 import React from 'react'
 import { Avatar, Input } from 'antd'
 import { UserOutlined, SearchOutlined } from '@ant-design/icons'
-import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
+import { useTheme } from '../../theme/ThemeContext'
 
 const contacts = [
   {
@@ -37,11 +36,9 @@ interface ChatContactProps {
 
 const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
   const { theme } = useTheme()
-  const color = themeColors[theme]
-  const borderColor =
-    theme === 'dark' ? (color.border === 'none' ? '#222' : color.border) : '#e5e7eb'
+  const borderColor = theme === 'dark' ? '#222' : '#e5e7eb'
   const contactBg = theme === 'dark' ? '#181a20' : '#fff'
-  const contactText = theme === 'dark' ? color.text : '#23272f'
+  const contactText = theme === 'dark' ? '#fff' : '#23272f'
   const contactMsg = theme === 'dark' ? '#aaa' : '#888'
 
   return (
@@ -51,7 +48,6 @@ const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
         flexDirection: 'column',
         width: '100%',
         height: '100%',
-        background: color.background,
         borderRadius: 12,
         overflow: 'hidden',
       }}
@@ -60,15 +56,13 @@ const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
       <div
         style={{
           height: 64,
-          borderBottom: `1px solid ${borderColor}`,
           display: 'flex',
           alignItems: 'center',
           padding: '0 16px',
           gap: 12,
-          background: color.background,
           position: 'sticky',
-          bottom: 0,
           zIndex: 2,
+          margin: 10,
         }}
       >
         <Avatar src="https://i.pravatar.cc/150?img=3" size={46} />
@@ -85,15 +79,14 @@ const ChatContact: React.FC<ChatContactProps> = ({ onSelectContact }) => {
           alignItems: 'center',
           padding: '0 16px',
           height: 56,
+          borderTop: `1px solid ${borderColor}`,
           borderBottom: `1px solid ${borderColor}`,
-          color: color.icon,
-          background: color.background,
           position: 'sticky',
           bottom: 0,
           zIndex: 2,
         }}
       >
-        <SearchOutlined style={{ fontSize: 20, color: color.icon }} />
+        <SearchOutlined style={{ fontSize: 20, color: contactText }} />
         <Input
           placeholder="Search messages"
           style={{

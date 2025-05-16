@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Button } from 'antd'
-import { ProjectOutlined, PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import { useTheme } from '../../theme/ThemeContext'
 import { themeColors } from '../../theme/colors'
 

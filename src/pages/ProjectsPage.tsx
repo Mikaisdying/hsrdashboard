@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Card, Spin } from 'antd'
-import AddNewProject from '../components/AddNewProject'
+import AddNewProject from '../views/AddProjectModal'
 import { PlusOutlined } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
 import { themeColors } from '../theme/colors'
 import BaseCard from '../components/Base/BaseCard'
 import BaseButton from '../components/Base/BaseButton'
+import { Spin } from 'antd'
 
 const mockProjects = [
   {

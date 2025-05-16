@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import BaseModal from './Base/BaseModal'
+import BaseModal from '../../components/Base/BaseModal'
 import ChatContact from './ChatContact'
 import ChatContainer from './ChatContainer'
 

@@ -1,25 +1,43 @@
 import React from 'react'
 import { Button, type ButtonProps } from 'antd'
 import { useTheme } from '../../theme/ThemeContext'
-import { themeColors } from '../../theme/colors'
 
-interface BaseButtonProps extends ButtonProps {
+export type BaseButtonType =
+  | 'primary'
+  | 'default'
+  | 'dashed'
+  | 'text'
+  | 'link'
+  | 'cancel'
+  | 'success'
+  | 'danger'
+  | 'warning'
+
+interface BaseButtonProps extends Omit<ButtonProps, 'type'> {
   icon?: React.ReactNode
+  type?: BaseButtonType
 }
 
 const BaseButton: React.FC<BaseButtonProps> = ({ style, icon, children, ...props }) => {
-  const { themeColors: color } = useTheme()
+  const { type, ...restProps } = props
+  const { primaryColor } = useTheme()
+
   return (
     <Button
-      {...props}
+      {...restProps}
       icon={icon}
+      type={
+        type === 'cancel' || type === 'success' || type === 'danger' || type === 'warning'
+          ? undefined
+          : type
+      }
       style={{
         borderRadius: 8,
         fontWeight: 400,
-        boxShadow: '0 1px 4px 0 rgba(0,0,0,0.04)',
-        border: color.border,
-        background: props.type === 'primary' ? color.avatarBg : color.secondary,
-        color: props.type === 'primary' ? '#fff' : color.text,
+        ...(type === 'primary' && { background: primaryColor, color: '#fff', border: 'none' }),
+        ...(type === 'success' && { background: '#52c41a', color: '#fff', border: 'none' }),
+        ...(type === 'danger' && { background: '#ff4d4f', color: '#fff', border: 'none' }),
+        ...(type === 'warning' && { background: '#faad14', color: '#fff', border: 'none' }),
         ...style,
       }}
     >

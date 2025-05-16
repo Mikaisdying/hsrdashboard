@@ -5,7 +5,6 @@ import Topbar from '../components/Topbar'
 import type { ReactNode, FC } from 'react'
 import { useState, useEffect } from 'react'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
 
 interface MainLayoutProps {
   children: ReactNode
@@ -18,7 +17,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < MOBILE_WIDTH)
   const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth >= MOBILE_WIDTH)
   const { theme, setTheme } = useTheme()
-  const color = themeColors[theme]
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,7 +40,6 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         style={{
           width: SIDEBAR_WIDTH,
           minWidth: SIDEBAR_WIDTH,
-          background: color.background,
           height: '100vh',
           position: 'fixed',
           left: 0,
@@ -51,8 +48,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
           boxShadow: '2px 0 12px rgba(0,0,0,0.08)',
           display: 'flex',
           flexDirection: 'column',
-          borderTopRightRadius: 18,
-          borderBottomRightRadius: 18,
+          background: theme === 'dark' ? '#001529' : '#fff',
         }}
       >
         <Sidebar onNavigate={() => {}} />
@@ -79,13 +75,12 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         maskClosable={true}
         style={{ position: 'relative', height: '100vh', zIndex: 4000 }}
         styles={{
-          body: { padding: 0, background: color.background, height: '100vh' },
+          body: { padding: 0, height: '100vh' },
           header: {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'flex-end',
             padding: '8px 16px',
-            background: color.background,
             borderBottom: 'none',
             minHeight: 56,
           },
@@ -93,7 +88,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
         title={
           <Button
             type="text"
-            icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
+            icon={<MenuOutlined style={{ fontSize: 24 }} />}
             onClick={() => setSidebarOpen(false)}
             style={{
               background: 'transparent',
@@ -117,7 +112,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
     )
 
   return (
-    <div style={{ minHeight: '100vh', width: '100%', background: color.contentBg }}>
+    <div style={{ minHeight: '100vh', width: '100%', overflow: 'hidden' }}>
       {renderDesktopSidebar()}
       {/* Topbar */}
       <div

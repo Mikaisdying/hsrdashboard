@@ -8,8 +8,7 @@ import {
   MenuOutlined,
 } from '@ant-design/icons'
 import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
-import ChatModal from './ChatModal'
+import ChatModal from '../views/ChatBox/ChatModal'
 import NotificationModal from './Notification'
 
 const { Header } = Layout
@@ -30,23 +29,21 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
   const [notificationCount] = useState(2)
   const [chatCount] = useState(1)
   const { theme } = useTheme()
-  const color = themeColors[theme]
   const [chatOpen, setChatOpen] = useState(false)
   const [notiOpen, setNotiOpen] = useState(false)
 
   return (
     <Header
       style={{
-        background: color.background,
+        background: theme === 'dark' ? '#001529' : '#fff',
         padding: '0 24px',
         height: 64,
         lineHeight: '64px',
         width: '98%',
         boxSizing: 'border-box',
-        borderBottom: color.border,
         borderRadius: 18,
         margin: 10,
-        boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.19)',
+        boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.12)',
         display: 'flex',
         alignItems: 'center',
         zIndex: 2000,
@@ -65,7 +62,7 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
         {onSidebarToggle && (
           <Button
             type="text"
-            icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
+            icon={<MenuOutlined style={{ fontSize: 24 }} />}
             onClick={onSidebarToggle}
             style={{
               marginRight: 16,
@@ -96,12 +93,10 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
           <Input
             placeholder="Search"
             allowClear
-            prefix={<SearchOutlined style={{ color: color.icon, fontSize: 18, marginRight: 6 }} />}
+            prefix={<SearchOutlined style={{ fontSize: 18, marginRight: 6 }} />}
             style={{
               width: '100%',
               borderRadius: 32,
-              background: color.searchBg,
-              color: color.searchColor,
               border: 'none',
               paddingLeft: 20,
               paddingRight: 20,
@@ -122,14 +117,24 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
             `}
           </style>
         </div>
-        {/* ctct bên phải */}
-        <Space size="large" style={{ marginLeft: 'auto', flexShrink: 0, zIndex: 3 }}>
+        {/* Avatar và notification icon bên phải */}
+        <Space
+          size="large"
+          className="flex h-10 items-center"
+          style={{
+            marginLeft: 'auto',
+            flexShrink: 0,
+            zIndex: 3,
+            height: 40,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           {currentUser ? (
             <>
               <Badge count={chatCount} size="small">
                 <MessageOutlined
                   style={{
-                    color: color.icon,
                     fontSize: 22,
                     cursor: 'pointer',
                     transition: 'color 0.2s',
@@ -140,7 +145,6 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
               <Badge count={notificationCount} size="small">
                 <BellOutlined
                   style={{
-                    color: color.icon,
                     fontSize: 22,
                     cursor: 'pointer',
                     transition: 'color 0.2s',
@@ -154,9 +158,6 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
                 style={{
                   marginLeft: 12,
                   cursor: 'pointer',
-                  background: color.avatarBg,
-                  color: color.text,
-                  border: `2px solid ${color.border}`,
                   boxShadow: '0 1px 4px 0 rgba(0,0,0,0.08)',
                 }}
               >
@@ -168,7 +169,6 @@ const Topbar: React.FC<TopbarProps> = ({ onSidebarToggle, isMobile }) => {
               icon={<UserOutlined />}
               style={{
                 borderRadius: 24,
-                color: '#1890ff',
                 background: 'transparent',
                 border: 'none',
                 boxShadow: 'none',

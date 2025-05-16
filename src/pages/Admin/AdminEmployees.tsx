@@ -20,7 +20,7 @@ const AdminEmployees: React.FC = () => {
       dataIndex: 'avatar',
       key: 'avatar',
       render: (_: any, record: any) => (
-        <Avatar icon={<UserOutlined />} style={{ background: color.avatarBg, color: color.text }}>
+        <Avatar icon={<UserOutlined />} style={{ background: color.background, color: color.text }}>
           {record.name.charAt(0)}
         </Avatar>
       ),
