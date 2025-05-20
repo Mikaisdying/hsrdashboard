@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout'
 import routes from './routes/appRoutes'
 import './App.css'
-import { useTheme } from './theme/ThemeContext'
+
+import { useTheme } from './common/theme/ThemeContext'
 import { ConfigProvider, theme as antdTheme } from 'antd'
 
 const App: React.FC = () => {
@@ -19,26 +20,29 @@ const App: React.FC = () => {
         token: antdTokens,
       }}
     >
-      <div
-        className={theme === 'dark' ? 'theme-dark' : 'theme-light'}
-        style={{
-          minHeight: '100vh',
-          width: '100%',
-          background: theme === 'dark' ? '#181414' : '#fff',
-        }}
-      >
+      <div className={theme === 'dark' ? 'theme-dark' : 'theme-light'}>
         <BrowserRouter>
           <Routes>
-            {routes.map(({ path, element }) => {
-              const Page = (
-                <div style={{ width: '100%' }}>
-                  <MainLayout>{element}</MainLayout>
-                </div>
-              )
-              return <Route key={path} path={path} element={Page} />
-            })}
+            {/* Auth Routes: không có layout */}
+            {routes
+              .filter((route) => route.layout === 'none')
+              .map(({ path, element }) => (
+                <Route key={path} path={path} element={element} />
+              ))}
+
+            {/* MainLayout Routes */}
+            <Route path="/" element={<MainLayout />}>
+              {routes
+                .filter((route) => route.layout === 'main')
+                .map(({ path, element }) => (
+                  <Route
+                    key={path}
+                    path={path === '/' ? '' : path.replace(/^\//, '')}
+                    element={element}
+                  />
+                ))}
+            </Route>
           </Routes>
-          lur
         </BrowserRouter>
       </div>
     </ConfigProvider>

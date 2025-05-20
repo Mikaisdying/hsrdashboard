@@ -1,15 +1,9 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import './tailwind.css'
-import App from './App.tsx'
-import 'antd/dist/reset.css'
-import { ThemeProvider } from './theme/ThemeContext'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import { ThemeProvider } from './common/theme/ThemeProvider'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </StrictMode>
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>
 )

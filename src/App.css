@@ -4,37 +4,39 @@
   width: 100%;
 }
 
-.custom-sidebar-menu .ant-menu-item-selected,
-.custom-sidebar-menu .ant-menu-item-active {
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+.theme-dark {
+  background: #000 !important;
+}
+.theme-light {
+  background: #fff !important;
 }
 
-/* Scrollbar styles for Webkit browsers */
-::-webkit-scrollbar {
-  width: 8px;
-  background: transparent;
+.ant-switch {
+  border-radius: 999px !important;
+}
+.ant-switch-handle {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #353b5a; /* màu thumb (kéo) */
-  border-radius: 8px;
+.theme-light :where(.ant-menu-light) .ant-menu-item-selected,
+.theme-light :where(.ant-menu-light) > .ant-menu .ant-menu-item-selected {
+  background-color: #15c5c5 !important;
+  color: #ffffff;
+  transition:
+    background-color 0.1s,
+    color 0.1s !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #4f46e5; /* màu khi hover */
-}
-
-/* Scrollbar styles for Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #3e487c transparent;
-}
-
-.ant-input::placeholder,
-.ant-input-affix-wrapper input::placeholder,
-.ant-input-textarea::placeholder,
-.ant-select-selection-placeholder {
-  color: #a1a1aa !important;
-  opacity: 1 !important;
+button:focus,
+button:active,
+.ant-btn:focus,
+.ant-btn:active,
+.ant-switch:focus,
+.ant-switch:active,
+.ant-menu-item:focus,
+.ant-menu-item:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
 }
