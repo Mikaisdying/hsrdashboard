@@ -3,3 +3,40 @@
   margin: 0;
   width: 100%;
 }
+
+.theme-dark {
+  background: #000 !important;
+}
+.theme-light {
+  background: #fff !important;
+}
+
+.ant-switch {
+  border-radius: 999px !important;
+}
+.ant-switch-handle {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.theme-light :where(.ant-menu-light) .ant-menu-item-selected,
+.theme-light :where(.ant-menu-light) > .ant-menu .ant-menu-item-selected {
+  background-color: #15c5c5 !important;
+  color: #ffffff;
+  transition:
+    background-color 0.1s,
+    color 0.1s !important;
+}
+
+button:focus,
+button:active,
+.ant-btn:focus,
+.ant-btn:active,
+.ant-switch:focus,
+.ant-switch:active,
+.ant-menu-item:focus,
+.ant-menu-item:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}

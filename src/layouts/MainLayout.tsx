@@ -1,176 +1,82 @@
-import { Drawer, Button, Switch } from 'antd'
-import { MenuOutlined } from '@ant-design/icons'
-import Sidebar from '../components/Sidebar'
-import Topbar from '../components/Topbar'
-import type { ReactNode, FC } from 'react'
-import { useState, useEffect } from 'react'
-import { useTheme } from '../theme/ThemeContext'
-import { themeColors } from '../theme/colors'
+import { ProLayout, PageContainer } from '@ant-design/pro-components'
+import { useTheme } from '../common/theme/ThemeContext'
+import routes from '../routes/appRoutes'
+import { Switch } from 'antd'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 
-interface MainLayoutProps {
-  children: ReactNode
-}
+const iconStyle = { fontSize: 16 }
+const switchBaseStyle = (theme: string) => ({
+  marginRight: 20,
+  background: theme === 'dark' ? '#0a0630' : '#e6f7f7',
+  border: 'none',
+  minWidth: 50,
+  height: 30,
+  display: 'flex',
+  alignItems: 'center',
+  borderRadius: 999,
+  boxShadow: theme === 'dark' ? '0 0 4px #222' : '0 0 4px #b2f0f0',
+  transition: 'background 0.3s',
+})
 
-const MOBILE_WIDTH = 1072
-const SIDEBAR_WIDTH = 240
-
-const MainLayout: FC<MainLayoutProps> = ({ children }) => {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < MOBILE_WIDTH)
-  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth >= MOBILE_WIDTH)
+const MainLayout: React.FC = () => {
   const { theme, setTheme } = useTheme()
-  const color = themeColors[theme]
+  const navigate = useNavigate()
+  const location = useLocation()
+  const pathname = location.pathname
 
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < MOBILE_WIDTH
-      setIsMobile(mobile)
-      setSidebarOpen(!mobile)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const menuData = routes.map(({ path, label, icon }) => ({ path, name: label, icon }))
 
-  useEffect(() => {
-    setSidebarOpen(!isMobile)
-  }, [isMobile])
-
-  // Sidebar rendering for desktop
-  const renderDesktopSidebar = () =>
-    !isMobile &&
-    sidebarOpen && (
-      <div
-        style={{
-          width: SIDEBAR_WIDTH,
-          minWidth: SIDEBAR_WIDTH,
-          background: color.background,
-          height: '100vh',
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          transition: 'all 0.2s',
-          boxShadow: '2px 0 12px rgba(0,0,0,0.08)',
-          display: 'flex',
-          flexDirection: 'column',
-          borderTopRightRadius: 18,
-          borderBottomRightRadius: 18,
-        }}
-      >
-        <Sidebar onNavigate={() => {}} />
-        <div style={{ padding: 16, marginTop: 'auto' }}>
-          <Switch
-            checkedChildren="🌙"
-            unCheckedChildren="☀️"
-            checked={theme === 'dark'}
-            onChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-          />
-        </div>
-      </div>
-    )
-
-  const renderMobileSidebar = () =>
-    isMobile && (
-      <Drawer
-        placement="left"
-        closable={false}
-        onClose={() => setSidebarOpen(false)}
-        open={sidebarOpen}
-        width={SIDEBAR_WIDTH}
-        mask={true}
-        maskClosable={true}
-        style={{ position: 'relative', height: '100vh', zIndex: 4000 }}
-        styles={{
-          body: { padding: 0, background: color.background, height: '100vh' },
-          header: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: '8px 16px',
-            background: color.background,
-            borderBottom: 'none',
-            minHeight: 56,
-          },
-        }}
-        title={
-          <Button
-            type="text"
-            icon={<MenuOutlined style={{ fontSize: 24, color: color.icon }} />}
-            onClick={() => setSidebarOpen(false)}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              boxShadow: 'none',
-              marginRight: -8,
-            }}
-          />
-        }
-      >
-        <Sidebar onNavigate={() => setSidebarOpen(false)} />
-        <div style={{ padding: 16, marginTop: 'auto' }}>
-          <Switch
-            checkedChildren="🌙"
-            unCheckedChildren="☀️"
-            checked={theme === 'dark'}
-            onChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-          />
-        </div>
-      </Drawer>
-    )
+  const iconSpan = (icon: any, align: 'flex-start' | 'flex-end', color: string) => (
+    <span
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: align,
+        width: 15,
+        height: 15,
+        paddingLeft: align === 'flex-start' ? 2 : 0,
+        paddingRight: align === 'flex-end' ? 2 : 0,
+      }}
+    >
+      <FontAwesomeIcon icon={icon} style={{ ...iconStyle, color }} />
+    </span>
+  )
 
   return (
-    <div style={{ minHeight: '100vh', width: '100%', background: color.contentBg }}>
-      {renderDesktopSidebar()}
-      {/* Topbar */}
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
-          right: 0,
-          width: !isMobile && sidebarOpen ? `calc(100% - ${SIDEBAR_WIDTH}px)` : '100%',
-          zIndex: 1,
-          transition: 'left 0.2s, width 0.2s',
-          borderTopLeftRadius: 18,
-          borderTopRightRadius: 18,
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 0,
-            pointerEvents: 'none',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            paddingTop: 4,
+    <ProLayout
+      title="HRM Dashboard"
+      layout="mix"
+      fixSiderbar
+      location={{ pathname }}
+      route={{ path: '/', routes: menuData }}
+      menuItemRender={(item, dom) => (
+        <a
+          onClick={() => {
+            if (item.path && item.path !== pathname) navigate(item.path)
           }}
-        />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <Topbar
-            onSidebarToggle={() => setSidebarOpen((v) => !v)}
-            sidebarOpen={sidebarOpen}
-            isMobile={isMobile}
-          />
-        </div>
-      </div>
-      <div
-        style={{
-          marginLeft: !isMobile && sidebarOpen ? SIDEBAR_WIDTH : 0,
-          transition: 'margin-left 0.2s',
-        }}
-      >
-        <main
-          style={{
-            padding: 32,
-            minHeight: 280,
-            paddingTop: 104,
-            overflowY: 'hidden',
-          }}
+          style={{ color: 'inherit' }}
         >
-          {children}
-        </main>
-      </div>
-      {renderMobileSidebar()}
-    </div>
+          {dom}
+        </a>
+      )}
+      navTheme={theme === 'dark' ? 'realDark' : 'light'}
+      actionsRender={() => [
+        <Switch
+          key="theme-switch"
+          checked={theme === 'dark'}
+          checkedChildren={iconSpan(faMoon, 'flex-end', '#faad04')}
+          unCheckedChildren={iconSpan(faSun, 'flex-start', '#ffcd57')}
+          onChange={(checked) => setTheme(checked ? 'dark' : 'light')}
+          style={switchBaseStyle(theme)}
+        />,
+      ]}
+    >
+      <PageContainer>
+        <Outlet />
+      </PageContainer>
+    </ProLayout>
   )
 }
 
