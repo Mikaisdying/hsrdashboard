@@ -1,7 +1,7 @@
 import { Tag } from 'antd'
-import { PriorityEnum } from '../common/enums/priority.enum'
-import { TaskTypeEnum } from '../common/enums/task-type.enum'
-import { priorityTagColorMap, taskTypeTagColorMap } from '../common/helpers/tagColor.helper'
+import { PriorityEnum } from '../../common/enums/priority.enum'
+import { TaskTypeEnum } from '../../common/enums/task-type.enum'
+import { priorityTagColorMap, taskTypeTagColorMap } from '../../common/helpers/tagColor.helper'
 
 type Props = {
   priority?: PriorityEnum

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import MainLayout from './layouts/MainLayout'
+import MainLayout from './components/layouts/MainLayout'
 import routes from './routes/appRoutes'
 import './App.css'
 
@@ -23,14 +23,11 @@ const App: React.FC = () => {
       <div className={theme === 'dark' ? 'theme-dark' : 'theme-light'}>
         <BrowserRouter>
           <Routes>
-            {/* Auth Routes: không có layout */}
             {routes
               .filter((route) => route.layout === 'none')
               .map(({ path, element }) => (
                 <Route key={path} path={path} element={element} />
               ))}
-
-            {/* MainLayout Routes */}
             <Route path="/" element={<MainLayout />}>
               {routes
                 .filter((route) => route.layout === 'main')
