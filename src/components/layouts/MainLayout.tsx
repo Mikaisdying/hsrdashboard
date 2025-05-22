@@ -1,8 +1,8 @@
 import { ProLayout, PageContainer } from '@ant-design/pro-components'
-import { Avatar, Popover, Button } from 'antd'
+import { Avatar, Popover, Divider, Modal } from 'antd'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
 import React, { useContext, useState } from 'react'
-import { UserOutlined } from '@ant-design/icons'
+import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import ThemeToggle from '../../common/theme/themeToggle'
 import routes from '../../routes/appRoutes'
 import { ProLayoutTokenContext } from '../../App'
@@ -12,24 +12,32 @@ const MainLayout: React.FC = () => {
   const { pathname } = useLocation()
   const [popoverOpen, setPopoverOpen] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false)
   const proLayoutToken = useContext(ProLayoutTokenContext)
 
   const handleLogout = () => {
     setPopoverOpen(false)
-    // navigate('/login')
+    setLogoutModalOpen(true)
   }
 
-  const mapRoutesToMenuData = (routes: any[]): any[] =>
-    routes
-      .filter((r) => r.label && !r.hidden)
-      .map(({ path, label, icon, children }) => ({
-        path,
-        name: label,
-        icon,
-        ...(children?.length && { children: mapRoutesToMenuData(children) }),
-      }))
+  const confirmLogout = () => {
+    setLogoutModalOpen(false)
+    navigate('/login')
+  }
 
-  const menuData = mapRoutesToMenuData(routes)
+  function mapRoutesToMenuData(routes: any[]): any[] {
+    return routes
+      .filter((r) => r.label && !r.hidden)
+      .map((r) => {
+        const children = r.children?.length ? mapRoutesToMenuData(r.children) : undefined
+        return {
+          path: r.path,
+          name: r.label,
+          icon: r.icon,
+          ...(children && { children }),
+        }
+      })
+  }
 
   return (
     <ProLayout
@@ -37,7 +45,7 @@ const MainLayout: React.FC = () => {
       layout="mix"
       fixSiderbar
       location={{ pathname }}
-      route={{ path: '/', routes: menuData }}
+      route={{ path: '/', routes: mapRoutesToMenuData(routes) }}
       menuItemRender={(item, dom) => (
         <a
           onClick={() => item.path !== pathname && navigate(item.path!)}
@@ -52,9 +60,35 @@ const MainLayout: React.FC = () => {
         <Popover
           key="avatar-popover"
           content={
-            <Button type="primary" danger block onClick={handleLogout}>
-              Đăng xuất
-            </Button>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0' }}>
+                <Avatar
+                  style={{
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  icon={<UserOutlined />}
+                />
+                <span>Tài khoản</span>
+              </div>
+              <Divider style={{ margin: '8px 0' }} />
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  cursor: 'pointer',
+                  color: '#ff4d4f',
+                  padding: '8px 0',
+                }}
+                onClick={handleLogout}
+              >
+                <LogoutOutlined />
+                <span>Đăng xuất</span>
+              </div>
+            </div>
           }
           trigger="click"
           placement="bottomRight"
@@ -62,7 +96,6 @@ const MainLayout: React.FC = () => {
           onOpenChange={setPopoverOpen}
         >
           <Avatar
-            size="default"
             style={{
               borderRadius: '50%',
               display: 'flex',
@@ -72,16 +105,23 @@ const MainLayout: React.FC = () => {
             icon={<UserOutlined />}
           />
         </Popover>,
+        <Modal
+          key="logout-modal"
+          open={logoutModalOpen}
+          title="Xác nhận đăng xuất"
+          onOk={confirmLogout}
+          onCancel={() => setLogoutModalOpen(false)}
+          okText="Đăng xuất"
+          cancelText="Hủy"
+          centered
+        >
+          Bạn có chắc chắn muốn đăng xuất?
+        </Modal>,
       ]}
       menuFooterRender={() =>
         !collapsed && (
           <div
-            style={{
-              padding: 15,
-              display: 'flex',
-              justifyContent: 'left',
-              alignItems: 'center',
-            }}
+            style={{ padding: 15, display: 'flex', justifyContent: 'left', alignItems: 'center' }}
           >
             <ThemeToggle />
           </div>

@@ -7,7 +7,6 @@ import {
   TeamOutlined,
   BellOutlined,
   SettingOutlined,
-  LogoutOutlined,
 } from '@ant-design/icons'
 
 import { Outlet } from 'react-router-dom'
@@ -31,7 +30,6 @@ const SystemLayout = () => {
   return (
     <div>
       <h1>System Settings</h1>
-      {/* Đây là chỗ con routes sẽ render */}
       <Outlet />
     </div>
   )
@@ -144,14 +142,6 @@ const routes = [
         roles: ['SA'],
       },
     ],
-  },
-  {
-    path: '/logout',
-    element: createPage('Logging out...')(),
-    layout: 'main',
-    label: 'Đăng xuất',
-    icon: <LogoutOutlined />,
-    roles: ['SA', 'PM', 'DE', 'QC'],
   },
 ]
 
