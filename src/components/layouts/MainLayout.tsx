@@ -1,28 +1,35 @@
 import { ProLayout, PageContainer } from '@ant-design/pro-components'
-import routes from '../../routes/appRoutes'
 import { Avatar, Popover, Button } from 'antd'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
-import React, { useContext } from 'react'
-import ThemeToggle from '../../common/theme/themeToggle'
+import React, { useContext, useState } from 'react'
 import { UserOutlined } from '@ant-design/icons'
+import ThemeToggle from '../../common/theme/themeToggle'
+import routes from '../../routes/appRoutes'
 import { ProLayoutTokenContext } from '../../App'
 
 const MainLayout: React.FC = () => {
   const navigate = useNavigate()
-  const location = useLocation()
-  const pathname = location.pathname
-
-  const [popoverOpen, setPopoverOpen] = React.useState(false)
-  const [collapsed, setCollapsed] = React.useState(false)
+  const { pathname } = useLocation()
+  const [popoverOpen, setPopoverOpen] = useState(false)
+  const [collapsed, setCollapsed] = useState(false)
+  const proLayoutToken = useContext(ProLayoutTokenContext)
 
   const handleLogout = () => {
     setPopoverOpen(false)
-    // Ví dụ: navigate('/login')
+    // navigate('/login')
   }
 
-  const menuData = routes.map(({ path, label, icon }) => ({ path, name: label, icon }))
+  const mapRoutesToMenuData = (routes: any[]): any[] =>
+    routes
+      .filter((r) => r.label && !r.hidden)
+      .map(({ path, label, icon, children }) => ({
+        path,
+        name: label,
+        icon,
+        ...(children?.length && { children: mapRoutesToMenuData(children) }),
+      }))
 
-  const proLayoutToken = useContext(ProLayoutTokenContext)
+  const menuData = mapRoutesToMenuData(routes)
 
   return (
     <ProLayout
@@ -33,9 +40,7 @@ const MainLayout: React.FC = () => {
       route={{ path: '/', routes: menuData }}
       menuItemRender={(item, dom) => (
         <a
-          onClick={() => {
-            if (item.path && item.path !== pathname) navigate(item.path)
-          }}
+          onClick={() => item.path !== pathname && navigate(item.path!)}
           style={{ color: 'inherit' }}
         >
           {dom}

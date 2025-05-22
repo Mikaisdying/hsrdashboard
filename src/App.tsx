@@ -2,12 +2,22 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MainLayout from './components/layouts/MainLayout'
 import routes from './routes/appRoutes'
 import './App.css'
-
 import { useTheme } from './common/theme/ThemeContext'
 import { ConfigProvider } from 'antd'
 import React from 'react'
 
 export const ProLayoutTokenContext = React.createContext<any>({})
+
+const renderRoutes = (routes: any[]) =>
+  routes.map(({ path, element, children }, idx) =>
+    children?.length ? (
+      <Route key={path || idx} path={path === '/' ? '' : path} element={element}>
+        {renderRoutes(children)}
+      </Route>
+    ) : (
+      <Route key={path || idx} path={path === '/' ? '' : path} element={element} />
+    )
+  )
 
 const App: React.FC = () => {
   const { theme, antdThemeConfig, proLayoutToken } = useTheme()
@@ -19,20 +29,12 @@ const App: React.FC = () => {
           <BrowserRouter>
             <Routes>
               {routes
-                .filter((route) => route.layout === 'none')
-                .map(({ path, element }) => (
-                  <Route key={path} path={path} element={element} />
+                .filter((r) => r.layout === 'none')
+                .map(({ path, element }, i) => (
+                  <Route key={path || i} path={path} element={element} />
                 ))}
               <Route path="/" element={<MainLayout />}>
-                {routes
-                  .filter((route) => route.layout === 'main')
-                  .map(({ path, element }) => (
-                    <Route
-                      key={path}
-                      path={path === '/' ? '' : path.replace(/^\//, '')}
-                      element={element}
-                    />
-                  ))}
+                {renderRoutes(routes.filter((r) => r.layout === 'main'))}
               </Route>
             </Routes>
           </BrowserRouter>

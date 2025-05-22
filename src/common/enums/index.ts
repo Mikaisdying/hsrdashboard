@@ -35,3 +35,11 @@ export const RoleEnum = {
   QC: 'QC',
 } as const
 export type RoleEnum = (typeof RoleEnum)[keyof typeof RoleEnum]
+
+export const EChartCode = {
+  SERVICE_MINING_REQUEST: 'SERVICE_MINING_REQUEST',
+  SERVICE_MINING_TOP_10: 'SERVICE_MINING_TOP_10',
+  SERVICE_MINING_APPROVED_SYSTEM: 'SERVICE_MINING_APPROVED_SYSTEM',
+  SERVICE_SUPPLIER_STATUS: 'SERVICE_SUPPLIER_STATUS',
+} as const
+export type EChartCode = (typeof EChartCode)[keyof typeof EChartCode]

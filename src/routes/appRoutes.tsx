@@ -1,15 +1,44 @@
-import Login from '../pages/auth/Login'
-import Dashboard from '../pages/dashboard/Dashboard'
 import {
   DashboardOutlined,
   ProjectOutlined,
+  FileDoneOutlined,
+  CheckCircleOutlined,
+  FileTextOutlined,
   TeamOutlined,
-  MessageOutlined,
+  BellOutlined,
+  SettingOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons'
 
-const ProjectPage = () => <div>Project Page</div>
-const CommunityPage = () => <div>Community Page</div>
-const ChatPage = () => <div>Chat Page</div>
+import { Outlet } from 'react-router-dom'
+
+// Pages
+import Login from '../pages/auth/Login'
+import Dashboard from '../pages/dashboard/Dashboard'
+
+// Dummy pages
+const createPage = (label: string) => () => <div>{label}</div>
+
+const ProjectList = createPage('Project List Page')
+const TaskList = createPage('Task List Page')
+const TaskDetail = createPage('Task Detail Page')
+const QcTestList = createPage('QC Test List Page')
+const QcReport = createPage('QC Report Page')
+const DocumentList = createPage('Document List Page')
+const MemberList = createPage('Member List Page')
+const NotificationPage = createPage('Notification Page')
+const SystemLayout = () => {
+  return (
+    <div>
+      <h1>System Settings</h1>
+      {/* Đây là chỗ con routes sẽ render */}
+      <Outlet />
+    </div>
+  )
+}
+const AuditLogPage = createPage('System - Audit Log Page')
+const SettingPage = createPage('System - Settings Page')
+const WorkflowPage = createPage('System - Workflow Page')
 
 const routes = [
   {
@@ -17,33 +46,112 @@ const routes = [
     element: <Login />,
     layout: 'none',
   },
+
   {
     path: '/',
     element: <Dashboard />,
     layout: 'main',
     label: 'Dashboard',
     icon: <DashboardOutlined />,
+    roles: ['SA', 'PM', 'DE', 'QC'],
   },
   {
-    path: '/project',
-    element: <ProjectPage />,
+    path: '/projects',
+    element: <ProjectList />,
     layout: 'main',
-    label: 'Project',
+    label: 'Quản lý dự án',
     icon: <ProjectOutlined />,
+    roles: ['SA', 'PM'],
   },
   {
-    path: '/community',
-    element: <CommunityPage />,
+    path: '/tasks',
+    element: <TaskList />,
     layout: 'main',
-    label: 'Community',
+    label: 'Task',
+    icon: <FileDoneOutlined />,
+    roles: ['SA', 'PM', 'DE', 'QC'],
+  },
+  {
+    path: '/tasks/:id',
+    element: <TaskDetail />,
+    layout: 'main',
+    hidden: true,
+    roles: ['SA', 'PM', 'DE', 'QC'],
+  },
+  {
+    path: '/qc/tests',
+    element: <QcTestList />,
+    layout: 'main',
+    label: 'Kiểm thử & QC',
+    icon: <CheckCircleOutlined />,
+    roles: ['QC'],
+  },
+  {
+    path: '/qc/reports',
+    element: <QcReport />,
+    layout: 'main',
+    hidden: true,
+    roles: ['QC'],
+  },
+  {
+    path: '/documents',
+    element: <DocumentList />,
+    layout: 'main',
+    label: 'Tài liệu',
+    icon: <FileTextOutlined />,
+    roles: ['SA', 'PM', 'DE', 'QC'],
+  },
+  {
+    path: '/members',
+    element: <MemberList />,
+    layout: 'main',
+    label: 'Thành viên',
     icon: <TeamOutlined />,
+    roles: ['SA'],
   },
   {
-    path: '/chat',
-    element: <ChatPage />,
+    path: '/notifications',
+    element: <NotificationPage />,
     layout: 'main',
-    label: 'Chat',
-    icon: <MessageOutlined />,
+    label: 'Thông báo / Lịch vận hành',
+    icon: <BellOutlined />,
+    roles: ['SA', 'PM', 'DE', 'QC'],
+  },
+  {
+    path: '/system',
+    element: <SystemLayout />,
+    layout: 'main',
+    label: 'Cấu hình hệ thống',
+    icon: <SettingOutlined />,
+    roles: ['SA'],
+    children: [
+      {
+        path: 'settings',
+        element: <SettingPage />,
+        label: 'Cài đặt',
+        roles: ['SA'],
+      },
+      {
+        path: 'workflow',
+        element: <WorkflowPage />,
+        label: 'Quy trình',
+        roles: ['SA'],
+      },
+      {
+        path: 'audit-log',
+        element: <AuditLogPage />,
+        label: 'Nhật ký hệ thống',
+        roles: ['SA'],
+      },
+    ],
+  },
+  {
+    path: '/logout',
+    element: createPage('Logging out...')(),
+    layout: 'main',
+    label: 'Đăng xuất',
+    icon: <LogoutOutlined />,
+    roles: ['SA', 'PM', 'DE', 'QC'],
   },
 ]
 

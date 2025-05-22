@@ -17,8 +17,6 @@ export const getAntdThemeConfig = (
     algorithm: isDarkMode ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
     token: {
       colorPrimary: primary,
-      colorBgContainer: isDarkMode ? '#141414' : '#fff',
-      colorText: isDarkMode ? '#fff' : '#000',
     },
     components: {
       Menu: {
