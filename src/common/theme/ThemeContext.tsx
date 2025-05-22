@@ -1,15 +1,19 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { PRIMARY_COLOR_DARK, PRIMARY_COLOR_LIGHT, type Theme } from './theme.constant'
-export interface ThemeContextProps {
+import { getAntdThemeConfig, getProLayoutToken } from './antdThemeConfig'
+
+interface ThemeContextProps {
   theme: Theme
   setTheme: (theme: Theme) => void
-  primaryColor: string
+  antdThemeConfig: any
+  proLayoutToken: any
 }
 
-export const ThemeContext = createContext<ThemeContextProps>({
+const ThemeContext = createContext<ThemeContextProps>({
   theme: 'dark',
   setTheme: () => {},
-  primaryColor: PRIMARY_COLOR_DARK,
+  antdThemeConfig: {},
+  proLayoutToken: {},
 })
 
 export const useTheme = () => useContext(ThemeContext)
@@ -19,14 +23,22 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const primaryColor = theme === 'dark' ? PRIMARY_COLOR_DARK : PRIMARY_COLOR_LIGHT
 
+  const { antdThemeConfig, proLayoutToken } = useMemo(
+    () => ({
+      antdThemeConfig: getAntdThemeConfig(theme, primaryColor),
+      proLayoutToken: getProLayoutToken(theme, primaryColor),
+    }),
+    [theme, primaryColor]
+  )
+
   useEffect(() => {
     const root = document.documentElement
-    root.classList.remove(theme === 'dark' ? 'light' : 'dark')
+    root.classList.remove('light', 'dark')
     root.classList.add(theme)
   }, [theme])
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, primaryColor }}>
+    <ThemeContext.Provider value={{ theme, setTheme, antdThemeConfig, proLayoutToken }}>
       {children}
     </ThemeContext.Provider>
   )

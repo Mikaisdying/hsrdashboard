@@ -2,9 +2,10 @@ import { ProLayout, PageContainer } from '@ant-design/pro-components'
 import routes from '../../routes/appRoutes'
 import { Avatar, Popover, Button } from 'antd'
 import { useNavigate, useLocation, Outlet } from 'react-router-dom'
-import React from 'react'
+import React, { useContext } from 'react'
 import ThemeToggle from '../../common/theme/themeToggle'
 import { UserOutlined } from '@ant-design/icons'
+import { ProLayoutTokenContext } from '../../App'
 
 const MainLayout: React.FC = () => {
   const navigate = useNavigate()
@@ -20,6 +21,8 @@ const MainLayout: React.FC = () => {
   }
 
   const menuData = routes.map(({ path, label, icon }) => ({ path, name: label, icon }))
+
+  const proLayoutToken = useContext(ProLayoutTokenContext)
 
   return (
     <ProLayout
@@ -79,6 +82,7 @@ const MainLayout: React.FC = () => {
           </div>
         )
       }
+      token={proLayoutToken}
     >
       <PageContainer>
         <Outlet />

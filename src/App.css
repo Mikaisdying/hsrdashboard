@@ -19,15 +19,6 @@
   transform: translateY(-50%) !important;
 }
 
-.theme-light :where(.ant-menu-light) .ant-menu-item-selected,
-.theme-light :where(.ant-menu-light) > .ant-menu .ant-menu-item-selected {
-  background-color: #15c5c5 !important;
-  color: #ffffff;
-  transition:
-    background-color 0.1s,
-    color 0.1s !important;
-}
-
 button:focus,
 button:active,
 .ant-btn:focus,
