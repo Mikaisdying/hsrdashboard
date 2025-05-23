@@ -2,6 +2,10 @@ export type Theme = 'dark' | 'light'
 
 export const PRIMARY_COLOR_LIGHT = '#15c5c5'
 export const PRIMARY_COLOR_DARK = '#08979c'
+export const textLight = '#1D2129'
+export const secondaryTextLight = '#4E5969'
+export const textDark = '#F2F3F5'
+export const secondaryTextDark = '#A9AEB8'
 
 export const colorColumnChart = ['#F08305', '#3F8FF9']
 export const colorPieChart = ['#F08305', '#3F8FF9', '#EB2F96', '#57B433', '#8365CD']

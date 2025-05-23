@@ -13,12 +13,12 @@ import { Outlet } from 'react-router-dom'
 
 // Pages
 import Login from '../pages/auth/Login'
-import Dashboard from '../pages/dashboard/Dashboard'
+import Dashboard from '../pages/dashboard'
+import { ProjectList } from '../pages/projectManagement'
 
 // Dummy pages
 const createPage = (label: string) => () => <div>{label}</div>
 
-const ProjectList = createPage('Project List Page')
 const TaskList = createPage('Task List Page')
 const TaskDetail = createPage('Task Detail Page')
 const QcTestList = createPage('QC Test List Page')
