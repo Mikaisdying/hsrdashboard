@@ -9,11 +9,16 @@
       "createdDate": "2024-06-01",
       "endDate": "2024-12-31",
       "budget": 1000000,
+      "updatedAt": "2024-06-10",
+      "link": "",
       "pm": {
         "id": 1,
         "name": "Nguyễn Văn A",
-        "avatar": "https://i.pravatar.cc/150?img=1"
-      }
+        "avatar": "https://i.pravatar.cc/150?img=1",
+        "email": "nguyenvana@example.com",
+        "role": "PM"
+      },
+      "members": []
     },
     {
       "id": 2,
@@ -24,11 +29,16 @@
       "createdDate": "2024-01-01",
       "endDate": "2024-05-31",
       "budget": 500000,
+      "updatedAt": "2024-05-31",
+      "link": "",
       "pm": {
         "id": 2,
         "name": "Trần Thị B",
-        "avatar": "https://i.pravatar.cc/150?img=2"
-      }
+        "avatar": "https://i.pravatar.cc/150?img=2",
+        "email": "tranthib@example.com",
+        "role": "PM"
+      },
+      "members": []
     },
     {
       "id": 3,
@@ -39,11 +49,16 @@
       "createdDate": "2024-07-01",
       "endDate": "2024-12-01",
       "budget": 300000,
+      "updatedAt": "2024-07-01",
+      "link": "",
       "pm": {
         "id": 3,
         "name": "Lê Văn C",
-        "avatar": "https://i.pravatar.cc/150?img=3"
-      }
+        "avatar": "https://i.pravatar.cc/150?img=3",
+        "email": "levanc@example.com",
+        "role": "PM"
+      },
+      "members": []
     },
     {
       "id": 4,
@@ -54,11 +69,16 @@
       "createdDate": "2024-03-01",
       "endDate": "2024-09-30",
       "budget": 200000,
+      "updatedAt": "2024-06-01",
+      "link": "",
       "pm": {
         "id": 1,
         "name": "Nguyễn Văn A",
-        "avatar": "https://i.pravatar.cc/150?img=1"
-      }
+        "avatar": "https://i.pravatar.cc/150?img=1",
+        "email": "nguyenvana@example.com",
+        "role": "PM"
+      },
+      "members": []
     },
     {
       "id": 5,
@@ -69,28 +89,59 @@
       "createdDate": "2024-08-01",
       "endDate": "2025-01-31",
       "budget": 250000,
+      "updatedAt": "2024-08-01",
+      "link": "",
       "pm": {
         "id": 2,
         "name": "Trần Thị B",
-        "avatar": "https://i.pravatar.cc/150?img=2"
-      }
-    },
-    {
-      "id": "97f2",
-      "tags": [],
-      "tools": [],
+        "avatar": "https://i.pravatar.cc/150?img=2",
+        "email": "tranthib@example.com",
+        "role": "PM"
+      },
       "members": []
     },
     {
-      "id": "ee21",
-      "tags": [],
-      "tools": [],
+      "id": 0,
+      "name": "Untitled Project",
+      "code": "PRJ-1747996035733-6828",
+      "description": "No description provided.",
+      "status": "NEW",
+      "createdDate": "2025-05-23",
+      "endDate": "",
+      "budget": 0,
+      "updatedAt": "",
+      "link": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "members": []
+    },
+    {
+      "id": 0,
+      "code": "PRJ-1747996447570-9405",
+      "status": "NEW",
+      "createdDate": "2025-05-23",
+      "endDate": "",
+      "budget": 0,
+      "updatedAt": "",
+      "link": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
       "members": []
     }
   ],
   "tasks": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Thiết kế UI",
       "projectCode": "PRJ001",
       "description": "Thiết kế giao diện",
@@ -112,7 +163,7 @@
       "tech_area": "FRONTEND"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Phân tích yêu cầu",
       "projectCode": "PRJ001",
       "description": "Phân tích nghiệp vụ",
@@ -133,7 +184,7 @@
       "tech_area": null
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Tạo database",
       "projectCode": "PRJ001",
       "description": "Thiết kế CSDL",
@@ -154,7 +205,7 @@
       "tech_area": "BACKEND"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Viết API",
       "projectCode": "PRJ001",
       "description": "Xây dựng API",
@@ -175,7 +226,7 @@
       "tech_area": "BACKEND"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Kiểm thử",
       "projectCode": "PRJ001",
       "description": "Test hệ thống",
@@ -196,7 +247,7 @@
       "tech_area": null
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Triển khai",
       "projectCode": "PRJ001",
       "description": "Triển khai sản phẩm",
@@ -217,7 +268,7 @@
       "tech_area": "BACKEND"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Tối ưu code",
       "projectCode": "PRJ001",
       "description": "Tối ưu hóa",
@@ -238,7 +289,7 @@
       "tech_area": null
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Cập nhật tài liệu",
       "projectCode": "PRJ001",
       "description": "Tài liệu dự án",
@@ -259,7 +310,7 @@
       "tech_area": null
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Tạo báo cáo",
       "projectCode": "PRJ001",
       "description": "Báo cáo tiến độ",
@@ -280,7 +331,7 @@
       "tech_area": null
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Đào tạo nội bộ",
       "projectCode": "PRJ001",
       "description": "Đào tạo nhân viên",
@@ -301,7 +352,7 @@
       "tech_area": "FRONTEND"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Kiểm tra bảo mật",
       "projectCode": "PRJ001",
       "description": "Đánh giá bảo mật",
@@ -322,7 +373,7 @@
       "tech_area": null
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Cấu hình hệ thống",
       "projectCode": "PRJ001",
       "description": "Cấu hình phần mềm",
@@ -343,7 +394,7 @@
       "tech_area": "BACKEND"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Tạo tài khoản",
       "projectCode": "PRJ001",
       "description": "Tạo user mới",
@@ -364,7 +415,7 @@
       "tech_area": null
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Kiểm tra dữ liệu",
       "projectCode": "PRJ001",
       "description": "Kiểm tra dữ liệu nhập",
@@ -385,7 +436,7 @@
       "tech_area": null
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Tối ưu giao diện",
       "projectCode": "PRJ001",
       "description": "Cải thiện UI",
@@ -406,7 +457,7 @@
       "tech_area": null
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "Tích hợp API",
       "projectCode": "PRJ001",
       "description": "Tích hợp hệ thống",
@@ -427,7 +478,7 @@
       "tech_area": "BACKEND"
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Kiểm thử chức năng",
       "projectCode": "PRJ001",
       "description": "Test chức năng",
@@ -448,7 +499,7 @@
       "tech_area": null
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Cập nhật báo cáo",
       "projectCode": "PRJ001",
       "description": "Báo cáo tiến độ",
@@ -469,7 +520,7 @@
       "tech_area": null
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Tạo tài liệu hướng dẫn",
       "projectCode": "PRJ001",
       "description": "Tài liệu sử dụng",
@@ -490,7 +541,7 @@
       "tech_area": null
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "Kiểm tra hệ thống",
       "projectCode": "PRJ001",
       "description": "Kiểm tra tổng thể",
@@ -511,7 +562,7 @@
       "tech_area": "BACKEND"
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "Kiểm thử giao diện",
       "projectCode": "PRJ001",
       "description": "QC kiểm thử UI cho dashboard",
@@ -530,7 +581,7 @@
       "tech_area": null
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "Kiểm tra chức năng đăng nhập",
       "projectCode": "PRJ001",
       "description": "QC kiểm tra chức năng login",
@@ -549,7 +600,7 @@
       "tech_area": null
     },
     {
-      "id": 23,
+      "id": "23",
       "name": "Đề xuất cải tiến báo cáo",
       "projectCode": "PRJ001",
       "description": "QC đề xuất cải tiến module báo cáo",
@@ -570,7 +621,7 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "fullName": "Nguyễn Văn A",
       "code": "USR001",
       "dob": "1990-01-01",
@@ -582,7 +633,7 @@
       "job": "SA"
     },
     {
-      "id": 2,
+      "id": "2",
       "fullName": "Trần Thị B",
       "code": "USR002",
       "dob": "1992-02-02",
@@ -594,7 +645,7 @@
       "job": "DE"
     },
     {
-      "id": 3,
+      "id": "3",
       "fullName": "Lê Văn C",
       "code": "USR003",
       "dob": "1985-03-03",
@@ -606,7 +657,7 @@
       "job": "QC"
     },
     {
-      "id": 4,
+      "id": "4",
       "fullName": "Phạm Minh D",
       "code": "USR004",
       "dob": "1988-04-04",
@@ -620,21 +671,21 @@
   ],
   "messages": [
     {
-      "id": 1,
+      "id": "1",
       "from": 1,
       "to": 2,
       "content": "Hello Jane!",
       "timestamp": "2024-06-01T12:21:00Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "from": 2,
       "to": 1,
       "content": "Hi John!",
       "timestamp": "2024-06-01T12:22:00Z"
     },
     {
-      "id": 3,
+      "id": "3",
       "from": 3,
       "to": 1,
       "content": "How are you?",
@@ -643,77 +694,77 @@
   ],
   "projectMembers": [
     {
-      "id": 1,
+      "id": "1",
       "project_id": 1,
       "user_id": 1,
       "role": "TEAM_LEADER",
       "joinedAt": "2024-06-01"
     },
     {
-      "id": 2,
+      "id": "2",
       "project_id": 1,
       "user_id": 2,
       "role": "MEMBER",
       "joinedAt": "2024-06-01"
     },
     {
-      "id": 3,
+      "id": "3",
       "project_id": 1,
       "user_id": 3,
       "role": "MEMBER",
       "joinedAt": "2024-06-01"
     },
     {
-      "id": 4,
+      "id": "4",
       "project_id": 2,
       "user_id": 2,
       "role": "TEAM_LEADER",
       "joinedAt": "2024-01-01"
     },
     {
-      "id": 5,
+      "id": "5",
       "project_id": 2,
       "user_id": 1,
       "role": "MEMBER",
       "joinedAt": "2024-01-01"
     },
     {
-      "id": 6,
+      "id": "6",
       "project_id": 2,
       "user_id": 3,
       "role": "MEMBER",
       "joinedAt": "2024-01-01"
     },
     {
-      "id": 7,
+      "id": "7",
       "project_id": 3,
       "user_id": 3,
       "role": "TEAM_LEADER",
       "joinedAt": "2024-07-01"
     },
     {
-      "id": 8,
+      "id": "8",
       "project_id": 3,
       "user_id": 1,
       "role": "MEMBER",
       "joinedAt": "2024-07-01"
     },
     {
-      "id": 9,
+      "id": "9",
       "project_id": 3,
       "user_id": 2,
       "role": "MEMBER",
       "joinedAt": "2024-07-01"
     },
     {
-      "id": 10,
+      "id": "10",
       "project_id": 1,
       "user_id": 4,
       "role": null,
       "joinedAt": "2024-06-01"
     },
     {
-      "id": 11,
+      "id": "11",
       "project_id": 2,
       "user_id": 4,
       "role": null,
@@ -722,7 +773,7 @@
   ],
   "taskComments": [
     {
-      "id": 1,
+      "id": "1",
       "task_id": 1,
       "user_id": 2,
       "content": "Please update the UI as discussed.",
@@ -732,7 +783,7 @@
   ],
   "taskAttachments": [
     {
-      "id": 1,
+      "id": "1",
       "task_id": 1,
       "file_url": "https://example.com/files/specs.pdf",
       "filename": "specs.pdf",
@@ -742,7 +793,7 @@
   ],
   "taskStatusHistory": [
     {
-      "id": 1,
+      "id": "1",
       "task_id": 1,
       "from_status": "NEW",
       "to_status": "WIP",
@@ -753,53 +804,65 @@
   "lineChartData": [
     {
       "x": "Jan",
-      "y": 30
+      "y": 30,
+      "id": "df89"
     },
     {
       "x": "Feb",
-      "y": 40
+      "y": 40,
+      "id": "94a8"
     },
     {
       "x": "Mar",
-      "y": 35
+      "y": 35,
+      "id": "b2fe"
     },
     {
       "x": "Apr",
-      "y": 50
+      "y": 50,
+      "id": "130a"
     },
     {
       "x": "May",
-      "y": 49
+      "y": 49,
+      "id": "e06c"
     },
     {
       "x": "Jun",
-      "y": 60
+      "y": 60,
+      "id": "17a7"
     }
   ],
   "pieChartData": [
     {
       "type": "Category 1",
-      "value": 27
+      "value": 27,
+      "id": "0bbc"
     },
     {
       "type": "Category 2",
-      "value": 25
+      "value": 25,
+      "id": "b9e3"
     },
     {
       "type": "Category 3",
-      "value": 18
+      "value": 18,
+      "id": "2c1c"
     },
     {
       "type": "Category 4",
-      "value": 15
+      "value": 15,
+      "id": "74de"
     },
     {
       "type": "Category 5",
-      "value": 10
+      "value": 10,
+      "id": "3d8b"
     },
     {
       "type": "Other",
-      "value": 5
+      "value": 5,
+      "id": "360c"
     }
   ]
 }

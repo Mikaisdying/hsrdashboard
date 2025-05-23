@@ -1,19 +1,20 @@
 import { Modal, Steps, Form, Input, Button, Avatar, Select, Space, message } from 'antd'
 import { useState } from 'react'
-import { PlusOutlined, UserOutlined } from '@ant-design/icons'
+import { UserOutlined } from '@ant-design/icons'
 import { createProjectApi } from '../../../apis/projects/project.api'
 import { searchMembers } from '../../../apis/members/member.api'
 import type { IMember } from '../../../apis/members/member.interface'
+import type { IProject, IProjectMember } from '../../../apis/projects/project.interface'
 
 const { Step } = Steps
 
 const defaultTools = [
-  { name: 'Github', icon: '', link: '' },
-  { name: 'Figma', icon: '', link: '' },
-  { name: 'Jira', icon: '', link: '' },
-  { name: 'Notion', icon: '', link: '' },
-  { name: 'Slack', icon: '', link: '' },
-  { name: 'Other', icon: '', link: '' },
+  { name: 'Github', link: '' },
+  { name: 'Gitlab', link: '' },
+  { name: 'Figma', link: '' },
+  { name: 'Jira', link: '' },
+  { name: 'Notion', link: '' },
+  { name: 'Slack', link: '' },
 ]
 
 interface AddProjectModalProps {
@@ -35,8 +36,8 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
   const [members, setMembers] = useState<ISelectedMember[]>([])
   const [userSearch, setUserSearch] = useState('')
   const [userOptions, setUserOptions] = useState<IMember[]>([])
+  const [successModal, setSuccessModal] = useState(false)
 
-  // Thay thế handleUserSearch bằng gọi API thật
   const handleUserSearch = async (value: string) => {
     setUserSearch(value)
     if (!value) {
@@ -70,125 +71,129 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
   }
 
   const handleChangeAccess = (userId: number, access: string) => {
-    setMembers(members.map((m) => (m.id === userId ? { ...m, access } : m)))
+    if (access === 'PM') {
+      setMembers(
+        members.map((m) =>
+          m.id === userId ? { ...m, access } : m.access === 'PM' ? { ...m, access: '' } : m
+        )
+      )
+    } else {
+      setMembers(members.map((m) => (m.id === userId ? { ...m, access } : m)))
+    }
   }
 
   const handleChangeRole = (userId: number, role: string) => {
     setMembers(members.map((m) => (m.id === userId ? { ...m, role } : m)))
   }
 
-  const steps = [
-    {
-      title: 'Project Details',
-      content: (
-        <Form form={form} layout="vertical" initialValues={{}}>
-          <Form.Item
-            label="Project Title"
-            name="title"
-            rules={[{ required: true, message: 'Please input project title' }]}
-          >
-            <Input placeholder="Title (Required)*" />
-          </Form.Item>
-          <Form.Item
-            label="Description"
-            name="desc"
-            rules={[{ required: true, message: 'Please input description' }]}
-          >
-            <Input.TextArea rows={3} placeholder="Description (Required)*" />
-          </Form.Item>
-          <Form.Item label="Tags" name="tags">
-            <Input placeholder="Tags: separate by comma" />
-          </Form.Item>
-        </Form>
-      ),
-    },
-    {
-      title: 'Tools',
-      content: (
-        <Space direction="vertical" style={{ width: '100%' }}>
-          {tools.map((tool, idx) => (
-            <Input
-              key={tool.name}
-              addonBefore={tool.name}
-              placeholder={`${tool.name} Link`}
-              value={tools[idx].link}
-              onChange={(e) => {
-                const newTools = [...tools]
-                newTools[idx].link = e.target.value
-                setTools(newTools)
-              }}
+  const stepContent = [
+    <>
+      <Form.Item
+        label="Project Title"
+        name="title"
+        rules={[{ required: true, message: 'Please input project title' }]}
+      >
+        <Input placeholder="Title (Required)*" />
+      </Form.Item>
+      <Form.Item
+        label="Description"
+        name="desc"
+        rules={[{ required: true, message: 'Please input description' }]}
+      >
+        <Input.TextArea rows={3} placeholder="Description (Required)*" />
+      </Form.Item>
+      <Form.Item label="Tags" name="tags">
+        <Input placeholder="Tags: separate by comma" />
+      </Form.Item>
+    </>,
+    <Space direction="vertical" style={{ width: '100%' }}>
+      {tools.map((tool, idx) => (
+        <Input
+          key={tool.name}
+          prefix={
+            <img
+              src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tool.name.toLowerCase()}/${tool.name.toLowerCase()}-original.svg`}
+              alt={tool.name}
+              style={{ width: 16, height: 16 }}
             />
-          ))}
-        </Space>
-      ),
-    },
-    {
-      title: 'Add Members',
-      content: (
-        <div>
-          <Select<number>
-            showSearch
-            value={undefined}
-            placeholder="Search users by name or email"
-            style={{ width: '100%', marginBottom: 12 }}
-            onSearch={handleUserSearch}
-            onSelect={handleAddMember}
-            filterOption={false}
-            optionLabelProp="label"
-            options={userOptions
-              .filter((u) => !members.find((m) => m.id === u.id))
-              .map((u) => ({
-                label: u.fullName,
-                value: u.id,
-                email: u.email,
-                avatar: u.avatar,
-              }))}
-            notFoundContent={userSearch ? 'No users found' : null}
-          />
-          <Space direction="vertical" style={{ width: '100%' }}>
-            {members.length === 0 && (
-              <div style={{ color: '#888', textAlign: 'center' }}>No members added</div>
-            )}
-            {members.map((m) => (
-              <Space
-                key={m.id}
-                style={{ justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}
+          }
+          placeholder={`${tool.name} link`}
+          value={tools[idx].link}
+          onChange={(e) => {
+            const newTools = [...tools]
+            newTools[idx].link = e.target.value
+            setTools(newTools)
+          }}
+        />
+      ))}
+    </Space>,
+    <div>
+      <Select<number>
+        showSearch
+        value={undefined}
+        placeholder="Search users by name or email"
+        style={{ width: '100%', marginBottom: 12 }}
+        onSearch={handleUserSearch}
+        onSelect={handleAddMember}
+        filterOption={false}
+        optionLabelProp="label"
+        options={userOptions
+          .filter((u) => !members.find((m) => m.id === u.id))
+          .map((u) => ({
+            label: u.fullName,
+            value: u.id,
+            email: u.email,
+            avatar: u.avatar,
+          }))}
+        notFoundContent={userSearch ? 'No users found' : null}
+      />
+      <Space direction="vertical" style={{ width: '100%' }}>
+        {members.length === 0 && (
+          <div style={{ color: '#888', textAlign: 'center' }}>No members added</div>
+        )}
+        {members.map((m) => (
+          <Space
+            key={m.id}
+            style={{ justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}
+          >
+            <Space>
+              <Avatar src={m.avatar} icon={!m.avatar && <UserOutlined />} />
+              <span>{m.fullName}</span>
+              <span style={{ color: '#888', fontSize: 12 }}>{m.email}</span>
+            </Space>
+            <Space>
+              <Select
+                size="small"
+                placeholder="Access"
+                style={{ width: 120 }}
+                value={m.access || undefined}
+                onChange={(val) => handleChangeAccess(m.id, val)}
               >
-                <Space>
-                  <Avatar src={m.avatar} icon={!m.avatar && <UserOutlined />} />
-                  <span>{m.fullName}</span>
-                  <span style={{ color: '#888', fontSize: 12 }}>{m.email}</span>
-                </Space>
-                <Space>
-                  <Select
-                    size="small"
-                    placeholder="Access"
-                    style={{ width: 100 }}
-                    value={m.access || undefined}
-                    onChange={(val) => handleChangeAccess(m.id, val)}
-                  >
-                    <Select.Option value="Admin">Admin</Select.Option>
-                    <Select.Option value="Member">Member</Select.Option>
-                    <Select.Option value="Editor">Editor</Select.Option>
-                    <Select.Option value="View Only">View Only</Select.Option>
-                  </Select>
-                  <Input
-                    size="small"
-                    placeholder="Role"
-                    style={{ width: 90 }}
-                    value={m.role}
-                    onChange={(e) => handleChangeRole(m.id, e.target.value)}
-                  />
-                  <Button size="small" danger onClick={() => handleRemoveMember(m.id)}>
-                    Remove
-                  </Button>
-                </Space>
-              </Space>
-            ))}
+                <Select.Option
+                  value="PM"
+                  disabled={!!members.find((mem) => mem.access === 'PM' && mem.id !== m.id)}
+                >
+                  Project Manager
+                </Select.Option>
+                <Select.Option value="LD">Leader</Select.Option>
+                <Select.Option value="Editor">Editor</Select.Option>
+                <Select.Option value="View Only">View Only</Select.Option>
+              </Select>
+              <Input
+                size="small"
+                placeholder="Role"
+                style={{ width: 90 }}
+                value={m.role}
+                onChange={(e) => handleChangeRole(m.id, e.target.value)}
+              />
+              <Button size="small" danger onClick={() => handleRemoveMember(m.id)}>
+                Remove
+              </Button>
+            </Space>
           </Space>
-        </div>
-      ),
-    },
+        ))}
+      </Space>
+    </div>,
   ]
 
   const handleNext = async () => {
@@ -207,26 +212,44 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
   const handleFinish = async () => {
     try {
       setLoading(true)
-      const values = await form.validateFields()
-      const payload = {
-        ...values,
-        tags: values.tags ? values.tags.split(',').map((t: string) => t.trim()) : [],
-        tools: tools.filter((t) => t.link),
-        members: members
-          .filter((m) => m.access && m.role)
-          .map((m) => ({
-            id: m.id,
-            name: m.fullName,
-            email: m.email,
-            access: m.access,
-            role: m.role,
-          })),
+      await form.validateFields()
+      const values = form.getFieldsValue()
+      const randomCode = `PRJ-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`
+      const membersPayload: IProjectMember[] = members.map((m) => ({
+        id: m.id,
+        name: m.fullName,
+        avatar: m.avatar ?? '',
+      }))
+      const pmMember = members.find((m) => m.access === 'PM')
+      const payload: IProject = {
+        id: 0,
+        name: values.title?.trim(),
+        code: randomCode,
+        description: values.desc?.trim(),
+        status: 'NEW',
+        createdDate: new Date().toISOString().slice(0, 10),
+        endDate: '',
+        budget: 0,
+        updatedAt: '',
+        link: tools.map((t) => t.link?.trim() || ''),
+        pm: pmMember
+          ? {
+              id: pmMember.id,
+              name: pmMember.fullName,
+              avatar: pmMember.avatar ?? '',
+            }
+          : undefined,
+        members: membersPayload,
       }
       await createProjectApi(payload)
-      message.success('Project created successfully')
       setLoading(false)
-      onSuccess && onSuccess()
-      onClose()
+      setSuccessModal(true)
+      setTimeout(() => {
+        setSuccessModal(false)
+        onSuccess && onSuccess()
+        window.location.reload()
+        onClose()
+      }, 2000)
     } catch (e) {
       setLoading(false)
       message.error('Failed to create project')
@@ -234,37 +257,48 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
   }
 
   return (
-    <Modal
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      title="Create a new project"
-      destroyOnClose
-      width={600}
-    >
-      <Steps current={current} style={{ marginBottom: 24 }}>
-        {steps.map((item) => (
-          <Step key={item.title} title={item.title} />
-        ))}
-      </Steps>
-      <div style={{ minHeight: 180, marginBottom: 24 }}>{steps[current].content}</div>
-      <div style={{ textAlign: 'right' }}>
-        {current > 0 && (
-          <Button style={{ marginRight: 8 }} onClick={handlePrev}>
-            Back
-          </Button>
-        )}
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={handleNext}>
-            Next
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button type="primary" loading={loading} onClick={handleFinish}>
-            Create Project
-          </Button>
-        )}
-      </div>
-    </Modal>
+    <>
+      <Modal open={open} onCancel={onClose} footer={null} title="Create a new project" width={600}>
+        <Steps current={current} style={{ marginBottom: 24 }}>
+          <Step title="Project Details" />
+          <Step title="Tools" />
+          <Step title="Add Members" />
+        </Steps>
+        <Form form={form} layout="vertical" initialValues={{}}>
+          <div style={{ minHeight: 180, marginBottom: 24 }}>{stepContent[current]}</div>
+          <div style={{ textAlign: 'right' }}>
+            {current > 0 && (
+              <Button style={{ marginRight: 8 }} onClick={handlePrev}>
+                Back
+              </Button>
+            )}
+            {current < stepContent.length - 1 && (
+              <Button type="primary" onClick={handleNext}>
+                Next
+              </Button>
+            )}
+            {current === stepContent.length - 1 && (
+              <Button type="primary" loading={loading} onClick={handleFinish}>
+                Create Project
+              </Button>
+            )}
+          </div>
+        </Form>
+      </Modal>
+      <Modal
+        open={successModal}
+        footer={null}
+        closable={false}
+        centered
+        width={350}
+        styles={{ body: { textAlign: 'center', padding: 32 } }}
+      >
+        <div style={{ fontSize: 32, color: '#52c41a', marginBottom: 16 }}>✔</div>
+        <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}>
+          Project created successfully!
+        </div>
+        <div style={{ color: '#888' }}>This dialog will close automatically.</div>
+      </Modal>
+    </>
   )
 }

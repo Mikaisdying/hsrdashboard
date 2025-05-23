@@ -20,9 +20,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   <Card
     variant="borderless"
     style={{ position: 'relative', display: 'flex', flexDirection: 'column', minHeight: 180 }}
-    title={<span style={{ fontWeight: 'bold' }}>{title}</span>}
+    title={
+      <span style={{ fontWeight: 'bold' }}>
+        {title?.trim() ? title : 'Dự án chưa có tên chính thức'}
+      </span>
+    }
   >
-    <div style={{ flex: 1, marginBottom: 20 }}>{description}</div>
+    <div style={{ flex: 1, marginBottom: 20 }}>
+      {description?.trim() ? description : 'Chưa có mô tả chung'}
+    </div>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <div style={{ fontSize: 12, color: '#888' }}>Cập nhật {dayjs(updatedAt).fromNow()}.</div>
       <Tooltip title={pmName}>

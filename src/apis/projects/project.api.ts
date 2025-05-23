@@ -22,10 +22,14 @@ export async function getProjectsArchived(): Promise<IProject[]> {
   })
 }
 
-export async function createProjectApi(payload: any) {
+export async function createProjectApi(payload: IProject) {
   return apiService({
     url: '/projects',
     method: 'POST',
-    body: payload,
+    body: {
+      ...payload,
+      status: 'NEW',
+      createdDate: new Date().toISOString().slice(0, 10),
+    },
   })
 }

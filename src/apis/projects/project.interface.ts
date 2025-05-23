@@ -8,9 +8,16 @@ export interface IProject {
   endDate: string
   budget: number
   updatedAt: string
-  pm: {
-    id: number
-    name: string
-    avatar: string
-  }
+  link: string[]
+  pm?: IProjectMember
+  members: IProjectMember[]
+}
+
+export interface IProjectMember {
+  id: number
+  name: string
+  avatar: string
+  email?: string
+  role?: string
+  access?: string
 }
