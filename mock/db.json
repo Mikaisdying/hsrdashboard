@@ -1,7 +1,7 @@
 {
   "projects": [
     {
-      "id": 1,
+      "id": "1",
       "name": "HRM Dashboard",
       "code": "PRJ001",
       "description": "Quản lý nhân sự",
@@ -10,18 +10,19 @@
       "endDate": "2024-12-31",
       "budget": 1000000,
       "updatedAt": "2024-06-10",
-      "link": "",
+      "link": [
+        ""
+      ],
       "pm": {
         "id": 1,
         "name": "Nguyễn Văn A",
         "avatar": "https://i.pravatar.cc/150?img=1",
-        "email": "nguyenvana@example.com",
-        "role": "PM"
+        "email": "nguyenvana@example.com"
       },
       "members": []
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Payroll System",
       "code": "PRJ002",
       "description": "Quản lý lương",
@@ -30,18 +31,19 @@
       "endDate": "2024-05-31",
       "budget": 500000,
       "updatedAt": "2024-05-31",
-      "link": "",
+      "link": [
+        ""
+      ],
       "pm": {
         "id": 2,
         "name": "Trần Thị B",
         "avatar": "https://i.pravatar.cc/150?img=2",
-        "email": "tranthib@example.com",
-        "role": "PM"
+        "email": "tranthib@example.com"
       },
       "members": []
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Recruitment Portal",
       "code": "PRJ003",
       "description": "Cổng tuyển dụng",
@@ -50,18 +52,19 @@
       "endDate": "2024-12-01",
       "budget": 300000,
       "updatedAt": "2024-07-01",
-      "link": "",
+      "link": [
+        ""
+      ],
       "pm": {
         "id": 3,
         "name": "Lê Văn C",
         "avatar": "https://i.pravatar.cc/150?img=3",
-        "email": "levanc@example.com",
-        "role": "PM"
+        "email": "levanc@example.com"
       },
       "members": []
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Time Tracking",
       "code": "PRJ004",
       "description": "Theo dõi thời gian",
@@ -70,18 +73,19 @@
       "endDate": "2024-09-30",
       "budget": 200000,
       "updatedAt": "2024-06-01",
-      "link": "",
+      "link": [
+        ""
+      ],
       "pm": {
         "id": 1,
         "name": "Nguyễn Văn A",
         "avatar": "https://i.pravatar.cc/150?img=1",
-        "email": "nguyenvana@example.com",
-        "role": "PM"
+        "email": "nguyenvana@example.com"
       },
       "members": []
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Employee Portal",
       "code": "PRJ005",
       "description": "Cổng nhân viên",
@@ -90,52 +94,15 @@
       "endDate": "2025-01-31",
       "budget": 250000,
       "updatedAt": "2024-08-01",
-      "link": "",
+      "link": [
+        ""
+      ],
       "pm": {
         "id": 2,
         "name": "Trần Thị B",
         "avatar": "https://i.pravatar.cc/150?img=2",
-        "email": "tranthib@example.com",
-        "role": "PM"
+        "email": "tranthib@example.com"
       },
-      "members": []
-    },
-    {
-      "id": 0,
-      "name": "Untitled Project",
-      "code": "PRJ-1747996035733-6828",
-      "description": "No description provided.",
-      "status": "NEW",
-      "createdDate": "2025-05-23",
-      "endDate": "",
-      "budget": 0,
-      "updatedAt": "",
-      "link": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "members": []
-    },
-    {
-      "id": 0,
-      "code": "PRJ-1747996447570-9405",
-      "status": "NEW",
-      "createdDate": "2025-05-23",
-      "endDate": "",
-      "budget": 0,
-      "updatedAt": "",
-      "link": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
       "members": []
     }
   ],
@@ -627,7 +594,7 @@
       "dob": "1990-01-01",
       "email": "nguyenvana@example.com",
       "phone": "0123456789",
-      "avatar": "avatar1.png",
+      "avatar": "https://i.pravatar.cc/150?img=1",
       "username": "nguyenvana",
       "password": "password123",
       "job": "SA"
@@ -639,7 +606,7 @@
       "dob": "1992-02-02",
       "email": "tranthib@example.com",
       "phone": "0987654321",
-      "avatar": "avatar2.png",
+      "avatar": "https://i.pravatar.cc/150?img=2",
       "username": "tranthib",
       "password": "password456",
       "job": "DE"
@@ -651,7 +618,7 @@
       "dob": "1985-03-03",
       "email": "levanc@example.com",
       "phone": "0912345678",
-      "avatar": "avatar3.png",
+      "avatar": "https://i.pravatar.cc/150?img=3",
       "username": "levanc",
       "password": "password789",
       "job": "QC"
@@ -663,7 +630,7 @@
       "dob": "1988-04-04",
       "email": "phamminhd@example.com",
       "phone": "0901122334",
-      "avatar": "avatar4.png",
+      "avatar": "https://i.pravatar.cc/150?img=4",
       "username": "phamminhd",
       "password": "passwordpm",
       "job": "PM"

@@ -1,4 +1,14 @@
-import { Modal, Steps, Form, Input, Button, Avatar, Select, Space, message } from 'antd'
+import {
+  Modal,
+  Steps,
+  Form,
+  Input,
+  Button,
+  Avatar,
+  Select,
+  Space,
+  notification as antdNotification,
+} from 'antd'
 import { useState } from 'react'
 import { UserOutlined } from '@ant-design/icons'
 import { createProjectApi } from '../../../apis/projects/project.api'
@@ -36,7 +46,17 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
   const [members, setMembers] = useState<ISelectedMember[]>([])
   const [userSearch, setUserSearch] = useState('')
   const [userOptions, setUserOptions] = useState<IMember[]>([])
-  const [successModal, setSuccessModal] = useState(false)
+  const [notification, notificationContext] = antdNotification.useNotification()
+
+  const resetModal = () => {
+    setCurrent(0)
+    setLoading(false)
+    form.resetFields()
+    setTools(defaultTools)
+    setMembers([])
+    setUserSearch('')
+    setUserOptions([])
+  }
 
   const handleUserSearch = async (value: string) => {
     setUserSearch(value)
@@ -59,7 +79,7 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
         ...members,
         {
           ...user,
-          access: '',
+          access: members.length === 0 ? 'PM' : 'MEM',
           role: '',
         },
       ])
@@ -72,6 +92,8 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
 
   const handleChangeAccess = (userId: number, access: string) => {
     if (access === 'PM') {
+      const hasOtherPM = members.some((m) => m.access === 'PM' && m.id !== userId)
+      if (hasOtherPM) return
       setMembers(
         members.map((m) =>
           m.id === userId ? { ...m, access } : m.access === 'PM' ? { ...m, access: '' } : m
@@ -89,27 +111,27 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
   const stepContent = [
     <>
       <Form.Item
-        label="Project Title"
-        name="title"
-        rules={[{ required: true, message: 'Please input project title' }]}
+        label="Tên dự án"
+        name="name"
+        rules={[{ required: true, message: 'Vui lòng nhập tên dự án' }]}
       >
-        <Input placeholder="Title (Required)*" />
+        <Input placeholder="Tên dự án (Bắt buộc)*" />
       </Form.Item>
       <Form.Item
-        label="Description"
-        name="desc"
-        rules={[{ required: true, message: 'Please input description' }]}
+        label="Mô tả"
+        name="description"
+        rules={[{ required: true, message: 'Vui lòng nhập mô tả' }]}
       >
-        <Input.TextArea rows={3} placeholder="Description (Required)*" />
+        <Input.TextArea rows={3} placeholder="Mô tả (Bắt buộc)*" />
       </Form.Item>
-      <Form.Item label="Tags" name="tags">
-        <Input placeholder="Tags: separate by comma" />
+      <Form.Item label="Thẻ" name="tags">
+        <Input placeholder="Thẻ: phân tách bằng dấu phẩy" />
       </Form.Item>
     </>,
     <Space direction="vertical" style={{ width: '100%' }}>
       {tools.map((tool, idx) => (
         <Input
-          key={tool.name}
+          key={`${tool.name}-${idx}`}
           prefix={
             <img
               src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tool.name.toLowerCase()}/${tool.name.toLowerCase()}-original.svg`}
@@ -117,7 +139,7 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
               style={{ width: 16, height: 16 }}
             />
           }
-          placeholder={`${tool.name} link`}
+          placeholder={`Link ${tool.name}`}
           value={tools[idx].link}
           onChange={(e) => {
             const newTools = [...tools]
@@ -131,7 +153,7 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
       <Select<number>
         showSearch
         value={undefined}
-        placeholder="Search users by name or email"
+        placeholder="Tìm kiếm thành viên theo tên hoặc email"
         style={{ width: '100%', marginBottom: 12 }}
         onSearch={handleUserSearch}
         onSelect={handleAddMember}
@@ -145,11 +167,11 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
             email: u.email,
             avatar: u.avatar,
           }))}
-        notFoundContent={userSearch ? 'No users found' : null}
+        notFoundContent={userSearch ? 'Không tìm thấy người dùng' : null}
       />
       <Space direction="vertical" style={{ width: '100%' }}>
         {members.length === 0 && (
-          <div style={{ color: '#888', textAlign: 'center' }}>No members added</div>
+          <div style={{ color: '#888', textAlign: 'center' }}>Chưa thêm thành viên nào</div>
         )}
         {members.map((m) => (
           <Space
@@ -164,7 +186,7 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
             <Space>
               <Select
                 size="small"
-                placeholder="Access"
+                placeholder="Phân quyền"
                 style={{ width: 120 }}
                 value={m.access || undefined}
                 onChange={(val) => handleChangeAccess(m.id, val)}
@@ -173,21 +195,20 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
                   value="PM"
                   disabled={!!members.find((mem) => mem.access === 'PM' && mem.id !== m.id)}
                 >
-                  Project Manager
+                  Quản lý dự án
                 </Select.Option>
-                <Select.Option value="LD">Leader</Select.Option>
-                <Select.Option value="Editor">Editor</Select.Option>
-                <Select.Option value="View Only">View Only</Select.Option>
+                <Select.Option value="LD">Trưởng nhóm</Select.Option>
+                <Select.Option value="MEM">Thành viên</Select.Option>
               </Select>
               <Input
                 size="small"
-                placeholder="Role"
+                placeholder="Vai trò"
                 style={{ width: 90 }}
                 value={m.role}
                 onChange={(e) => handleChangeRole(m.id, e.target.value)}
               />
               <Button size="small" danger onClick={() => handleRemoveMember(m.id)}>
-                Remove
+                Xóa
               </Button>
             </Space>
           </Space>
@@ -214,7 +235,7 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
       setLoading(true)
       await form.validateFields()
       const values = form.getFieldsValue()
-      const randomCode = `PRJ-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`
+      const randomCode = `PRJ${Date.now()}${Math.floor(1000 + Math.random() * 9000)}`
       const membersPayload: IProjectMember[] = members.map((m) => ({
         id: m.id,
         name: m.fullName,
@@ -223,9 +244,9 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
       const pmMember = members.find((m) => m.access === 'PM')
       const payload: IProject = {
         id: 0,
-        name: values.title?.trim(),
+        name: values.name?.trim(),
         code: randomCode,
-        description: values.desc?.trim(),
+        description: values.description?.trim(),
         status: 'NEW',
         createdDate: new Date().toISOString().slice(0, 10),
         endDate: '',
@@ -243,61 +264,64 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
       }
       await createProjectApi(payload)
       setLoading(false)
-      setSuccessModal(true)
-      setTimeout(() => {
-        setSuccessModal(false)
-        onSuccess && onSuccess()
-        window.location.reload()
-        onClose()
-      }, 2000)
+      notification.success({
+        message: 'Hoàn thành!',
+        description: 'Tạo dự án thành công.',
+      })
+      onSuccess && onSuccess()
+      onClose()
     } catch (e) {
       setLoading(false)
-      message.error('Failed to create project')
+      notification.error({
+        message: 'Tạo dự án thất bại',
+      })
     }
   }
 
   return (
     <>
-      <Modal open={open} onCancel={onClose} footer={null} title="Create a new project" width={600}>
+      {notificationContext}
+      <Modal
+        open={open}
+        onCancel={() => {
+          onClose()
+        }}
+        afterClose={resetModal}
+        footer={null}
+        title="Tạo dự án mới"
+        width={600}
+      >
         <Steps current={current} style={{ marginBottom: 24 }}>
-          <Step title="Project Details" />
-          <Step title="Tools" />
-          <Step title="Add Members" />
+          <Step title="Thông tin dự án" />
+          <Step title="Công cụ" />
+          <Step title="Thành viên" />
         </Steps>
         <Form form={form} layout="vertical" initialValues={{}}>
-          <div style={{ minHeight: 180, marginBottom: 24 }}>{stepContent[current]}</div>
+          <div style={{ minHeight: 180, marginBottom: 24 }}>
+            {stepContent.map((content, idx) => (
+              <div key={idx} style={{ display: current === idx ? 'block' : 'none' }}>
+                {content}
+              </div>
+            ))}
+          </div>
           <div style={{ textAlign: 'right' }}>
             {current > 0 && (
               <Button style={{ marginRight: 8 }} onClick={handlePrev}>
-                Back
+                Quay lại
               </Button>
             )}
             {current < stepContent.length - 1 && (
               <Button type="primary" onClick={handleNext}>
-                Next
+                Tiếp tục
               </Button>
             )}
             {current === stepContent.length - 1 && (
               <Button type="primary" loading={loading} onClick={handleFinish}>
-                Create Project
+                Tạo dự án
               </Button>
             )}
           </div>
         </Form>
-      </Modal>
-      <Modal
-        open={successModal}
-        footer={null}
-        closable={false}
-        centered
-        width={350}
-        styles={{ body: { textAlign: 'center', padding: 32 } }}
-      >
-        <div style={{ fontSize: 32, color: '#52c41a', marginBottom: 16 }}>✔</div>
-        <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 8 }}>
-          Project created successfully!
-        </div>
-        <div style={{ color: '#888' }}>This dialog will close automatically.</div>
       </Modal>
     </>
   )

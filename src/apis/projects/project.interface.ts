@@ -18,6 +18,6 @@ export interface IProjectMember {
   name: string
   avatar: string
   email?: string
-  role?: string
-  access?: string
+  role?: string //LEAD, MEMBER (PM sẽ null)
+  job?: string //BA, QC, DEV (PM sẽ null)
 }

@@ -32,7 +32,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <div style={{ fontSize: 12, color: '#888' }}>Cập nhật {dayjs(updatedAt).fromNow()}.</div>
       <Tooltip title={pmName}>
-        <Avatar src={pmAvatarUrl} size={32} />
+        <Avatar
+          src={
+            pmAvatarUrl?.trim()
+              ? pmAvatarUrl
+              : 'https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png'
+          }
+          size={32}
+        />
       </Tooltip>
     </div>
   </Card>

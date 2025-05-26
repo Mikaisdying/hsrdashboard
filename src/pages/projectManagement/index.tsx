@@ -19,16 +19,20 @@ export const ProjectList = () => {
   const [loadingArchived, setLoadingArchived] = useState(true)
   const [showAddModal, setShowAddModal] = useState(false)
 
-  const handleProjectCreated = useCallback(() => {
-    // Optionally, reload projects here
-  }, [])
-
-  useEffect(() => {
+  // Tách hàm fetchOnPlan
+  const fetchOnPlan = useCallback(() => {
     setLoadingOnPlan(true)
     getProjectsOnPlan()
       .then(setOnPlan)
       .finally(() => setLoadingOnPlan(false))
+  }, [])
 
+  const handleProjectCreated = useCallback(() => {
+    fetchOnPlan()
+  }, [fetchOnPlan])
+
+  useEffect(() => {
+    fetchOnPlan()
     setLoadingInProgress(true)
     getProjectsInProgress()
       .then(setInProgress)
@@ -38,7 +42,7 @@ export const ProjectList = () => {
     getProjectsArchived()
       .then(setArchived)
       .finally(() => setLoadingArchived(false))
-  }, [])
+  }, [fetchOnPlan])
 
   return (
     <div className="p-4">
@@ -82,7 +86,9 @@ export const ProjectList = () => {
                 justifyContent: 'center',
               }}
             >
-              <ScheduleOutlined style={{ marginRight: 8 }} />
+              <ScheduleOutlined
+                style={{ marginRight: 8, color: '#1890ff', fontWeight: 700, fontSize: 20 }}
+              />
               ON PLAN
               <span style={{ fontWeight: 400, marginLeft: 8 }}>({onPlan.length})</span>
             </span>
@@ -151,7 +157,9 @@ export const ProjectList = () => {
                 justifyContent: 'center',
               }}
             >
-              <SyncOutlined style={{ marginRight: 8 }} />
+              <SyncOutlined
+                style={{ marginRight: 8, color: '#faad14', fontWeight: 700, fontSize: 20 }}
+              />
               IN PROGRESS
               <span style={{ fontWeight: 400, marginLeft: 8 }}>({inProgress.length})</span>
             </span>
@@ -206,7 +214,9 @@ export const ProjectList = () => {
                 justifyContent: 'center',
               }}
             >
-              <CiOutlined style={{ marginRight: 8 }} />
+              <CiOutlined
+                style={{ marginRight: 8, color: '#bfbfbf', fontWeight: 700, fontSize: 20 }}
+              />
               ARCHIVED
               <span style={{ fontWeight: 400, marginLeft: 8 }}>({archived.length})</span>
             </span>
