@@ -9,6 +9,7 @@ import {
 } from '../../apis/projects/project.api'
 import type { IProject } from '../../apis/projects/project.interface'
 import AddProjectModal from './addProjectModal'
+import { useNavigate } from 'react-router-dom'
 
 export const ProjectList = () => {
   const [onPlan, setOnPlan] = useState<IProject[]>([])
@@ -18,8 +19,8 @@ export const ProjectList = () => {
   const [loadingInProgress, setLoadingInProgress] = useState(true)
   const [loadingArchived, setLoadingArchived] = useState(true)
   const [showAddModal, setShowAddModal] = useState(false)
+  const navigate = useNavigate()
 
-  // Tách hàm fetchOnPlan
   const fetchOnPlan = useCallback(() => {
     setLoadingOnPlan(true)
     getProjectsOnPlan()
@@ -112,6 +113,7 @@ export const ProjectList = () => {
                     updatedAt={item.updatedAt}
                     pmName={item.pm?.name || ''}
                     pmAvatarUrl={item.pm?.avatar || ''}
+                    onClick={() => navigate(`/projects/${item.id}`)}
                   />
                 ))}
           </div>
@@ -183,6 +185,7 @@ export const ProjectList = () => {
                     updatedAt={item.updatedAt}
                     pmName={item.pm?.name || ''}
                     pmAvatarUrl={item.pm?.avatar || ''}
+                    onClick={() => navigate(`/projects/${item.id}`)}
                   />
                 ))}
           </div>
@@ -240,6 +243,7 @@ export const ProjectList = () => {
                     updatedAt={item.updatedAt}
                     pmName={item.pm?.name || ''}
                     pmAvatarUrl={item.pm?.avatar || ''}
+                    onClick={() => navigate(`/projects/${item.id}`)}
                   />
                 ))}
           </div>

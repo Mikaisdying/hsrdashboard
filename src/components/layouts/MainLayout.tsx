@@ -46,7 +46,8 @@ const MainLayout: React.FC = () => {
 
   return (
     <ProLayout
-      title="HRM Dashboard"
+      logo={'/logo.svg'}
+      title={false}
       layout="mix"
       fixSiderbar
       location={{ pathname }}

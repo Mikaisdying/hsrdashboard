@@ -1,3 +1,5 @@
+import type { ITask } from '../tasks/task.interface'
+
 export interface IProject {
   id: number
   name: string
@@ -11,6 +13,7 @@ export interface IProject {
   link: string[]
   pm?: IProjectMember
   members: IProjectMember[]
+  tasks?: ITask[]
 }
 
 export interface IProjectMember {

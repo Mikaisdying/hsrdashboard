@@ -16,6 +16,7 @@ import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import Dashboard from '../pages/dashboard'
 import { ProjectList } from '../pages/projectManagement'
+import ProjectDetailsPage from '../pages/projectManagement/projectDetails'
 
 // Dummy pages
 const createPage = (label: string) => () => <div>{label}</div>
@@ -64,6 +65,13 @@ const routes = [
     layout: 'main',
     label: 'Quản lý dự án',
     icon: <ProjectOutlined />,
+    roles: ['SA', 'PM'],
+  },
+  {
+    path: '/projects/:id',
+    element: <ProjectDetailsPage />,
+    layout: 'main',
+    hidden: true,
     roles: ['SA', 'PM'],
   },
   {
