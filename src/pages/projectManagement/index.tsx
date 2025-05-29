@@ -1,56 +1,45 @@
 import { Button, Skeleton } from 'antd'
 import { ScheduleOutlined, SyncOutlined, CiOutlined } from '@ant-design/icons'
 import ProjectCard from '../../components/projectCard'
-import { useEffect, useState, useCallback } from 'react'
+import { useState } from 'react'
 import {
   getProjectsOnPlan,
   getProjectsInProgress,
   getProjectsArchived,
 } from '../../apis/projects/project.api'
-import type { IProject } from '../../apis/projects/project.interface'
 import AddProjectModal from './addProjectModal'
 import { useNavigate } from 'react-router-dom'
+import { useFetch } from '../../hooks/useFetch'
 
 export const ProjectList = () => {
-  const [onPlan, setOnPlan] = useState<IProject[]>([])
-  const [inProgress, setInProgress] = useState<IProject[]>([])
-  const [archived, setArchived] = useState<IProject[]>([])
-  const [loadingOnPlan, setLoadingOnPlan] = useState(true)
-  const [loadingInProgress, setLoadingInProgress] = useState(true)
-  const [loadingArchived, setLoadingArchived] = useState(true)
+  const {
+    data: onPlan,
+    loading: loadingOnPlan,
+    error: errorOnPlan,
+  } = useFetch(getProjectsOnPlan, [])
+  const {
+    data: inProgress,
+    loading: loadingInProgress,
+    error: errorInProgress,
+  } = useFetch(getProjectsInProgress, [])
+  const {
+    data: archived,
+    loading: loadingArchived,
+    error: errorArchived,
+  } = useFetch(getProjectsArchived, [])
   const [showAddModal, setShowAddModal] = useState(false)
   const navigate = useNavigate()
 
-  const fetchOnPlan = useCallback(() => {
-    setLoadingOnPlan(true)
-    getProjectsOnPlan()
-      .then(setOnPlan)
-      .finally(() => setLoadingOnPlan(false))
-  }, [])
-
-  const handleProjectCreated = useCallback(() => {
-    fetchOnPlan()
-  }, [fetchOnPlan])
-
-  useEffect(() => {
-    fetchOnPlan()
-    setLoadingInProgress(true)
-    getProjectsInProgress()
-      .then(setInProgress)
-      .finally(() => setLoadingInProgress(false))
-
-    setLoadingArchived(true)
-    getProjectsArchived()
-      .then(setArchived)
-      .finally(() => setLoadingArchived(false))
-  }, [fetchOnPlan])
+  if (errorOnPlan || errorInProgress || errorArchived) {
+    return <div>Error loading project data</div>
+  }
 
   return (
     <div className="p-4">
       <AddProjectModal
         open={showAddModal}
         onClose={() => setShowAddModal(false)}
-        onSuccess={handleProjectCreated}
+        onSuccess={() => window.location.reload()}
       />
       <div
         style={{
@@ -91,7 +80,7 @@ export const ProjectList = () => {
                 style={{ marginRight: 8, color: '#1890ff', fontWeight: 700, fontSize: 20 }}
               />
               ON PLAN
-              <span style={{ fontWeight: 400, marginLeft: 8 }}>({onPlan.length})</span>
+              <span style={{ fontWeight: 400, marginLeft: 8 }}>({onPlan?.length || 0})</span>
             </span>
           </div>
           <div
@@ -105,7 +94,7 @@ export const ProjectList = () => {
               ? Array.from({ length: 2 }).map((_, idx) => (
                   <Skeleton key={idx} active paragraph={{ rows: 2 }} />
                 ))
-              : onPlan.map((item) => (
+              : (onPlan || []).map((item) => (
                   <ProjectCard
                     key={item.id}
                     title={item.name}
@@ -131,7 +120,6 @@ export const ProjectList = () => {
             New Project
           </Button>
         </div>
-
         {/* In Progress */}
         <div
           style={{
@@ -163,7 +151,7 @@ export const ProjectList = () => {
                 style={{ marginRight: 8, color: '#faad14', fontWeight: 700, fontSize: 20 }}
               />
               IN PROGRESS
-              <span style={{ fontWeight: 400, marginLeft: 8 }}>({inProgress.length})</span>
+              <span style={{ fontWeight: 400, marginLeft: 8 }}>({inProgress?.length || 0})</span>
             </span>
           </div>
           <div
@@ -177,7 +165,7 @@ export const ProjectList = () => {
               ? Array.from({ length: 2 }).map((_, idx) => (
                   <Skeleton key={idx} active paragraph={{ rows: 2 }} />
                 ))
-              : inProgress.map((item) => (
+              : (inProgress || []).map((item) => (
                   <ProjectCard
                     key={item.id}
                     title={item.name}
@@ -221,7 +209,7 @@ export const ProjectList = () => {
                 style={{ marginRight: 8, color: '#bfbfbf', fontWeight: 700, fontSize: 20 }}
               />
               ARCHIVED
-              <span style={{ fontWeight: 400, marginLeft: 8 }}>({archived.length})</span>
+              <span style={{ fontWeight: 400, marginLeft: 8 }}>({archived?.length || 0})</span>
             </span>
           </div>
           <div
@@ -235,7 +223,7 @@ export const ProjectList = () => {
               ? Array.from({ length: 2 }).map((_, idx) => (
                   <Skeleton key={idx} active paragraph={{ rows: 2 }} />
                 ))
-              : archived.map((item) => (
+              : (archived || []).map((item) => (
                   <ProjectCard
                     key={item.id}
                     title={item.name}
