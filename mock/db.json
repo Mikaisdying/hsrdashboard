@@ -636,6 +636,22 @@
       "job": "PM"
     }
   ],
+  "auth": [
+    {
+      "id": 1,
+      "password": "password123",
+      "token": "token_nguyenvana",
+      "fullName": "Nguyễn Văn A",
+      "email": "nguyenvana@example.com"
+    },
+    {
+      "id": 2,
+      "password": "password456",
+      "token": "token_tranthib",
+      "fullName": "Trần Thị B",
+      "email": "tranthib@example.com"
+    }
+  ],
   "messages": [
     {
       "id": "1",

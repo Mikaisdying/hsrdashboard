@@ -13,6 +13,7 @@ import { Outlet } from 'react-router-dom'
 
 // Pages
 import Login from '../pages/auth/Login'
+import Register from '../pages/auth/Register'
 import Dashboard from '../pages/dashboard'
 import { ProjectList } from '../pages/projectManagement'
 
@@ -44,7 +45,11 @@ const routes = [
     element: <Login />,
     layout: 'none',
   },
-
+  {
+    path: '/register',
+    element: <Register />,
+    layout: 'none',
+  },
   {
     path: '/',
     element: <Dashboard />,

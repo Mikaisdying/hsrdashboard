@@ -1,6 +1,8 @@
 import React from 'react'
 import { Card, Avatar, Tooltip } from 'antd'
-import dayjs from '../utils/days'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 interface ProjectCardProps {
   title: string
@@ -30,7 +32,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       {description?.trim() ? description : 'Chưa có mô tả chung'}
     </div>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <div style={{ fontSize: 12, color: '#888' }}>Cập nhật {dayjs(updatedAt).fromNow()}.</div>
+      <div style={{ fontSize: 12, color: '#888' }}>
+        Cập nhật {dayjs(updatedAt).locale('vi').fromNow()}.
+      </div>
       <Tooltip title={pmName}>
         <Avatar
           src={

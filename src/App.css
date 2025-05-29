@@ -42,3 +42,9 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(87, 87, 87, 0.103) transparent;
 }
+
+.ant-pro-global-header-header-actions-item > * {
+  padding-inline: 0px;
+  padding-block: 0px;
+  border-radius: 50%;
+}

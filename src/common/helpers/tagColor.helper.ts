@@ -1,5 +1,5 @@
-import { PriorityEnum } from '../enums/priority.enum'
-import { TaskTypeEnum } from '../enums/task-type.enum'
+import { PriorityEnum } from '../enums'
+import { TaskTypeEnum } from '../enums'
 
 export const priorityTagColorMap: Record<PriorityEnum, string> = {
   CRITICAL: 'red-6',

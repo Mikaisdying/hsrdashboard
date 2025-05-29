@@ -5,3 +5,5 @@ export interface IMember {
   avatar?: string
   job?: string
 }
+
+export type IUser = IMember

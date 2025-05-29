@@ -15,13 +15,18 @@ const MainLayout: React.FC = () => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false)
   const proLayoutToken = useContext(ProLayoutTokenContext)
 
+  const user = JSON.parse(localStorage.getItem('user') || '{}')
+  const userName = user.fullName || user.email || 'Tài khoản'
+  const userAvatar = user.avatar || undefined
+
   const handleLogout = () => {
     setPopoverOpen(false)
     setLogoutModalOpen(true)
   }
 
-  const confirmLogout = () => {
+  const confirmLogout = async () => {
     setLogoutModalOpen(false)
+    localStorage.removeItem('user')
     navigate('/login')
   }
 
@@ -61,17 +66,9 @@ const MainLayout: React.FC = () => {
           key="avatar-popover"
           content={
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0' }}>
-                <Avatar
-                  style={{
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                  icon={<UserOutlined />}
-                />
-                <span>Tài khoản</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Avatar src={userAvatar} icon={!userAvatar && <UserOutlined />} />
+                <span>{userName}</span>
               </div>
               <Divider style={{ margin: '8px 0' }} />
               <div
@@ -96,13 +93,10 @@ const MainLayout: React.FC = () => {
           onOpenChange={setPopoverOpen}
         >
           <Avatar
-            style={{
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            icon={<UserOutlined />}
+            size={'large'}
+            src={userAvatar}
+            icon={!userAvatar && <UserOutlined />}
+            style={{ marginRight: 40 }}
           />
         </Popover>,
         <Modal

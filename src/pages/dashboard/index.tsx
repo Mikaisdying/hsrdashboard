@@ -8,7 +8,7 @@ import type { LineChartData, PieChartData } from '../../apis/charts/chart.interf
 const DashboardPage = () => {
   const [lineData, setLineData] = useState<LineChartData[]>([])
   const [pieData, setPieData] = useState<PieChartData[]>([])
-  const [loading, setLoading] = useState(true)
+  const [, /* loading */ setLoading] = useState(true)
 
   useEffect(() => {
     setLoading(true)
