@@ -106,12 +106,43 @@
       "members": []
     },
     {
-      "id": 0,
+      "id": "0",
       "name": "Xuân",
       "code": "PRJ17482764880035328",
       "description": "ffsfdgesf",
       "status": "NEW",
       "createdDate": "2025-05-26",
+      "endDate": "",
+      "budget": 0,
+      "updatedAt": "",
+      "link": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "pm": {
+        "id": "1",
+        "name": "Nguyễn Văn A",
+        "avatar": "https://i.pravatar.cc/150?img=1"
+      },
+      "members": [
+        {
+          "id": "1",
+          "name": "Nguyễn Văn A",
+          "avatar": "https://i.pravatar.cc/150?img=1"
+        }
+      ]
+    },
+    {
+      "id": 0,
+      "name": "eifjeoif",
+      "code": "PRJ17489270203128718",
+      "description": "gsgvsgvv",
+      "status": "NEW",
+      "createdDate": "2025-06-03",
       "endDate": "",
       "budget": 0,
       "updatedAt": "",
@@ -669,14 +700,14 @@
   ],
   "auth": [
     {
-      "id": 1,
+      "id": "1",
       "password": "password123",
       "token": "token_nguyenvana",
       "fullName": "Nguyễn Văn A",
       "email": "nguyenvana@example.com"
     },
     {
-      "id": 2,
+      "id": "2",
       "password": "password456",
       "token": "token_tranthib",
       "fullName": "Trần Thị B",

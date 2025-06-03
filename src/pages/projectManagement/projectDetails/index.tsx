@@ -23,6 +23,8 @@ import {
 import { getProjectById } from '../../../apis/projects/project.api'
 import type { IProject } from '../../../apis/projects/project.interface'
 import TaskCard from '../../../components/taskCard'
+import AddTaskModal from '../../../components/taskModal'
+import { createTaskApi } from '../../../apis/tasks/task.api'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -36,6 +38,8 @@ const ProjectDetailsPage: React.FC = () => {
   const { id } = useParams()
   const [project, setProject] = useState<IProject | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showAddTask, setShowAddTask] = useState(false)
+  const [taskLoading, setTaskLoading] = useState(false)
 
   useEffect(() => {
     if (!id) return
@@ -45,13 +49,32 @@ const ProjectDetailsPage: React.FC = () => {
       .finally(() => setLoading(false))
   }, [id])
 
+  const handleAddTask = async (values: any) => {
+    if (!project) return
+    setTaskLoading(true)
+    await createTaskApi({
+      name: values.name,
+      description: values.description,
+      deadline: values.deadline,
+      assigneeIds: values.assignees,
+      projectId: project.id,
+    })
+    setTaskLoading(false)
+    setShowAddTask(false)
+    // Reload project to get new tasks
+    setLoading(true)
+    getProjectById(project.id)
+      .then(setProject)
+      .finally(() => setLoading(false))
+  }
+
   if (loading || !project) {
     return <Skeleton active paragraph={{ rows: 6 }} />
   }
 
   return (
     <div>
-      {/* Header: Tên, mô tả, trạng thái, mời thành viên */}
+      {/* Header*/}
       <Row align="middle" justify="space-between" style={{ marginBottom: 24 }}>
         <Col>
           <Space align="center">
@@ -87,9 +110,21 @@ const ProjectDetailsPage: React.FC = () => {
       <Row gutter={24}>
         {/* Left: Danh sách TaskCard */}
         <Col flex={6}>
-          <Title level={5} style={{ marginBottom: 16 }}>
-            <UnorderedListOutlined /> Danh sách công việc
-          </Title>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 16,
+            }}
+          >
+            <Title level={5} style={{ marginBottom: 0 }}>
+              <UnorderedListOutlined /> Danh sách công việc
+            </Title>
+            <Button type="dashed" onClick={() => setShowAddTask(true)} loading={taskLoading}>
+              + Thêm Task
+            </Button>
+          </div>
           {project.tasks && project.tasks.length > 0 ? (
             <Row gutter={[16, 16]}>
               {project.tasks.map((task) => (
@@ -101,6 +136,17 @@ const ProjectDetailsPage: React.FC = () => {
           ) : (
             <Text type="secondary">Chưa có công việc nào</Text>
           )}
+          <AddTaskModal
+            open={showAddTask}
+            onClose={() => setShowAddTask(false)}
+            onSuccess={() => {
+              setLoading(true)
+              getProjectById(project.id)
+                .then(setProject)
+                .finally(() => setLoading(false))
+            }}
+            membersOptions={project.members?.map((m) => ({ label: m.name, value: m.id })) || []}
+          />
         </Col>
         <Col>
           <Divider type="vertical" style={{ height: '100%' }} />
