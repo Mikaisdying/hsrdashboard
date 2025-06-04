@@ -9,6 +9,7 @@ interface AddTaskModalProps {
   onClose: () => void
   onSuccess?: () => void
   membersOptions?: { label: string; value: number }[]
+  onSubmit?: (values: any) => Promise<void>
 }
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({
@@ -16,6 +17,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
   onClose,
   onSuccess,
   membersOptions = [],
+  onSubmit,
 }) => {
   const [current, setCurrent] = useState(0)
   const [form] = Form.useForm()
@@ -34,7 +36,12 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
     try {
       setLoading(true)
       await form.validateFields()
-      // TODO: Call createTask API here
+      const values = form.getFieldsValue()
+      if (onSubmit) {
+        await onSubmit(values)
+      } else {
+        // TODO: Call createTask API here (fallback)
+      }
       setLoading(false)
       notification.success({ message: 'Tạo task thành công!' })
       onSuccess && onSuccess()

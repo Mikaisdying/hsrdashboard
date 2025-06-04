@@ -1,6 +1,8 @@
 import jsonServer from 'json-server'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import express from 'express'
+const authMock = require('./auth')
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -25,6 +27,8 @@ server.post('/login', (req, res) => {
   }
 })
 
+server.use(express.json())
+server.use(authMock)
 server.use(router)
 
 server.listen(3001, () => {

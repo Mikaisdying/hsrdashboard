@@ -41,40 +41,40 @@ const ProjectDetailsPage: React.FC = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [taskLoading, setTaskLoading] = useState(false)
 
-  useEffect(() => {
-    if (!id) return
+  // Reload project
+  const reloadProject = (projectId: string) => {
     setLoading(true)
-    getProjectById(id)
+    getProjectById(projectId)
       .then(setProject)
       .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    if (id) reloadProject(id)
   }, [id])
 
   const handleAddTask = async (values: any) => {
     if (!project) return
     setTaskLoading(true)
-    await createTaskApi({
-      name: values.name,
-      description: values.description,
-      deadline: values.deadline,
-      assigneeIds: values.assignees,
-      projectId: project.id,
-    })
-    setTaskLoading(false)
-    setShowAddTask(false)
-    // Reload project to get new tasks
-    setLoading(true)
-    getProjectById(project.id)
-      .then(setProject)
-      .finally(() => setLoading(false))
+    try {
+      await createTaskApi({
+        name: values.name,
+        description: values.description,
+        deadline: values.deadline,
+        assigneeIds: values.assignees,
+        projectId: project.id,
+      })
+    } finally {
+      setTaskLoading(false)
+      setShowAddTask(false)
+    }
   }
 
-  if (loading || !project) {
-    return <Skeleton active paragraph={{ rows: 6 }} />
-  }
+  if (loading || !project) return <Skeleton active paragraph={{ rows: 6 }} />
 
   return (
     <div>
-      {/* Header*/}
+      {/* Header */}
       <Row align="middle" justify="space-between" style={{ marginBottom: 24 }}>
         <Col>
           <Space align="center">
@@ -108,7 +108,7 @@ const ProjectDetailsPage: React.FC = () => {
       </Row>
       <Divider />
       <Row gutter={24}>
-        {/* Left: Danh sách TaskCard */}
+        {/* Task List */}
         <Col flex={6}>
           <div
             style={{
@@ -125,7 +125,7 @@ const ProjectDetailsPage: React.FC = () => {
               + Thêm Task
             </Button>
           </div>
-          {project.tasks && project.tasks.length > 0 ? (
+          {project.tasks?.length ? (
             <Row gutter={[16, 16]}>
               {project.tasks.map((task) => (
                 <Col span={12} key={task.id}>
@@ -139,19 +139,15 @@ const ProjectDetailsPage: React.FC = () => {
           <AddTaskModal
             open={showAddTask}
             onClose={() => setShowAddTask(false)}
-            onSuccess={() => {
-              setLoading(true)
-              getProjectById(project.id)
-                .then(setProject)
-                .finally(() => setLoading(false))
-            }}
+            onSuccess={() => project && reloadProject(String(project.id))}
+            onSubmit={handleAddTask}
             membersOptions={project.members?.map((m) => ({ label: m.name, value: m.id })) || []}
           />
         </Col>
         <Col>
           <Divider type="vertical" style={{ height: '100%' }} />
         </Col>
-        {/* Right: Thông tin dự án, PM, Thành viên */}
+        {/* Project Info, PM, Members */}
         <Col flex={2}>
           <Descriptions
             title="Thông tin dự án"
@@ -167,7 +163,7 @@ const ProjectDetailsPage: React.FC = () => {
               {project.budget?.toLocaleString()} VND
             </Descriptions.Item>
             <Descriptions.Item label="Liên kết">
-              {project.link && project.link.length > 0 && project.link.some((l) => l) ? (
+              {project.link?.filter(Boolean).length ? (
                 <Space direction="vertical">
                   {project.link.filter(Boolean).map((l, idx) => (
                     <a key={idx} href={l} target="_blank" rel="noopener noreferrer">
@@ -194,7 +190,7 @@ const ProjectDetailsPage: React.FC = () => {
             <Title level={5}>
               <TeamOutlined /> Thành viên
             </Title>
-            {project.members && project.members.length > 0 ? (
+            {project.members?.length ? (
               <List
                 itemLayout="horizontal"
                 dataSource={project.members}

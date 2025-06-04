@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3001'
+const BASE_URL = ''
 const TIMEOUT = 10000
 
 function resolveUrlWithParams(url: string, pathParams?: Record<string, string | number>) {

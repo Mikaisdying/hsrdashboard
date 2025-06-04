@@ -12,15 +12,13 @@ import {
 import { Outlet } from 'react-router-dom'
 
 // Pages
-import Login from '../pages/auth/Login'
-import Register from '../pages/auth/Register'
+import Login from '../pages/auth'
 import Dashboard from '../pages/dashboard'
 import { ProjectList } from '../pages/projectManagement'
 import ProjectDetailsPage from '../pages/projectManagement/projectDetails'
 
 // Dummy pages
 const createPage = (label: string) => () => <div>{label}</div>
-
 const TaskList = createPage('Task List Page')
 const TaskDetail = createPage('Task Detail Page')
 const QcTestList = createPage('QC Test List Page')
@@ -41,16 +39,13 @@ const SettingPage = createPage('System - Settings Page')
 const WorkflowPage = createPage('System - Workflow Page')
 
 const routes = [
+  // Auth
   {
     path: '/login',
     element: <Login />,
     layout: 'none',
   },
-  {
-    path: '/register',
-    element: <Register />,
-    layout: 'none',
-  },
+  // Dashboard
   {
     path: '/',
     element: <Dashboard />,
@@ -59,6 +54,7 @@ const routes = [
     icon: <DashboardOutlined />,
     roles: ['SA', 'PM', 'DE', 'QC'],
   },
+  // Project Management
   {
     path: '/projects',
     element: <ProjectList />,
@@ -74,6 +70,7 @@ const routes = [
     hidden: true,
     roles: ['SA', 'PM'],
   },
+  // Task
   {
     path: '/tasks',
     element: <TaskList />,
@@ -89,6 +86,7 @@ const routes = [
     hidden: true,
     roles: ['SA', 'PM', 'DE', 'QC'],
   },
+  // QC
   {
     path: '/qc/tests',
     element: <QcTestList />,
@@ -104,6 +102,7 @@ const routes = [
     hidden: true,
     roles: ['QC'],
   },
+  // Document
   {
     path: '/documents',
     element: <DocumentList />,
@@ -112,6 +111,7 @@ const routes = [
     icon: <FileTextOutlined />,
     roles: ['SA', 'PM', 'DE', 'QC'],
   },
+  // Member
   {
     path: '/members',
     element: <MemberList />,
@@ -120,6 +120,7 @@ const routes = [
     icon: <TeamOutlined />,
     roles: ['SA'],
   },
+  // Notification
   {
     path: '/notifications',
     element: <NotificationPage />,
@@ -128,6 +129,7 @@ const routes = [
     icon: <BellOutlined />,
     roles: ['SA', 'PM', 'DE', 'QC'],
   },
+  // System
   {
     path: '/system',
     element: <SystemLayout />,
