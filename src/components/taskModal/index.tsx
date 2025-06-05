@@ -8,14 +8,18 @@ interface AddTaskModalProps {
   open: boolean
   onClose: () => void
   onSuccess?: () => void
+  onFinish?: (values: any) => Promise<void>
   membersOptions?: { label: string; value: number }[]
+  loading?: boolean
 }
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({
   open,
   onClose,
   onSuccess,
+  onFinish,
   membersOptions = [],
+  loading: loadingProp,
 }) => {
   const [current, setCurrent] = useState(0)
   const [form] = Form.useForm()
@@ -34,7 +38,10 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
     try {
       setLoading(true)
       await form.validateFields()
-      // TODO: Call createTask API here
+      const values = form.getFieldsValue()
+      if (onFinish) {
+        await onFinish(values)
+      }
       setLoading(false)
       notification.success({ message: 'Tạo task thành công!' })
       onSuccess && onSuccess()
@@ -95,7 +102,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           {current === stepContent.length - 1 && (
             <Button
               type="primary"
-              loading={loading}
+              loading={typeof loadingProp === 'boolean' ? loadingProp : loading}
               onClick={async () => {
                 // Trim giá trị trước khi validate
                 const values = form.getFieldsValue()
