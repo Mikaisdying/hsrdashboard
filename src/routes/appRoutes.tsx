@@ -22,8 +22,6 @@ const createPage = (label: string) => () => <div>{label}</div>
 
 const TaskList = createPage('Task List Page')
 const TaskDetail = createPage('Task Detail Page')
-const QcTestList = createPage('QC Test List Page')
-const QcReport = createPage('QC Report Page')
 const DocumentList = createPage('Document List Page')
 const MemberList = createPage('Member List Page')
 const NotificationPage = createPage('Notification Page')
@@ -82,21 +80,6 @@ const routes = [
     layout: 'main',
     hidden: true,
     roles: ['SA', 'PM', 'DE', 'QC'],
-  },
-  {
-    path: '/qc/tests',
-    element: <QcTestList />,
-    layout: 'main',
-    label: 'Kiểm thử & QC',
-    icon: <CheckCircleOutlined />,
-    roles: ['QC'],
-  },
-  {
-    path: '/qc/reports',
-    element: <QcReport />,
-    layout: 'main',
-    hidden: true,
-    roles: ['QC'],
   },
   {
     path: '/documents',

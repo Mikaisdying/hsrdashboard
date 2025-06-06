@@ -124,7 +124,15 @@ const MainLayout: React.FC = () => {
       }
       token={proLayoutToken}
     >
-      <PageContainer>
+      <PageContainer
+        style={{
+          height: '100%',
+          minHeight: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
         <Outlet />
       </PageContainer>
     </ProLayout>

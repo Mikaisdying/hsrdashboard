@@ -19,61 +19,7 @@
         "avatar": "https://i.pravatar.cc/150?img=1",
         "email": "nguyenvana@example.com"
       },
-      "members": [],
-      "works": [
-        {
-          "id": "work1",
-          "name": "UI Design",
-          "tasks": [
-            {
-              "id": "task1",
-              "name": "Create wireframes",
-              "description": "Design wireframes for the dashboard."
-            },
-            {
-              "id": "task2",
-              "name": "Design mockups",
-              "description": "Create high-fidelity mockups."
-            },
-            {
-              "id": "task3",
-              "name": "Review UI with team",
-              "description": "Team review and feedback on UI."
-            },
-            {
-              "id": "task4",
-              "name": "Update UI based on feedback",
-              "description": "Revise UI after team review."
-            },
-            {
-              "id": "task5",
-              "name": "Export UI assets",
-              "description": "Export images and icons for development."
-            },
-            {
-              "id": "task6",
-              "name": "Prepare UI documentation",
-              "description": "Document UI guidelines and usage."
-            }
-          ]
-        },
-        {
-          "id": "work2",
-          "name": "Backend Development",
-          "tasks": [
-            {
-              "id": "task3",
-              "name": "Setup database",
-              "description": "Configure the database schema."
-            },
-            {
-              "id": "task4",
-              "name": "Develop API",
-              "description": "Build RESTful APIs."
-            }
-          ]
-        }
-      ]
+      "members": []
     },
     {
       "id": "2",
@@ -191,7 +137,7 @@
       ]
     },
     {
-      "id": 0,
+      "id": "0",
       "name": "eifjeoif",
       "code": "PRJ17489270203128718",
       "description": "gsgvsgvv",
@@ -220,494 +166,264 @@
           "avatar": "https://i.pravatar.cc/150?img=1"
         }
       ]
+    },
+    {
+      "id": "0",
+      "name": "jjj",
+      "code": "PRJ17491997517851808",
+      "description": "jjj",
+      "status": "NEW",
+      "createdDate": "2025-06-06",
+      "endDate": "",
+      "budget": 0,
+      "updatedAt": "",
+      "link": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "pm": {
+        "id": "1",
+        "name": "Nguyễn Văn A",
+        "avatar": "https://i.pravatar.cc/150?img=1"
+      },
+      "members": [
+        {
+          "id": "1",
+          "name": "Nguyễn Văn A",
+          "avatar": "https://i.pravatar.cc/150?img=1"
+        }
+      ]
+    }
+  ],
+  "works": [
+    {
+      "id": "work1",
+      "name": "UI Design",
+      "projectId": "1"
+    },
+    {
+      "id": "work2",
+      "name": "Backend Development",
+      "projectId": "1"
+    },
+    {
+      "id": "221e",
+      "name": "ff",
+      "projectId": "1"
     }
   ],
   "tasks": [
     {
       "id": "1",
-      "name": "Thiết kế UI",
-      "projectCode": "PRJ001",
-      "description": "Thiết kế giao diện",
-      "status": "NEW",
-      "createdDate": "2024-06-01",
-      "endDate": "2024-06-10",
-      "effort": 5,
-      "projectId": 1,
-      "assigneeIds": [
-        1,
-        2
-      ],
-      "creatorId": 1,
-      "deadline": "2024-06-10",
-      "confirm_required": true,
+      "name": "Create wireframes",
+      "description": "Design wireframes for the dashboard.",
+      "workId": "work1",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "HIGH",
-      "type": "FEATURE",
-      "tech_area": "FRONTEND"
+      "priority": null,
+      "type": null
     },
     {
       "id": "2",
-      "name": "Phân tích yêu cầu",
-      "projectCode": "PRJ001",
-      "description": "Phân tích nghiệp vụ",
-      "status": "WIP",
-      "createdDate": "2024-06-02",
-      "endDate": "2024-06-12",
-      "effort": 4,
-      "projectId": 1,
-      "assigneeIds": [
-        2
-      ],
-      "creatorId": 2,
-      "deadline": "2024-06-12",
-      "confirm_required": false,
+      "name": "Design mockups",
+      "description": "Create high-fidelity mockups.",
+      "workId": "work1",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "MEDIUM",
-      "type": "IMPROVE",
-      "tech_area": null
+      "priority": null,
+      "type": null
     },
     {
       "id": "3",
-      "name": "Tạo database",
-      "projectCode": "PRJ001",
-      "description": "Thiết kế CSDL",
-      "status": "NEW",
-      "createdDate": "2024-01-02",
-      "endDate": "2024-01-10",
-      "effort": 3,
-      "projectId": 1,
-      "assigneeIds": [
-        3
-      ],
-      "creatorId": 3,
-      "deadline": "2024-01-10",
-      "confirm_required": true,
+      "name": "Review UI with team",
+      "description": "Team review and feedback on UI.",
+      "workId": "work1",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "CRITICAL",
-      "type": "FEATURE",
-      "tech_area": "BACKEND"
+      "priority": null,
+      "type": null
     },
     {
       "id": "4",
-      "name": "Viết API",
-      "projectCode": "PRJ001",
-      "description": "Xây dựng API",
-      "status": "WIP",
-      "createdDate": "2024-01-11",
-      "endDate": "2024-01-20",
-      "effort": 6,
-      "projectId": 1,
-      "assigneeIds": [
-        4
-      ],
-      "creatorId": 2,
-      "deadline": "2024-01-20",
-      "confirm_required": false,
+      "name": "Update UI based on feedback",
+      "description": "Revise UI after team review.",
+      "workId": "work1",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "HIGH",
-      "type": "FEATURE",
-      "tech_area": "BACKEND"
+      "priority": null,
+      "type": null
     },
     {
       "id": "5",
-      "name": "Kiểm thử",
-      "projectCode": "PRJ001",
-      "description": "Test hệ thống",
-      "status": "NEW",
-      "createdDate": "2024-07-15",
-      "endDate": "2024-07-25",
-      "effort": 2,
-      "projectId": 1,
-      "assigneeIds": [
-        5
-      ],
-      "creatorId": 1,
-      "deadline": "2024-07-25",
-      "confirm_required": true,
+      "name": "Export UI assets",
+      "description": "Export images and icons for development.",
+      "workId": "work1",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "BUG",
-      "type": "BUG",
-      "tech_area": null
+      "priority": null,
+      "type": null
     },
     {
       "id": "6",
-      "name": "Triển khai",
-      "projectCode": "PRJ001",
-      "description": "Triển khai sản phẩm",
-      "status": "WIP",
-      "createdDate": "2024-07-26",
-      "endDate": "2024-08-05",
-      "effort": 4,
-      "projectId": 1,
-      "assigneeIds": [
-        6
-      ],
-      "creatorId": 3,
-      "deadline": "2024-08-05",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "HIGH",
-      "type": "FEATURE",
-      "tech_area": "BACKEND"
-    },
-    {
-      "id": "7",
-      "name": "Tối ưu code",
-      "projectCode": "PRJ001",
-      "description": "Tối ưu hóa",
-      "status": "WIP",
-      "createdDate": "2024-03-05",
-      "endDate": "2024-03-15",
-      "effort": 3,
-      "projectId": 1,
-      "assigneeIds": [
-        7
-      ],
-      "creatorId": 1,
-      "deadline": "2024-03-15",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "LOW",
-      "type": "IMPROVE",
-      "tech_area": null
-    },
-    {
-      "id": "8",
-      "name": "Cập nhật tài liệu",
-      "projectCode": "PRJ001",
-      "description": "Tài liệu dự án",
-      "status": "CLOSED",
-      "createdDate": "2024-03-16",
-      "endDate": "2024-03-20",
-      "effort": 2,
-      "projectId": 1,
-      "assigneeIds": [
-        8
-      ],
-      "creatorId": 2,
-      "deadline": "2024-03-20",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "LOW",
-      "type": "IMPROVE",
-      "tech_area": null
-    },
-    {
-      "id": "9",
-      "name": "Tạo báo cáo",
-      "projectCode": "PRJ001",
-      "description": "Báo cáo tiến độ",
-      "status": "NEW",
-      "createdDate": "2024-08-02",
-      "endDate": "2024-08-12",
-      "effort": 2,
-      "projectId": 1,
-      "assigneeIds": [
-        9
-      ],
-      "creatorId": 3,
-      "deadline": "2024-08-12",
-      "confirm_required": true,
-      "isConfirmed": null,
-      "priority": "BUG",
-      "type": "BUG",
-      "tech_area": null
-    },
-    {
-      "id": "10",
-      "name": "Đào tạo nội bộ",
-      "projectCode": "PRJ001",
-      "description": "Đào tạo nhân viên",
-      "status": "WIP",
-      "createdDate": "2024-08-13",
-      "endDate": "2024-08-23",
-      "effort": 4,
-      "projectId": 1,
-      "assigneeIds": [
-        10
-      ],
-      "creatorId": 2,
-      "deadline": "2024-08-23",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "FEATURE",
-      "type": "FEATURE",
-      "tech_area": "FRONTEND"
-    },
-    {
-      "id": "11",
-      "name": "Kiểm tra bảo mật",
-      "projectCode": "PRJ001",
-      "description": "Đánh giá bảo mật",
-      "status": "NEW",
-      "createdDate": "2024-02-05",
-      "endDate": "2024-02-15",
-      "effort": 3,
-      "projectId": 1,
-      "assigneeIds": [
-        11
-      ],
-      "creatorId": 1,
-      "deadline": "2024-02-15",
-      "confirm_required": true,
-      "isConfirmed": null,
-      "priority": "CRITICAL",
-      "type": "BUG",
-      "tech_area": null
-    },
-    {
-      "id": "12",
-      "name": "Cấu hình hệ thống",
-      "projectCode": "PRJ001",
-      "description": "Cấu hình phần mềm",
-      "status": "WIP",
-      "createdDate": "2024-02-16",
-      "endDate": "2024-02-26",
-      "effort": 5,
-      "projectId": 1,
-      "assigneeIds": [
-        12
-      ],
-      "creatorId": 3,
-      "deadline": "2024-02-26",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "HIGH",
-      "type": "FEATURE",
-      "tech_area": "BACKEND"
-    },
-    {
-      "id": "13",
-      "name": "Tạo tài khoản",
-      "projectCode": "PRJ001",
-      "description": "Tạo user mới",
-      "status": "NEW",
-      "createdDate": "2024-04-05",
-      "endDate": "2024-04-15",
-      "effort": 2,
-      "projectId": 1,
-      "assigneeIds": [
-        13
-      ],
-      "creatorId": 2,
-      "deadline": "2024-04-15",
-      "confirm_required": true,
-      "isConfirmed": null,
-      "priority": "BUG",
-      "type": "BUG",
-      "tech_area": null
-    },
-    {
-      "id": "14",
-      "name": "Kiểm tra dữ liệu",
-      "projectCode": "PRJ001",
-      "description": "Kiểm tra dữ liệu nhập",
-      "status": "WIP",
-      "createdDate": "2024-04-16",
-      "endDate": "2024-04-26",
-      "effort": 3,
-      "projectId": 1,
-      "assigneeIds": [
-        14
-      ],
-      "creatorId": 1,
-      "deadline": "2024-04-26",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "LOW",
-      "type": "IMPROVE",
-      "tech_area": null
-    },
-    {
-      "id": "15",
-      "name": "Tối ưu giao diện",
-      "projectCode": "PRJ001",
-      "description": "Cải thiện UI",
-      "status": "NEW",
-      "createdDate": "2024-09-05",
-      "endDate": "2024-09-15",
-      "effort": 4,
-      "projectId": 1,
-      "assigneeIds": [
-        15
-      ],
-      "creatorId": 3,
-      "deadline": "2024-09-15",
-      "confirm_required": true,
-      "isConfirmed": null,
-      "priority": "IMPROVE",
-      "type": "IMPROVE",
-      "tech_area": null
-    },
-    {
-      "id": "16",
-      "name": "Tích hợp API",
-      "projectCode": "PRJ001",
-      "description": "Tích hợp hệ thống",
-      "status": "WIP",
-      "createdDate": "2024-09-16",
-      "endDate": "2024-09-26",
-      "effort": 5,
-      "projectId": 1,
-      "assigneeIds": [
-        16
-      ],
-      "creatorId": 2,
-      "deadline": "2024-09-26",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "HIGH",
-      "type": "FEATURE",
-      "tech_area": "BACKEND"
-    },
-    {
-      "id": "17",
-      "name": "Kiểm thử chức năng",
-      "projectCode": "PRJ001",
-      "description": "Test chức năng",
-      "status": "NEW",
-      "createdDate": "2024-05-05",
-      "endDate": "2024-05-15",
-      "effort": 3,
-      "projectId": 1,
-      "assigneeIds": [
-        17
-      ],
-      "creatorId": 1,
-      "deadline": "2024-05-15",
-      "confirm_required": true,
-      "isConfirmed": null,
-      "priority": "BUG",
-      "type": "BUG",
-      "tech_area": null
-    },
-    {
-      "id": "18",
-      "name": "Cập nhật báo cáo",
-      "projectCode": "PRJ001",
-      "description": "Báo cáo tiến độ",
-      "status": "WIP",
-      "createdDate": "2024-05-16",
-      "endDate": "2024-05-26",
-      "effort": 2,
-      "projectId": 1,
-      "assigneeIds": [
-        18
-      ],
-      "creatorId": 3,
-      "deadline": "2024-05-26",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "IMPROVE",
-      "type": "IMPROVE",
-      "tech_area": null
-    },
-    {
-      "id": "19",
-      "name": "Tạo tài liệu hướng dẫn",
-      "projectCode": "PRJ001",
-      "description": "Tài liệu sử dụng",
-      "status": "CLOSED",
-      "createdDate": "2023-09-05",
-      "endDate": "2023-09-15",
-      "effort": 2,
-      "projectId": 1,
-      "assigneeIds": [
-        19
-      ],
-      "creatorId": 2,
-      "deadline": "2023-09-15",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "IMPROVE",
-      "type": "IMPROVE",
-      "tech_area": null
-    },
-    {
-      "id": "20",
-      "name": "Kiểm tra hệ thống",
-      "projectCode": "PRJ001",
-      "description": "Kiểm tra tổng thể",
-      "status": "WIP",
-      "createdDate": "2023-09-16",
-      "endDate": "2023-09-26",
-      "effort": 3,
-      "projectId": 1,
-      "assigneeIds": [
-        20
-      ],
-      "creatorId": 1,
-      "deadline": "2023-09-26",
-      "confirm_required": false,
-      "isConfirmed": null,
-      "priority": "FEATURE",
-      "type": "FEATURE",
-      "tech_area": "BACKEND"
-    },
-    {
-      "id": "21",
-      "name": "Kiểm thử giao diện",
-      "projectCode": "PRJ001",
-      "description": "QC kiểm thử UI cho dashboard",
-      "status": "NEW",
-      "createdDate": "2024-06-15",
-      "endDate": "2024-06-20",
+      "name": "Prepare UI documentation",
+      "description": "Document UI guidelines and usage.",
+      "workId": "work1",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
       "effort": null,
-      "projectId": 1,
       "assigneeIds": [],
-      "creatorId": 3,
-      "deadline": "2024-06-20",
-      "confirm_required": false,
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "MEDIUM",
-      "type": "BUG",
-      "tech_area": null
+      "priority": null,
+      "type": null
     },
     {
-      "id": "22",
-      "name": "Kiểm tra chức năng đăng nhập",
-      "projectCode": "PRJ001",
-      "description": "QC kiểm tra chức năng login",
-      "status": "NEW",
-      "createdDate": "2024-06-16",
-      "endDate": "2024-06-22",
+      "id": "3",
+      "name": "Setup database",
+      "description": "Configure the database schema.",
+      "workId": "work2",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
       "effort": null,
-      "projectId": 1,
       "assigneeIds": [],
-      "creatorId": 3,
-      "deadline": "2024-06-22",
-      "confirm_required": false,
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "HIGH",
-      "type": "BUG",
-      "tech_area": null
+      "priority": null,
+      "type": null
     },
     {
-      "id": "23",
-      "name": "Đề xuất cải tiến báo cáo",
-      "projectCode": "PRJ001",
-      "description": "QC đề xuất cải tiến module báo cáo",
-      "status": "NEW",
-      "createdDate": "2024-06-17",
-      "endDate": "2024-06-25",
+      "id": "4",
+      "name": "Develop API",
+      "description": "Build RESTful APIs.",
+      "workId": "work2",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
       "effort": null,
-      "projectId": 1,
       "assigneeIds": [],
-      "creatorId": 3,
-      "deadline": "2024-06-25",
-      "confirm_required": false,
+      "creatorId": null,
+      "confirm_required": null,
       "isConfirmed": null,
-      "priority": "LOW",
-      "type": "IMPROVE",
-      "tech_area": null
+      "priority": null,
+      "type": null
     },
     {
-      "id": "22a2",
-      "deadline": [
-        "2025-06-11T17:00:00.000Z",
-        "2025-07-15T17:00:00.000Z"
-      ],
-      "projectId": "1"
+      "id": "9b7e",
+      "name": "",
+      "description": "",
+      "deadline": null,
+      "assigneeIds": [],
+      "projectId": "1",
+      "workId": "work1",
+      "priority": null,
+      "type": null,
+      "tech_area": null,
+      "confirm_required": null,
+      "effort": null,
+      "status": "NEW",
+      "createdDate": "2025-06-06T09:27:18.550Z"
+    },
+    {
+      "id": "38c7",
+      "name": "",
+      "description": "",
+      "deadline": null,
+      "assigneeIds": [],
+      "projectId": "1",
+      "workId": "221e",
+      "priority": null,
+      "type": null,
+      "tech_area": null,
+      "confirm_required": null,
+      "effort": null,
+      "status": "NEW",
+      "createdDate": "2025-06-06T09:27:26.148Z"
+    },
+    {
+      "id": "a3b4",
+      "name": "",
+      "description": "",
+      "deadline": null,
+      "assigneeIds": [],
+      "projectId": "1",
+      "workId": "work1",
+      "priority": null,
+      "type": null,
+      "tech_area": null,
+      "confirm_required": null,
+      "effort": null,
+      "status": "NEW",
+      "createdDate": "2025-06-06T09:29:54.887Z"
+    },
+    {
+      "id": "b707",
+      "name": "",
+      "description": "",
+      "deadline": null,
+      "assigneeIds": [],
+      "projectId": "1",
+      "workId": "work2",
+      "priority": null,
+      "type": null,
+      "tech_area": null,
+      "confirm_required": null,
+      "effort": null,
+      "status": "NEW",
+      "createdDate": "2025-06-06T09:44:18.223Z"
+    },
+    {
+      "id": "c13a",
+      "name": "",
+      "description": "",
+      "deadline": null,
+      "assigneeIds": [],
+      "projectId": "1",
+      "workId": "work2",
+      "priority": null,
+      "type": null,
+      "tech_area": null,
+      "confirm_required": null,
+      "effort": null,
+      "status": "NEW",
+      "createdDate": "2025-06-06T09:45:44.688Z"
     }
   ],
   "users": [

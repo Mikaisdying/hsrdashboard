@@ -1,7 +1,5 @@
-import type { ITask } from './task.interface'
-
 export interface IWork {
-  id: string
+  id: string | number
   name: string
-  tasks: ITask[]
+  projectId: string | number
 }

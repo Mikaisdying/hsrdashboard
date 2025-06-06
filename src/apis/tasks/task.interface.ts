@@ -1,19 +1,19 @@
 export interface ITask {
-  id: number
+  id: string | number
   name: string
-  description?: string
-  deadline?: string
-  assigneeIds?: number[]
-  projectId?: number | string
-  status?: string
-  priority?: string
-  type?: string
-  createdDate?: string
-  endDate?: string
-}
-
-export interface IWork {
-  id: string
-  name: string
-  tasks: ITask[]
+  description: string
+  status: string | null
+  createdDate: string | null
+  endDate?: string | null
+  effort: number | null
+  projectId: string | number
+  workId: string | number
+  assigneeIds: (string | number)[]
+  creatorId: string | number | null
+  deadline: string | null
+  confirm_required: boolean | null
+  isConfirmed: boolean | null
+  priority: string | null
+  type: string | null
+  tech_area?: string | null
 }

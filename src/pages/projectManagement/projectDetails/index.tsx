@@ -7,9 +7,11 @@ import {
   TeamOutlined,
   UnorderedListOutlined,
 } from '@ant-design/icons'
-import { getProjectById } from '../../../apis/projects/project.api'
-import { createTaskApi } from '../../../apis/tasks/task.api'
+import { getProjectById, getProjectDetailApi } from '../../../apis/projects/project.api'
+import { handleAddTask as addTaskModalHandleAddTask } from '../../../components/taskModal/addTaskModal'
 import type { IProject } from '../../../apis/projects/project.interface'
+import type { IWork } from '../../../apis/tasks/work.interface'
+import type { ITask } from '../../../apis/tasks/task.interface'
 import ProjectTaskTab from './projectTaskTab'
 import ProjectMemberTab from './projectMemberTab'
 import AddMemberModal from './addMemberModal'
@@ -25,37 +27,30 @@ const statusColor: Record<string, string> = {
 const ProjectDetailsPage: React.FC = () => {
   const { id } = useParams()
   const [project, setProject] = useState<IProject | null>(null)
+  const [works, setWorks] = useState<IWork[]>([])
+  const [tasks, setTasks] = useState<ITask[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddTask, setShowAddTask] = useState(false)
   const [taskLoading, setTaskLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('tasks')
   const [showAddMember, setShowAddMember] = useState(false)
 
-  useEffect(() => {
+  const fetchDetail = async () => {
     if (!id) return
     setLoading(true)
-    getProjectById(id)
-      .then(setProject)
-      .finally(() => setLoading(false))
-  }, [id])
-
-  const handleAddTask = async (values: any) => {
-    if (!project) return
-    setTaskLoading(true)
-    await createTaskApi({
-      name: values.name,
-      description: values.description,
-      deadline: values.deadline,
-      assigneeIds: values.assignees,
-      projectId: project.id,
-    })
-    setTaskLoading(false)
-    setShowAddTask(false)
-    setLoading(true)
-    getProjectById(project.id)
-      .then(setProject)
-      .finally(() => setLoading(false))
+    try {
+      const detail = await getProjectDetailApi(id)
+      setProject(detail.project)
+      setWorks(detail.works)
+      setTasks(detail.tasks)
+    } finally {
+      setLoading(false)
+    }
   }
+
+  useEffect(() => {
+    fetchDetail()
+  }, [id])
 
   const handleAddMemberSuccess = () => {
     setShowAddMember(false)
@@ -66,16 +61,7 @@ const ProjectDetailsPage: React.FC = () => {
   }
 
   return (
-    <div
-      style={{
-        minHeight: 0,
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        boxSizing: 'border-box',
-      }}
-    >
+    <div style={{}}>
       <div style={{ boxSizing: 'border-box', flexShrink: 0 }}>
         {/* Header*/}
         <Row align="middle" justify="space-between">
@@ -150,13 +136,18 @@ const ProjectDetailsPage: React.FC = () => {
             >
               <ProjectTaskTab
                 project={project}
-                onAddTask={handleAddTask}
-                onSuccess={() => {
-                  setLoading(true)
-                  getProjectById(project.id)
-                    .then(setProject)
-                    .finally(() => setLoading(false))
-                }}
+                works={works}
+                tasks={tasks}
+                onAddTask={async (values: any) =>
+                  addTaskModalHandleAddTask(
+                    values,
+                    project,
+                    setTaskLoading,
+                    setShowAddTask,
+                    fetchDetail
+                  )
+                }
+                onSuccess={fetchDetail}
                 showAddTask={showAddTask}
                 setShowAddTask={setShowAddTask}
                 taskLoading={taskLoading}
