@@ -1,8 +1,7 @@
 import React from 'react'
-import { Row, Col, Typography, Button } from 'antd'
-import TaskCard from '../../../components/taskCard'
+import { Row, Col, Typography } from 'antd'
 import AddTaskModal from '../../../components/taskModal'
-import type { ITask } from '../../../apis/tasks/task.interface'
+import WorkCard from '../../../components/workCard'
 import type { IProject } from '../../../apis/projects/project.interface'
 import type { IWork } from '../../../apis/tasks/work.interface'
 
@@ -44,69 +43,11 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
           >
             {project.works.map((work: IWork) => (
               <Col flex="0 0 280px" key={work.id} style={{ minWidth: 280, maxWidth: 280 }}>
-                <div
-                  style={{
-                    border: '1px solid #222',
-                    borderRadius: '10px',
-                    padding: '4px 10px 10px 10px',
-                    background: '#18191c',
-                    minHeight: 120,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      marginBottom: 8,
-                      marginTop: 2,
-                    }}
-                  >
-                    <Typography.Title
-                      level={5}
-                      style={{
-                        margin: 5,
-                        color: '#fff',
-                        fontSize: 17,
-                        fontWeight: 700,
-                        lineHeight: '28px',
-                      }}
-                    >
-                      {work.name}
-                    </Typography.Title>
-                  </div>
-                  <div style={{ flex: 1, overflowY: 'visible', marginBottom: 0 }}>
-                    {work.tasks.map((task: ITask) => (
-                      <div
-                        key={task.id}
-                        style={{
-                          borderRadius: '4px',
-                          padding: '2px',
-                          marginBottom: '4px',
-                        }}
-                      >
-                        <TaskCard title={task.name} description={task.description} />
-                      </div>
-                    ))}
-                  </div>
-                  <Button
-                    type="dashed"
-                    block
-                    style={{
-                      marginTop: 8,
-                      color: '#fff',
-                      borderColor: '#fff',
-                      background: 'transparent',
-                      marginBottom: 0,
-                    }}
-                    onClick={() => setShowAddTask(true)}
-                  >
-                    + Thêm thẻ
-                  </Button>
-                </div>
+                <WorkCard
+                  name={work.name}
+                  tasks={work.tasks}
+                  onAddTask={() => setShowAddTask(true)}
+                />
               </Col>
             ))}
             {/* Add Work Card */}

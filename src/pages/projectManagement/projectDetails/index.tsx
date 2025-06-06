@@ -66,85 +66,115 @@ const ProjectDetailsPage: React.FC = () => {
   }
 
   return (
-    <div style={{ padding: 24, boxSizing: 'border-box' }}>
-      {/* Header*/}
-      <Row align="middle" justify="space-between" style={{ marginBottom: 24 }}>
-        <Col>
-          <Space align="center">
-            <Title level={2} style={{ marginBottom: 0 }}>
-              {project.name}
-            </Title>
-            <Tag
-              color={statusColor[project.status] || 'default'}
-              style={{ marginLeft: 8, marginBottom: 4 }}
-            >
-              {project.status}
-            </Tag>
-          </Space>
-          <Paragraph type="secondary" style={{ marginBottom: 0 }}>
-            {project.description}
-          </Paragraph>
-        </Col>
-        <Col>
-          <Space>
-            <Avatar
-              size="large"
-              icon={<UserOutlined />}
-              src={project.pm?.avatar}
-              style={{ backgroundColor: '#1890ff' }}
-            />
-            <Button
-              type="primary"
-              icon={<UserAddOutlined />}
-              onClick={() => setShowAddMember(true)}
-            >
-              Mời thành viên
-            </Button>
-          </Space>
-        </Col>
-      </Row>
-      <Divider />
-      <Tabs
-        activeKey={activeTab}
-        onChange={setActiveTab}
-        style={{ marginBottom: 24 }}
-        tabBarStyle={{ margin: 0 }}
-        size="large"
-        items={undefined}
+    <div
+      style={{
+        minHeight: 0,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        boxSizing: 'border-box',
+      }}
+    >
+      <div style={{ boxSizing: 'border-box', flexShrink: 0 }}>
+        {/* Header*/}
+        <Row align="middle" justify="space-between">
+          <Col>
+            <Space align="center">
+              <Title level={2} style={{ marginBottom: 0 }}>
+                {project.name}
+              </Title>
+              <Tag
+                color={statusColor[project.status] || 'default'}
+                style={{ marginLeft: 8, marginBottom: 4 }}
+              >
+                {project.status}
+              </Tag>
+            </Space>
+            <Paragraph type="secondary" style={{ marginBottom: 0 }}>
+              {project.description}
+            </Paragraph>
+          </Col>
+          <Col>
+            <Space>
+              <Avatar
+                size="large"
+                icon={<UserOutlined />}
+                src={project.pm?.avatar}
+                style={{ backgroundColor: '#1890ff' }}
+              />
+              <Button
+                type="primary"
+                icon={<UserAddOutlined />}
+                onClick={() => setShowAddMember(true)}
+              >
+                Mời thành viên
+              </Button>
+            </Space>
+          </Col>
+        </Row>
+        <Divider />
+      </div>
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
       >
-        <Tabs.TabPane
-          tab={
-            <span>
-              <UnorderedListOutlined /> Công việc
-            </span>
-          }
-          key="tasks"
+        <Tabs
+          activeKey={activeTab}
+          onChange={setActiveTab}
+          style={{ marginBottom: 24, height: '100%' }}
+          tabBarStyle={{ margin: 0 }}
+          size="large"
+          items={undefined}
         >
-          <ProjectTaskTab
-            project={project}
-            onAddTask={handleAddTask}
-            onSuccess={() => {
-              setLoading(true)
-              getProjectById(project.id)
-                .then(setProject)
-                .finally(() => setLoading(false))
-            }}
-            showAddTask={showAddTask}
-            setShowAddTask={setShowAddTask}
-            taskLoading={taskLoading}
-          />
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={
-            <span>
-              <TeamOutlined /> Thông tin
-            </span>
-          }
-          key="members"
-        >
-          <ProjectMemberTab project={project} />
-        </Tabs.TabPane>
-      </Tabs>
+          <Tabs.TabPane
+            tab={
+              <span>
+                <UnorderedListOutlined /> Công việc
+              </span>
+            }
+            key="tasks"
+          >
+            <div
+              style={{
+                minHeight: 0,
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <ProjectTaskTab
+                project={project}
+                onAddTask={handleAddTask}
+                onSuccess={() => {
+                  setLoading(true)
+                  getProjectById(project.id)
+                    .then(setProject)
+                    .finally(() => setLoading(false))
+                }}
+                showAddTask={showAddTask}
+                setShowAddTask={setShowAddTask}
+                taskLoading={taskLoading}
+              />
+            </div>
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={
+              <span>
+                <TeamOutlined /> Thông tin
+              </span>
+            }
+            key="members"
+          >
+            <ProjectMemberTab project={project} />
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
       <AddMemberModal
         open={showAddMember}
         onClose={() => setShowAddMember(false)}
