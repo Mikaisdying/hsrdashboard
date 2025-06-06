@@ -12,8 +12,7 @@ import {
 import { Outlet } from 'react-router-dom'
 
 // Pages
-import Login from '../pages/auth/Login'
-import Register from '../pages/auth/Register'
+import Auth from '../pages/auth'
 import Dashboard from '../pages/dashboard'
 import { ProjectList } from '../pages/projectManagement'
 import ProjectDetailsPage from '../pages/projectManagement/projectDetails'
@@ -42,13 +41,8 @@ const WorkflowPage = createPage('System - Workflow Page')
 
 const routes = [
   {
-    path: '/login',
-    element: <Login />,
-    layout: 'none',
-  },
-  {
-    path: '/register',
-    element: <Register />,
+    path: '/auth',
+    element: <Auth />,
     layout: 'none',
   },
   {

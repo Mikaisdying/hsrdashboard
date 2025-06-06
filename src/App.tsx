@@ -5,6 +5,7 @@ import './App.css'
 import { useTheme } from './common/theme/ThemeContext'
 import { ConfigProvider } from 'antd'
 import React from 'react'
+import viVN from 'antd/lib/locale/vi_VN'
 
 export const ProLayoutTokenContext = React.createContext<any>({})
 
@@ -23,7 +24,7 @@ const App: React.FC = () => {
   const { theme, antdThemeConfig, proLayoutToken } = useTheme()
 
   return (
-    <ConfigProvider theme={antdThemeConfig}>
+    <ConfigProvider locale={viVN} theme={antdThemeConfig}>
       <ProLayoutTokenContext.Provider value={proLayoutToken}>
         <div className={theme === 'dark' ? 'theme-dark' : 'theme-light'}>
           <BrowserRouter>

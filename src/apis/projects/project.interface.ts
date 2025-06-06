@@ -1,4 +1,5 @@
 import type { ITask } from '../tasks/task.interface'
+import type { IWork } from '../tasks/task.interface'
 
 export interface IProject {
   id: number
@@ -14,6 +15,7 @@ export interface IProject {
   pm?: IProjectMember
   members: IProjectMember[]
   tasks?: ITask[]
+  works?: IWork[]
 }
 
 export interface IProjectMember {

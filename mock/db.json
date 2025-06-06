@@ -19,7 +19,61 @@
         "avatar": "https://i.pravatar.cc/150?img=1",
         "email": "nguyenvana@example.com"
       },
-      "members": []
+      "members": [],
+      "works": [
+        {
+          "id": "work1",
+          "name": "UI Design",
+          "tasks": [
+            {
+              "id": "task1",
+              "name": "Create wireframes",
+              "description": "Design wireframes for the dashboard."
+            },
+            {
+              "id": "task2",
+              "name": "Design mockups",
+              "description": "Create high-fidelity mockups."
+            },
+            {
+              "id": "task3",
+              "name": "Review UI with team",
+              "description": "Team review and feedback on UI."
+            },
+            {
+              "id": "task4",
+              "name": "Update UI based on feedback",
+              "description": "Revise UI after team review."
+            },
+            {
+              "id": "task5",
+              "name": "Export UI assets",
+              "description": "Export images and icons for development."
+            },
+            {
+              "id": "task6",
+              "name": "Prepare UI documentation",
+              "description": "Document UI guidelines and usage."
+            }
+          ]
+        },
+        {
+          "id": "work2",
+          "name": "Backend Development",
+          "tasks": [
+            {
+              "id": "task3",
+              "name": "Setup database",
+              "description": "Configure the database schema."
+            },
+            {
+              "id": "task4",
+              "name": "Develop API",
+              "description": "Build RESTful APIs."
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "2",
@@ -646,6 +700,14 @@
       "priority": "LOW",
       "type": "IMPROVE",
       "tech_area": null
+    },
+    {
+      "id": "22a2",
+      "deadline": [
+        "2025-06-11T17:00:00.000Z",
+        "2025-07-15T17:00:00.000Z"
+      ],
+      "projectId": "1"
     }
   ],
   "users": [

@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 const server = jsonServer.create()
 const router = jsonServer.router(path.join(__dirname, 'db.json'))
 
-server.post('/login', (req, res) => {
+server.post('/auth', (req, res) => {
   const { email, password } = req.body
   const db = router.db
   const user = db.get('users').find({ email, password }).value()

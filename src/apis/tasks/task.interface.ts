@@ -11,3 +11,9 @@ export interface ITask {
   createdDate?: string
   endDate?: string
 }
+
+export interface IWork {
+  id: string
+  name: string
+  tasks: ITask[]
+}

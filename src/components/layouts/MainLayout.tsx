@@ -27,7 +27,7 @@ const MainLayout: React.FC = () => {
   const confirmLogout = async () => {
     setLogoutModalOpen(false)
     localStorage.removeItem('user')
-    navigate('/login')
+    navigate('/auth')
   }
 
   function mapRoutesToMenuData(routes: any[]): any[] {

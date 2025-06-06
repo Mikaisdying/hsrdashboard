@@ -1,5 +1,15 @@
 import React, { useState } from 'react'
-import { Modal, Steps, Form, Input, Button, DatePicker, Select, notification } from 'antd'
+import {
+  Modal,
+  Steps,
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  Select,
+  notification,
+  ConfigProvider,
+} from 'antd'
 
 const { Step } = Steps
 const { RangePicker } = DatePicker
@@ -70,7 +80,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
       <Form.Item
         label="Deadline"
         name="deadline"
-        rules={[{ required: true, message: 'Chọn deadline' }]}
+        rules={[{ required: true, message: 'Vui lòng chọn hạn chót' }]}
       >
         <RangePicker style={{ width: '100%' }} />
       </Form.Item>
@@ -104,7 +114,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               type="primary"
               loading={typeof loadingProp === 'boolean' ? loadingProp : loading}
               onClick={async () => {
-                // Trim giá trị trước khi validate
                 const values = form.getFieldsValue()
                 form.setFieldsValue({ name: values.name?.trim() })
                 await handleFinish()

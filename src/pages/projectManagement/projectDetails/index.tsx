@@ -1,22 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  Typography,
-  Avatar,
-  Button,
-  Divider,
-  Row,
-  Col,
-  Space,
-  Skeleton,
-  Tag,
-  Descriptions,
-  Tabs,
-} from 'antd'
+import { Typography, Avatar, Button, Divider, Row, Col, Space, Skeleton, Tag, Tabs } from 'antd'
 import {
   UserOutlined,
   UserAddOutlined,
-  LinkOutlined,
   TeamOutlined,
   UnorderedListOutlined,
 } from '@ant-design/icons'
@@ -25,8 +12,9 @@ import { createTaskApi } from '../../../apis/tasks/task.api'
 import type { IProject } from '../../../apis/projects/project.interface'
 import ProjectTaskTab from './projectTaskTab'
 import ProjectMemberTab from './projectMemberTab'
+import AddMemberModal from './addMemberModal'
 
-const { Title, Paragraph, Text } = Typography
+const { Title, Paragraph } = Typography
 
 const statusColor: Record<string, string> = {
   NEW: 'blue',
@@ -41,6 +29,7 @@ const ProjectDetailsPage: React.FC = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [taskLoading, setTaskLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('tasks')
+  const [showAddMember, setShowAddMember] = useState(false)
 
   useEffect(() => {
     if (!id) return
@@ -68,12 +57,16 @@ const ProjectDetailsPage: React.FC = () => {
       .finally(() => setLoading(false))
   }
 
+  const handleAddMemberSuccess = () => {
+    setShowAddMember(false)
+  }
+
   if (loading || !project) {
     return <Skeleton active paragraph={{ rows: 6 }} />
   }
 
   return (
-    <div style={{ padding: 24 }}>
+    <div style={{ padding: 24, boxSizing: 'border-box' }}>
       {/* Header*/}
       <Row align="middle" justify="space-between" style={{ marginBottom: 24 }}>
         <Col>
@@ -100,7 +93,11 @@ const ProjectDetailsPage: React.FC = () => {
               src={project.pm?.avatar}
               style={{ backgroundColor: '#1890ff' }}
             />
-            <Button type="primary" icon={<UserAddOutlined />}>
+            <Button
+              type="primary"
+              icon={<UserAddOutlined />}
+              onClick={() => setShowAddMember(true)}
+            >
               Mời thành viên
             </Button>
           </Space>
@@ -140,7 +137,7 @@ const ProjectDetailsPage: React.FC = () => {
         <Tabs.TabPane
           tab={
             <span>
-              <TeamOutlined /> Thành viên
+              <TeamOutlined /> Thông tin
             </span>
           }
           key="members"
@@ -148,44 +145,11 @@ const ProjectDetailsPage: React.FC = () => {
           <ProjectMemberTab project={project} />
         </Tabs.TabPane>
       </Tabs>
-      {/* Thông tin dự án */}
-      <Descriptions
-        title="Thông tin dự án"
-        column={1}
-        size="small"
-        bordered
-        style={{ marginBottom: 16 }}
-      >
-        <Descriptions.Item label="Mã dự án">{project.code}</Descriptions.Item>
-        <Descriptions.Item label="Ngày bắt đầu">{project.createdDate}</Descriptions.Item>
-        <Descriptions.Item label="Ngày kết thúc">{project.endDate}</Descriptions.Item>
-        <Descriptions.Item label="Ngân sách">
-          {project.budget?.toLocaleString()} VND
-        </Descriptions.Item>
-        <Descriptions.Item label="Liên kết">
-          {project.link && project.link.length > 0 && project.link.some((l) => l) ? (
-            <Space direction="vertical">
-              {project.link.filter(Boolean).map((l, idx) => (
-                <a key={idx} href={l} target="_blank" rel="noopener noreferrer">
-                  <LinkOutlined /> {l}
-                </a>
-              ))}
-            </Space>
-          ) : (
-            <Text type="secondary">Không có</Text>
-          )}
-        </Descriptions.Item>
-      </Descriptions>
-      <div style={{ marginBottom: 24 }}>
-        <Title level={5}>
-          <UserOutlined /> Quản lý dự án
-        </Title>
-        <Space>
-          <Avatar src={project.pm?.avatar} />
-          <span>{project.pm?.name}</span>
-          <Text type="secondary">{project.pm?.email}</Text>
-        </Space>
-      </div>
+      <AddMemberModal
+        open={showAddMember}
+        onClose={() => setShowAddMember(false)}
+        onSuccess={handleAddMemberSuccess}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { apiService } from '../apiService'
 import type { IProject } from './project.interface'
+import type { IWork } from '../tasks/work.interface'
 
 export async function getProjectsOnPlan(): Promise<IProject[]> {
   return apiService<IProject[]>({
@@ -53,4 +54,30 @@ export async function getProjectById(id: string | number): Promise<IProject> {
   }
 
   return project
+}
+
+export async function addProjectMemberApi(
+  projectId: string | number,
+  payload: { memberId: string; role: string }
+): Promise<void> {
+  return apiService<void>({
+    url: `/projects/${projectId}/members`,
+    method: 'POST',
+    body: payload,
+  })
+}
+
+export async function getWorksByProjectId(projectId: string | number): Promise<IWork[]> {
+  return apiService<IWork[]>({
+    url: `/projects/${projectId}/works`,
+    method: 'GET',
+  })
+}
+
+export async function createWorkForProject(projectId: string | number, payload: IWork) {
+  return apiService({
+    url: `/projects/${projectId}/works`,
+    method: 'POST',
+    body: payload,
+  })
 }
