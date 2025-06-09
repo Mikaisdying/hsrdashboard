@@ -1,11 +1,13 @@
 import React from 'react'
-import { Row, Col, Typography, Button, Input } from 'antd'
+import { Row, Col } from 'antd'
 import AddTaskModal from '../../../components/taskModal'
 import WorkCard from '../../../components/workCard'
+import AddWorkButton from '../../../components/AddWorkButton'
 import { createWorkApi, getWorksApi } from '../../../apis/tasks/task.api'
 import type { IWork } from '../../../apis/tasks/work.interface'
 import type { IProject } from '../../../apis/projects/project.interface'
 import type { ITask } from '../../../apis/tasks/task.interface'
+import AddWorkForm from '../../../components/AddWorkForm'
 
 interface ProjectTaskTabProps {
   project: IProject
@@ -126,69 +128,36 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
               style={{ minWidth: 280, maxWidth: 280, height: '100%' }}
             >
               {showAddWork ? (
-                <div
-                  style={{
-                    background: '#18191c',
-                    borderRadius: 10,
-                    padding: 12,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 8,
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+                <AddWorkForm
+                  value={addWorkName}
+                  loading={addWorkLoading}
+                  onChange={setAddWorkName}
+                  onAdd={handleAddWork}
+                  onCancel={() => {
+                    setShowAddWork(false)
+                    setAddWorkName('')
                   }}
-                >
-                  <Input
-                    placeholder="Nhập tên danh sách..."
-                    value={addWorkName}
-                    onChange={(e) => setAddWorkName(e.target.value)}
-                    autoFocus
-                    onPressEnter={handleAddWork}
-                    disabled={addWorkLoading}
-                  />
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <Button
-                      type="primary"
-                      onClick={handleAddWork}
-                      loading={addWorkLoading}
-                      disabled={!addWorkName.trim()}
-                    >
-                      Thêm danh sách
-                    </Button>
-                    <Button
-                      danger
-                      type="text"
-                      style={{ fontSize: 22, lineHeight: 1, padding: 0 }}
-                      onClick={() => {
-                        setShowAddWork(false)
-                        setAddWorkName('')
-                      }}
-                    >
-                      ×
-                    </Button>
-                  </div>
-                </div>
+                />
               ) : (
-                <div
-                  style={{
-                    border: '2px dashed',
-                    borderRadius: '10px',
-                    padding: '10px',
-                    minHeight: 120,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    height: '100%',
-                  }}
-                  onClick={() => setShowAddWork(true)}
-                >
-                  + Thêm work
-                </div>
+                <AddWorkButton onClick={() => setShowAddWork(true)} />
               )}
             </Col>
           </Row>
+        ) : showAddWork ? (
+          <div style={{ maxWidth: 280, margin: '0 auto' }}>
+            <AddWorkForm
+              value={addWorkName}
+              loading={addWorkLoading}
+              onChange={setAddWorkName}
+              onAdd={handleAddWork}
+              onCancel={() => {
+                setShowAddWork(false)
+                setAddWorkName('')
+              }}
+            />
+          </div>
         ) : (
-          <Typography.Text type="secondary">Chưa có công việc nào</Typography.Text>
+          <AddWorkButton onClick={() => setShowAddWork(true)} />
         )}
       </div>
       <AddTaskModal
