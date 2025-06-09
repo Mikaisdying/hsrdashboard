@@ -90,3 +90,62 @@ export async function getProjectDetailApi(projectId: string | number): Promise<I
     tasks,
   }
 }
+
+export async function updateProjectDescriptionApi(projectId: string | number, description: string) {
+  return apiService({
+    url: `/projects/${projectId}`,
+    method: 'PATCH',
+    body: { description },
+  })
+}
+
+export async function updateProjectCodeApi(projectId: string | number, code: string) {
+  return apiService({
+    url: `/projects/${projectId}`,
+    method: 'PATCH',
+    body: { code },
+  })
+}
+
+export async function updateProjectStartDateApi(projectId: string | number, createdDate: string) {
+  return apiService({
+    url: `/projects/${projectId}`,
+    method: 'PATCH',
+    body: { createdDate },
+  })
+}
+
+export async function updateProjectEndDateApi(projectId: string | number, endDate: string) {
+  return apiService({
+    url: `/projects/${projectId}`,
+    method: 'PATCH',
+    body: { endDate },
+  })
+}
+
+export async function updateProjectBudgetApi(projectId: string | number, budget: number) {
+  return apiService({
+    url: `/projects/${projectId}`,
+    method: 'PATCH',
+    body: { budget },
+  })
+}
+
+export async function updateProjectLinksApi(projectId: string | number, link: string[]) {
+  return apiService({
+    url: `/projects/${projectId}`,
+    method: 'PATCH',
+    body: { link },
+  })
+}
+
+export async function updateProjectFieldsApi(
+  projectId: string | number,
+  fields: Partial<IProject>
+) {
+  return apiService({
+    url: `/projects/${projectId}`,
+    method: 'PATCH',
+    body: fields,
+  })
+}

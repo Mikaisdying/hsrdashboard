@@ -1,17 +1,27 @@
 import React, { useRef } from 'react'
-import { Typography, Button } from 'antd'
-import TaskCard from './taskCard'
-import type { ITask } from '../apis/tasks/task.interface'
+import { Typography, Button, Dropdown } from 'antd'
+import { EllipsisOutlined } from '@ant-design/icons'
+import TaskCard from '../taskCard'
+import { WorkCardMenu } from './workCardMenu'
+import type { ITask } from '../../apis/tasks/task.interface'
 
 interface WorkCardProps {
   name: string
   tasks: ITask[]
   workId: string | number
   onAddTask?: (workId: string | number) => void
+  onDeleted?: () => void
   children?: React.ReactNode
 }
 
-const WorkCard: React.FC<WorkCardProps> = ({ name, tasks, workId, onAddTask, children }) => {
+const WorkCard: React.FC<WorkCardProps> = ({
+  name,
+  tasks,
+  workId,
+  onAddTask,
+  onDeleted,
+  children,
+}) => {
   const cardRef = useRef<HTMLDivElement>(null)
   const taskListRef = useRef<HTMLDivElement>(null)
 
@@ -34,6 +44,8 @@ const WorkCard: React.FC<WorkCardProps> = ({ name, tasks, workId, onAddTask, chi
           display: 'flex',
           alignItems: 'flex-start',
           marginBottom: 8,
+          justifyContent: 'space-between',
+          width: '100%',
         }}
       >
         <Typography.Title
@@ -47,16 +59,35 @@ const WorkCard: React.FC<WorkCardProps> = ({ name, tasks, workId, onAddTask, chi
         >
           {name}
         </Typography.Title>
+        <Dropdown
+          menu={{
+            items: [
+              {
+                key: 'workCardMenu',
+                label: (
+                  <WorkCardMenu name={name} tasks={tasks} workId={workId} onDeleted={onDeleted} />
+                ),
+              },
+            ],
+          }}
+          trigger={['click']}
+          placement="bottomRight"
+        >
+          <Button
+            type="text"
+            icon={<EllipsisOutlined />}
+            style={{ marginLeft: 4, marginTop: 2, background: 'transparent' }}
+          />
+        </Dropdown>
       </div>
-      {/* Task List - scrollable, flex: 1, with max height */}
+      {/* Task List */}
       <div
         ref={taskListRef}
         style={{
           flex: 1,
           minHeight: 0,
-          maxHeight: 300, // Thêm maxHeight để hiện scroll khi task nhiều
+          maxHeight: 300,
           overflowY: 'auto',
-
           marginBottom: 0,
         }}
       >
@@ -73,7 +104,7 @@ const WorkCard: React.FC<WorkCardProps> = ({ name, tasks, workId, onAddTask, chi
           </div>
         ))}
       </div>
-      {/* Footer: always pinned to bottom, never scrolls */}
+      {/* Footer */}
       <div style={{ marginTop: 8, flexShrink: 0 }}>
         {children}
         {onAddTask && (

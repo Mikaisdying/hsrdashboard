@@ -2,7 +2,6 @@ import {
   DashboardOutlined,
   ProjectOutlined,
   FileDoneOutlined,
-  CheckCircleOutlined,
   FileTextOutlined,
   TeamOutlined,
   BellOutlined,

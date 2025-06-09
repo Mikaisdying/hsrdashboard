@@ -10,7 +10,7 @@ export interface IApiRequestParams<P = any, Q = any, B = any> {
   path?: P
   query?: Q
   body?: B
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
   responseType?: 'json' | 'blob' | 'text'
   headers?: Record<string, string>
 }

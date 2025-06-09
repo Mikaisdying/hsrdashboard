@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Modal, Steps, Form, Input, Button, DatePicker, Select, notification } from 'antd'
+import { createTaskApi } from '../../apis/tasks/task.api'
+import type { IProject } from '../../apis/projects/project.interface'
 
 const { Step } = Steps
 const { RangePicker } = DatePicker
@@ -8,26 +10,35 @@ interface AddTaskModalProps {
   open: boolean
   onClose: () => void
   onSuccess?: () => void
-  onFinish?: (values: any) => Promise<void>
   membersOptions?: { label: string; value: number }[]
   workOptions?: { label: string; value: string | number }[]
   loading?: boolean
+  setTaskLoading?: React.Dispatch<React.SetStateAction<boolean>>
   workId?: string | number | null
+  project: IProject
+  fetchDetail: () => void
 }
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({
   open,
   onClose,
   onSuccess,
-  onFinish,
   membersOptions = [],
   workOptions = [],
   loading: loadingProp,
+  setTaskLoading,
   workId,
+  project,
+  fetchDetail,
 }) => {
   const [current, setCurrent] = useState(0)
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
+
+  const setLoadingSafe = (val: boolean) => {
+    if (setTaskLoading) setTaskLoading(val)
+    setLoading(val)
+  }
 
   const handleNext = async () => {
     try {
@@ -38,23 +49,27 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
 
   const handlePrev = () => setCurrent(current - 1)
 
-  const handleFinish = async () => {
+  const handleAddTask = async (values: any) => {
+    if (!project) return
+    setLoadingSafe(true)
     try {
-      setLoading(true)
-      await form.validateFields()
-      let values = form.getFieldsValue()
-      if (workId) values = { ...values, workId }
-      if (onFinish) {
-        await onFinish(values)
-      }
-      setLoading(false)
-      notification.success({ message: 'Tạo task thành công!' })
-      onSuccess && onSuccess()
+      const task = await createTaskApi({
+        ...values,
+        projectId: project.id,
+        status: 'NEW',
+        createdDate: new Date().toISOString(),
+      })
+      setLoadingSafe(false)
       onClose()
       setCurrent(0)
       form.resetFields()
-    } catch {
-      setLoading(false)
+      fetchDetail()
+      notification.success({ message: 'Tạo task thành công!' })
+      onSuccess && onSuccess()
+      return task
+    } catch (e) {
+      setLoadingSafe(false)
+      throw e
     }
   }
 
@@ -144,13 +159,24 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               type="primary"
               loading={typeof loadingProp === 'boolean' ? loadingProp : loading}
               onClick={async () => {
-                const values = form.getFieldsValue()
+                const values = form.getFieldsValue(true)
                 const trimmedName = values.name?.trim() || ''
                 form.setFieldsValue({ name: trimmedName })
                 try {
                   await form.validateFields()
-                  await handleFinish()
-                } catch {}
+                  let submitValues = form.getFieldsValue(true)
+                  if (submitValues.deadline && Array.isArray(submitValues.deadline)) {
+                    const [start, end] = submitValues.deadline
+                    submitValues = {
+                      ...submitValues,
+                      startDate: start ? start.toISOString() : undefined,
+                      endDate: end ? end.toISOString() : undefined,
+                    }
+                    delete submitValues.deadline
+                  }
+                  if (workId) submitValues = { ...submitValues, workId }
+                  await handleAddTask(submitValues)
+                } catch (err) {}
               }}
             >
               Tạo Task

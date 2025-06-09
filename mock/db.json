@@ -6,9 +6,9 @@
       "code": "PRJ001",
       "description": "Quản lý nhân sự",
       "status": "ONGOING",
-      "createdDate": "2024-06-01",
-      "endDate": "2024-12-31",
-      "budget": 1000000,
+      "createdDate": "2024-07-20",
+      "endDate": "2025-07-17",
+      "budget": 10000000,
       "updatedAt": "2024-06-10",
       "link": [
         ""
@@ -88,7 +88,7 @@
       "id": "5",
       "name": "Employee Portal",
       "code": "PRJ005",
-      "description": "Cổng nhân viên",
+      "description": "Cổng nhân viênb",
       "status": "NEW",
       "createdDate": "2024-08-01",
       "endDate": "2025-01-31",
@@ -104,99 +104,6 @@
         "email": "tranthib@example.com"
       },
       "members": []
-    },
-    {
-      "id": "0",
-      "name": "Xuân",
-      "code": "PRJ17482764880035328",
-      "description": "ffsfdgesf",
-      "status": "NEW",
-      "createdDate": "2025-05-26",
-      "endDate": "",
-      "budget": 0,
-      "updatedAt": "",
-      "link": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "pm": {
-        "id": "1",
-        "name": "Nguyễn Văn A",
-        "avatar": "https://i.pravatar.cc/150?img=1"
-      },
-      "members": [
-        {
-          "id": "1",
-          "name": "Nguyễn Văn A",
-          "avatar": "https://i.pravatar.cc/150?img=1"
-        }
-      ]
-    },
-    {
-      "id": "0",
-      "name": "eifjeoif",
-      "code": "PRJ17489270203128718",
-      "description": "gsgvsgvv",
-      "status": "NEW",
-      "createdDate": "2025-06-03",
-      "endDate": "",
-      "budget": 0,
-      "updatedAt": "",
-      "link": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "pm": {
-        "id": "1",
-        "name": "Nguyễn Văn A",
-        "avatar": "https://i.pravatar.cc/150?img=1"
-      },
-      "members": [
-        {
-          "id": "1",
-          "name": "Nguyễn Văn A",
-          "avatar": "https://i.pravatar.cc/150?img=1"
-        }
-      ]
-    },
-    {
-      "id": "0",
-      "name": "jjj",
-      "code": "PRJ17491997517851808",
-      "description": "jjj",
-      "status": "NEW",
-      "createdDate": "2025-06-06",
-      "endDate": "",
-      "budget": 0,
-      "updatedAt": "",
-      "link": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "pm": {
-        "id": "1",
-        "name": "Nguyễn Văn A",
-        "avatar": "https://i.pravatar.cc/150?img=1"
-      },
-      "members": [
-        {
-          "id": "1",
-          "name": "Nguyễn Văn A",
-          "avatar": "https://i.pravatar.cc/150?img=1"
-        }
-      ]
     }
   ],
   "works": [
@@ -208,11 +115,6 @@
     {
       "id": "work2",
       "name": "Backend Development",
-      "projectId": "1"
-    },
-    {
-      "id": "221e",
-      "name": "ff",
       "projectId": "1"
     }
   ],
@@ -344,86 +246,6 @@
       "isConfirmed": null,
       "priority": null,
       "type": null
-    },
-    {
-      "id": "9b7e",
-      "name": "",
-      "description": "",
-      "deadline": null,
-      "assigneeIds": [],
-      "projectId": "1",
-      "workId": "work1",
-      "priority": null,
-      "type": null,
-      "tech_area": null,
-      "confirm_required": null,
-      "effort": null,
-      "status": "NEW",
-      "createdDate": "2025-06-06T09:27:18.550Z"
-    },
-    {
-      "id": "38c7",
-      "name": "",
-      "description": "",
-      "deadline": null,
-      "assigneeIds": [],
-      "projectId": "1",
-      "workId": "221e",
-      "priority": null,
-      "type": null,
-      "tech_area": null,
-      "confirm_required": null,
-      "effort": null,
-      "status": "NEW",
-      "createdDate": "2025-06-06T09:27:26.148Z"
-    },
-    {
-      "id": "a3b4",
-      "name": "",
-      "description": "",
-      "deadline": null,
-      "assigneeIds": [],
-      "projectId": "1",
-      "workId": "work1",
-      "priority": null,
-      "type": null,
-      "tech_area": null,
-      "confirm_required": null,
-      "effort": null,
-      "status": "NEW",
-      "createdDate": "2025-06-06T09:29:54.887Z"
-    },
-    {
-      "id": "b707",
-      "name": "",
-      "description": "",
-      "deadline": null,
-      "assigneeIds": [],
-      "projectId": "1",
-      "workId": "work2",
-      "priority": null,
-      "type": null,
-      "tech_area": null,
-      "confirm_required": null,
-      "effort": null,
-      "status": "NEW",
-      "createdDate": "2025-06-06T09:44:18.223Z"
-    },
-    {
-      "id": "c13a",
-      "name": "",
-      "description": "",
-      "deadline": null,
-      "assigneeIds": [],
-      "projectId": "1",
-      "workId": "work2",
-      "priority": null,
-      "type": null,
-      "tech_area": null,
-      "confirm_required": null,
-      "effort": null,
-      "status": "NEW",
-      "createdDate": "2025-06-06T09:45:44.688Z"
     }
   ],
   "users": [

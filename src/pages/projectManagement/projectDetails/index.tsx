@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Typography, Avatar, Button, Divider, Row, Col, Space, Skeleton, Tag, Tabs } from 'antd'
+import {
+  Typography,
+  Avatar,
+  Button,
+  Divider,
+  Row,
+  Col,
+  Space,
+  Skeleton,
+  Tag,
+  Tabs,
+  Modal,
+  Input,
+} from 'antd'
 import {
   UserOutlined,
   UserAddOutlined,
   TeamOutlined,
   UnorderedListOutlined,
+  EditOutlined,
 } from '@ant-design/icons'
-import { getProjectById, getProjectDetailApi } from '../../../apis/projects/project.api'
-import { handleAddTask as addTaskModalHandleAddTask } from '../../../components/taskModal/addTaskModal'
+import {
+  getProjectDetailApi,
+  updateProjectDescriptionApi,
+} from '../../../apis/projects/project.api'
+import {} from '../../../components/taskModal'
 import type { IProject } from '../../../apis/projects/project.interface'
 import type { IWork } from '../../../apis/tasks/work.interface'
 import type { ITask } from '../../../apis/tasks/task.interface'
@@ -34,6 +51,9 @@ const ProjectDetailsPage: React.FC = () => {
   const [taskLoading, setTaskLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('tasks')
   const [showAddMember, setShowAddMember] = useState(false)
+  const [editDescModalOpen, setEditDescModalOpen] = useState(false)
+  const [descLoading, setDescLoading] = useState(false)
+  const [descValue, setDescValue] = useState('')
 
   const fetchDetail = async () => {
     if (!id) return
@@ -54,6 +74,23 @@ const ProjectDetailsPage: React.FC = () => {
 
   const handleAddMemberSuccess = () => {
     setShowAddMember(false)
+  }
+
+  const handleOpenEditDesc = () => {
+    if (project) setDescValue(project.description)
+    setEditDescModalOpen(true)
+  }
+
+  const handleSaveDesc = async () => {
+    if (!project) return
+    setDescLoading(true)
+    try {
+      await updateProjectDescriptionApi(project.id, descValue)
+      setEditDescModalOpen(false)
+      fetchDetail()
+    } finally {
+      setDescLoading(false)
+    }
   }
 
   if (loading || !project) {
@@ -77,8 +114,18 @@ const ProjectDetailsPage: React.FC = () => {
                 {project.status}
               </Tag>
             </Space>
-            <Paragraph type="secondary" style={{ marginBottom: 0 }}>
-              {project.description}
+            <Paragraph
+              type="secondary"
+              style={{ marginBottom: 0, display: 'flex', alignItems: 'center' }}
+            >
+              <span>{project.description}</span>
+              <Button
+                type="text"
+                size="small"
+                icon={<EditOutlined />}
+                style={{ marginLeft: 8 }}
+                onClick={handleOpenEditDesc}
+              />
             </Paragraph>
           </Col>
           <Col>
@@ -138,19 +185,11 @@ const ProjectDetailsPage: React.FC = () => {
                 project={project}
                 works={works}
                 tasks={tasks}
-                onAddTask={async (values: any) =>
-                  addTaskModalHandleAddTask(
-                    values,
-                    project,
-                    setTaskLoading,
-                    setShowAddTask,
-                    fetchDetail
-                  )
-                }
-                onSuccess={fetchDetail}
                 showAddTask={showAddTask}
                 setShowAddTask={setShowAddTask}
                 taskLoading={taskLoading}
+                setTaskLoading={setTaskLoading}
+                onSuccess={fetchDetail}
               />
             </div>
           </Tabs.TabPane>
@@ -162,7 +201,7 @@ const ProjectDetailsPage: React.FC = () => {
             }
             key="members"
           >
-            <ProjectMemberTab project={project} />
+            <ProjectMemberTab project={project} fetchDetail={fetchDetail} />
           </Tabs.TabPane>
         </Tabs>
       </div>
@@ -171,6 +210,22 @@ const ProjectDetailsPage: React.FC = () => {
         onClose={() => setShowAddMember(false)}
         onSuccess={handleAddMemberSuccess}
       />
+      <Modal
+        open={editDescModalOpen}
+        title="Sửa mô tả dự án"
+        onCancel={() => setEditDescModalOpen(false)}
+        onOk={handleSaveDesc}
+        confirmLoading={descLoading}
+        okText="Lưu"
+        cancelText="Hủy"
+      >
+        <Input.TextArea
+          rows={4}
+          value={descValue}
+          onChange={(e) => setDescValue(e.target.value)}
+          placeholder="Nhập mô tả mới cho dự án"
+        />
+      </Modal>
     </div>
   )
 }

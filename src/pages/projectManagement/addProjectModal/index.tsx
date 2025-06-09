@@ -30,7 +30,7 @@ const defaultTools = [
 interface AddProjectModalProps {
   open: boolean
   onClose: () => void
-  onSuccess?: () => void
+  onSuccess?: (project?: IProject) => void
 }
 
 interface ISelectedMember extends IMember {
@@ -268,7 +268,10 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
         message: 'Hoàn thành!',
         description: 'Tạo dự án thành công.',
       })
-      onSuccess && onSuccess()
+      if (onSuccess) {
+        // Truyền lại payload (project vừa tạo, đã có members) cho parent để cập nhật client
+        onSuccess(payload)
+      }
       onClose()
     } catch (e) {
       setLoading(false)

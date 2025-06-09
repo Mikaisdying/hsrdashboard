@@ -11,10 +11,10 @@ interface ProjectTaskTabProps {
   project: IProject
   works: IWork[]
   tasks: ITask[]
-  onAddTask: (values: any) => Promise<any>
   showAddTask: boolean
   setShowAddTask: (show: boolean) => void
   taskLoading: boolean
+  setTaskLoading: React.Dispatch<React.SetStateAction<boolean>>
   onSuccess?: () => void
 }
 
@@ -22,10 +22,10 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
   project,
   works: worksProp,
   tasks: tasksProp,
-  onAddTask,
   showAddTask,
   setShowAddTask,
   taskLoading,
+  setTaskLoading,
   onSuccess,
 }) => {
   const [works, setWorks] = React.useState<IWork[]>(worksProp)
@@ -41,13 +41,6 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
   React.useEffect(() => {
     setTasks(tasksProp)
   }, [tasksProp])
-
-  const handleAddTask = async (values: any) => {
-    const result: any = await onAddTask({ ...values, workId: currentWorkId })
-    if (currentWorkId && result && result.id) {
-      setTasks((prev) => [...prev, { ...result, workId: currentWorkId }])
-    }
-  }
 
   const handleAddWork = async () => {
     if (!addWorkName.trim()) return
@@ -66,7 +59,6 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
     }
   }
 
-  // Group tasks by workId
   const tasksByWork: Record<string, ITask[]> = React.useMemo(() => {
     const map: Record<string, ITask[]> = {}
     tasks.forEach((t) => {
@@ -123,6 +115,7 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
                       setCurrentWorkId(workId)
                       setShowAddTask(true)
                     }}
+                    onDeleted={onSuccess}
                   />
                 </div>
               </Col>
@@ -205,10 +198,12 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
           setCurrentWorkId(null)
         }}
         onSuccess={onSuccess}
-        onFinish={handleAddTask}
         membersOptions={project.members?.map((m: any) => ({ label: m.name, value: m.id })) || []}
         loading={taskLoading}
+        setTaskLoading={setTaskLoading}
         workId={currentWorkId}
+        project={project}
+        fetchDetail={onSuccess || (() => {})}
       />
     </div>
   )
