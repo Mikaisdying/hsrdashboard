@@ -274,7 +274,8 @@
       "avatar": "https://i.pravatar.cc/150?img=1",
       "username": "nguyenvana",
       "password": "password123",
-      "job": "SA"
+      "job": "SA",
+      "isApproved": true
     },
     {
       "id": "2",
@@ -286,7 +287,8 @@
       "avatar": "https://i.pravatar.cc/150?img=2",
       "username": "tranthib",
       "password": "password456",
-      "job": "DE"
+      "job": "DE",
+      "isApproved": true
     },
     {
       "id": "3",
@@ -298,7 +300,8 @@
       "avatar": "https://i.pravatar.cc/150?img=3",
       "username": "levanc",
       "password": "password789",
-      "job": "QC"
+      "job": "QC",
+      "isApproved": true
     },
     {
       "id": "4",
@@ -310,7 +313,8 @@
       "avatar": "https://i.pravatar.cc/150?img=4",
       "username": "phamminhd",
       "password": "passwordpm",
-      "job": "PM"
+      "job": "PM",
+      "isApproved": true
     }
   ],
   "auth": [

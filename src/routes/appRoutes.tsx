@@ -8,13 +8,12 @@ import {
   SettingOutlined,
 } from '@ant-design/icons'
 
-import { Outlet } from 'react-router-dom'
-
 // Pages
 import Auth from '../pages/auth'
 import Dashboard from '../pages/dashboard'
 import { ProjectList } from '../pages/projectManagement'
 import ProjectDetailsPage from '../pages/projectManagement/projectDetails'
+import UserListPage from '../pages/system/user'
 
 // Dummy pages
 const createPage = (label: string) => () => <div>{label}</div>
@@ -24,17 +23,8 @@ const TaskDetail = createPage('Task Detail Page')
 const DocumentList = createPage('Document List Page')
 const MemberList = createPage('Member List Page')
 const NotificationPage = createPage('Notification Page')
-const SystemLayout = () => {
-  return (
-    <div>
-      <h1>System Settings</h1>
-      <Outlet />
-    </div>
-  )
-}
 const AuditLogPage = createPage('System - Audit Log Page')
 const SettingPage = createPage('System - Settings Page')
-const WorkflowPage = createPage('System - Workflow Page')
 
 const routes = [
   {
@@ -106,11 +96,11 @@ const routes = [
   },
   {
     path: '/system',
-    element: <SystemLayout />,
     layout: 'main',
     label: 'Cấu hình hệ thống',
     icon: <SettingOutlined />,
     roles: ['SA'],
+    disabled: true,
     children: [
       {
         path: 'settings',
@@ -119,9 +109,9 @@ const routes = [
         roles: ['SA'],
       },
       {
-        path: 'workflow',
-        element: <WorkflowPage />,
-        label: 'Quy trình',
+        path: 'users',
+        element: <UserListPage />,
+        label: 'Người dùng',
         roles: ['SA'],
       },
       {
