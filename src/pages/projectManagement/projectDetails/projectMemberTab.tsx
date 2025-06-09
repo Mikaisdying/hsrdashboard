@@ -10,10 +10,11 @@ import {
   Modal,
   Input,
   DatePicker,
+  Popover,
 } from 'antd'
 import { LinkOutlined, TeamOutlined, UserOutlined, EditOutlined } from '@ant-design/icons'
 import type { IProject } from '../../../apis/projects/project.interface'
-import { updateProjectFieldsApi } from '../../../apis/projects/project.api'
+import { updateProjectFieldsApi, deleteProjectMemberApi } from '../../../apis/projects/project.api'
 import dayjs from 'dayjs'
 
 const { Title } = Typography
@@ -42,6 +43,15 @@ const ProjectMemberTab: React.FC<ProjectMemberTabProps> = ({ project, fetchDetai
   const [editLinksModalOpen, setEditLinksModalOpen] = useState(false)
   const [linksValue, setLinksValue] = useState(project.link?.join('\n') || '')
   const [linksLoading, setLinksLoading] = useState(false)
+
+  const [editMemberMenuOpen, setEditMemberMenuOpen] = useState<string | null>(null)
+  const [confirmRemoveMember, setConfirmRemoveMember] = useState<{
+    open: boolean
+    memberId: string | null
+  }>({
+    open: false,
+    memberId: null,
+  })
 
   const handleOpenEditCode = () => {
     setCodeValue(project.code)
@@ -129,23 +139,102 @@ const ProjectMemberTab: React.FC<ProjectMemberTabProps> = ({ project, fetchDetai
         <List
           itemLayout="horizontal"
           dataSource={project.members}
-          renderItem={(member) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar src={member.avatar} />}
-                title={member.name}
-                description={
-                  <Space>
-                    {member.email && (
-                      <Typography.Paragraph type="secondary">{member.email}</Typography.Paragraph>
-                    )}
-                    {member.role && <Tag>{member.role}</Tag>}
-                    {member.job && <Tag color="blue">{member.job}</Tag>}
-                  </Space>
-                }
-              />
-            </List.Item>
-          )}
+          renderItem={(member) => {
+            const memberId = String(member.id)
+            return (
+              <List.Item
+                actions={[
+                  <Popover
+                    key="popover"
+                    trigger="click"
+                    open={editMemberMenuOpen === memberId}
+                    onOpenChange={(visible) => {
+                      setEditMemberMenuOpen(visible ? memberId : null)
+                    }}
+                    content={
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                        <Button
+                          type="text"
+                          style={{ textAlign: 'left' }}
+                          onClick={() => {
+                            setEditMemberMenuOpen(null)
+                            // TODO: Mở modal chỉnh sửa role hoặc thông tin thành viên
+                          }}
+                        >
+                          Chỉnh sửa
+                        </Button>
+                        <Button
+                          type="text"
+                          danger
+                          style={{ textAlign: 'left' }}
+                          onClick={() => {
+                            setEditMemberMenuOpen(null)
+                            setConfirmRemoveMember({ open: true, memberId })
+                          }}
+                        >
+                          Xóa thành viên
+                        </Button>
+                      </div>
+                    }
+                  >
+                    <Button
+                      type="text"
+                      icon={<EditOutlined />}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setEditMemberMenuOpen(memberId)
+                      }}
+                    />
+                  </Popover>,
+                ]}
+              >
+                <List.Item.Meta
+                  avatar={<Avatar src={member.avatar} />}
+                  title={
+                    <span>
+                      {member.name}
+                      {member.role === 'TEAM_LEADER' && (
+                        <Tag
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 10,
+                            padding: '0 6px',
+                            height: 18,
+                            lineHeight: '18px',
+                          }}
+                        >
+                          {member.role}
+                        </Tag>
+                      )}
+                      {member.job && (
+                        <Tag
+                          color="blue"
+                          style={{
+                            marginLeft: 4,
+                            fontSize: 10,
+                            padding: '0 6px',
+                            height: 18,
+                            lineHeight: '18px',
+                          }}
+                        >
+                          {member.job}
+                        </Tag>
+                      )}
+                    </span>
+                  }
+                  description={
+                    <Space>
+                      {member.email && (
+                        <Typography.Paragraph type="secondary" style={{ marginBottom: 0 }}>
+                          {member.email}
+                        </Typography.Paragraph>
+                      )}
+                    </Space>
+                  }
+                />
+              </List.Item>
+            )
+          }}
         />
       ) : (
         <Typography.Paragraph type="secondary">Chưa có thành viên</Typography.Paragraph>
@@ -294,6 +383,23 @@ const ProjectMemberTab: React.FC<ProjectMemberTabProps> = ({ project, fetchDetai
           onChange={(e) => setLinksValue(e.target.value)}
           placeholder="Mỗi liên kết 1 dòng"
         />
+      </Modal>
+      <Modal
+        open={confirmRemoveMember.open}
+        title="Xác nhận xóa thành viên"
+        onCancel={() => setConfirmRemoveMember({ open: false, memberId: null })}
+        onOk={async () => {
+          if (!confirmRemoveMember.memberId) return
+          await deleteProjectMemberApi(Number(confirmRemoveMember.memberId))
+          setConfirmRemoveMember({ open: false, memberId: null })
+          if (fetchDetail) fetchDetail()
+          else window.location.reload()
+        }}
+        okText="Xóa"
+        okButtonProps={{ danger: true }}
+        cancelText="Hủy"
+      >
+        Bạn có chắc chắn muốn xóa thành viên này khỏi dự án?
       </Modal>
     </div>
   )

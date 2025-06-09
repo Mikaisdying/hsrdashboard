@@ -1,27 +1,60 @@
 import React, { useState } from 'react'
 import { Modal, Form, Button, Select } from 'antd'
+import { addProjectMemberApi } from '../../../apis/projects/project.api'
+import { searchMembers } from '../../../apis/members/member.api'
 
 interface AddMemberModalProps {
   open: boolean
   onClose: () => void
   onSuccess?: () => void
+  projectId: string | number
+  fetchDetail?: () => void
 }
 
-const AddMemberModal: React.FC<AddMemberModalProps> = ({ open, onClose, onSuccess }) => {
+const AddMemberModal: React.FC<AddMemberModalProps> = ({
+  open,
+  onClose,
+  onSuccess,
+  projectId,
+  fetchDetail,
+}) => {
   const [loading, setLoading] = useState(false)
   const [form] = Form.useForm()
+  const [userOptions, setUserOptions] = useState<{ label: string; value: string }[]>([])
+
+  React.useEffect(() => {
+    async function fetchUsers() {
+      const users = await searchMembers('')
+      setUserOptions(
+        users.map((u: any) => ({
+          label: `${u.fullName} (${u.email})`,
+          value: String(u.id),
+        }))
+      )
+    }
+    if (open) fetchUsers()
+  }, [open])
 
   const handleFinish = async () => {
     try {
       setLoading(true)
+      await form.validateFields()
       const values = form.getFieldsValue()
-      console.log('Mock API call with values:', values)
-      setTimeout(() => {
-        setLoading(false)
-        form.resetFields()
-        onSuccess && onSuccess()
-        onClose()
-      }, 1000)
+      // Thêm từng thành viên vào bảng projectMembers
+      await Promise.all(
+        (values.members || []).map((user_id: string | number) =>
+          addProjectMemberApi(projectId, {
+            user_id,
+            role: 'MEMBER',
+            joinedAt: new Date().toISOString().slice(0, 10),
+          })
+        )
+      )
+      setLoading(false)
+      form.resetFields()
+      onSuccess && onSuccess()
+      fetchDetail && fetchDetail()
+      onClose()
     } catch {
       setLoading(false)
     }
@@ -40,13 +73,9 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({ open, onClose, onSucces
             placeholder="Tìm kiếm và chọn thành viên"
             showSearch
             filterOption={(input, option) =>
-              option?.label.toLowerCase().includes(input.toLowerCase()) ?? false
+              (option?.label as string).toLowerCase().includes(input.toLowerCase())
             }
-            options={[
-              { label: 'Nguyễn Văn A (nguyenvana@example.com)', value: '1' },
-              { label: 'Trần Thị B (tranthib@example.com)', value: '2' },
-              { label: 'Lê Văn C (levanc@example.com)', value: '3' },
-            ]}
+            options={userOptions}
           />
         </Form.Item>
         <div style={{ textAlign: 'right' }}>

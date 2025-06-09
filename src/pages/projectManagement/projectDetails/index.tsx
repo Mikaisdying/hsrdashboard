@@ -60,7 +60,7 @@ const ProjectDetailsPage: React.FC = () => {
     setLoading(true)
     try {
       const detail = await getProjectDetailApi(id)
-      setProject(detail.project)
+      setProject({ ...detail.project, members: detail.members })
       setWorks(detail.works)
       setTasks(detail.tasks)
     } finally {
@@ -163,52 +163,54 @@ const ProjectDetailsPage: React.FC = () => {
           style={{ marginBottom: 24, height: '100%' }}
           tabBarStyle={{ margin: 0 }}
           size="large"
-          items={undefined}
-        >
-          <Tabs.TabPane
-            tab={
-              <span>
-                <UnorderedListOutlined /> Công việc
-              </span>
-            }
-            key="tasks"
-          >
-            <div
-              style={{
-                minHeight: 0,
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <ProjectTaskTab
-                project={project}
-                works={works}
-                tasks={tasks}
-                showAddTask={showAddTask}
-                setShowAddTask={setShowAddTask}
-                taskLoading={taskLoading}
-                setTaskLoading={setTaskLoading}
-                onSuccess={fetchDetail}
-              />
-            </div>
-          </Tabs.TabPane>
-          <Tabs.TabPane
-            tab={
-              <span>
-                <TeamOutlined /> Thông tin
-              </span>
-            }
-            key="members"
-          >
-            <ProjectMemberTab project={project} fetchDetail={fetchDetail} />
-          </Tabs.TabPane>
-        </Tabs>
+          items={[
+            {
+              key: 'tasks',
+              label: (
+                <span>
+                  <UnorderedListOutlined /> Công việc
+                </span>
+              ),
+              children: (
+                <div
+                  style={{
+                    minHeight: 0,
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <ProjectTaskTab
+                    project={project}
+                    works={works}
+                    tasks={tasks}
+                    showAddTask={showAddTask}
+                    setShowAddTask={setShowAddTask}
+                    taskLoading={taskLoading}
+                    setTaskLoading={setTaskLoading}
+                    onSuccess={fetchDetail}
+                  />
+                </div>
+              ),
+            },
+            {
+              key: 'members',
+              label: (
+                <span>
+                  <TeamOutlined /> Thông tin
+                </span>
+              ),
+              children: <ProjectMemberTab project={project} fetchDetail={fetchDetail} />,
+            },
+          ]}
+        />
       </div>
       <AddMemberModal
         open={showAddMember}
         onClose={() => setShowAddMember(false)}
         onSuccess={handleAddMemberSuccess}
+        projectId={project.id}
+        fetchDetail={fetchDetail}
       />
       <Modal
         open={editDescModalOpen}

@@ -38,12 +38,24 @@ export async function createProjectApi(payload: IProject) {
 
 export async function addProjectMemberApi(
   projectId: string | number,
-  payload: { memberId: string; role: string }
+  payload: { user_id: string | number; role: string; joinedAt?: string }
 ): Promise<void> {
   return apiService<void>({
-    url: `/projects/${projectId}/members`,
+    url: '/projectMembers',
     method: 'POST',
-    body: payload,
+    body: {
+      project_id: projectId,
+      user_id: payload.user_id,
+      role: payload.role,
+      joinedAt: payload.joinedAt || new Date().toISOString().slice(0, 10),
+    },
+  })
+}
+
+export async function deleteProjectMemberApi(memberId: number) {
+  return apiService({
+    url: `/projectMembers/${memberId}`,
+    method: 'DELETE',
   })
 }
 
@@ -66,6 +78,7 @@ export interface IProjectDetail {
   project: IProject
   works: IWork[]
   tasks: ITask[]
+  members: any[]
 }
 
 export async function getProjectById(projectId: string | number): Promise<IProject> {
@@ -76,18 +89,46 @@ export async function getProjectById(projectId: string | number): Promise<IProje
 }
 
 export async function getProjectDetailApi(projectId: string | number): Promise<IProjectDetail> {
-  const project = await getProjectById(projectId)
-  const works = await getWorksByProjectId(projectId)
-  const allTasks = await apiService<ITask[]>({
+  const project = await apiService<IProject>({
+    url: `/projects/${projectId}`,
+    method: 'GET',
+  })
+
+  const projectMembers = await apiService<any[]>({
+    url: `/projectMembers?project_id=${projectId}`,
+    method: 'GET',
+  })
+
+  const users = await apiService<any[]>({
+    url: `/users`,
+    method: 'GET',
+  })
+  const members = projectMembers.map((pm) => {
+    const user = users.find((u) => String(u.id) === String(pm.user_id))
+    return {
+      id: pm.id,
+      name: user?.fullName,
+      avatar: user?.avatar,
+      email: user?.email,
+      role: pm.role,
+      job: user?.job,
+      joinedAt: pm.joinedAt,
+    }
+  })
+  // Lấy works và tasks như cũ
+  const works = await apiService<IWork[]>({
+    url: `/works?projectId=${projectId}`,
+    method: 'GET',
+  })
+  const tasks = await apiService<ITask[]>({
     url: `/tasks?projectId=${projectId}`,
     method: 'GET',
   })
-  const workIds = works.map((w) => w.id)
-  const tasks = allTasks.filter((t) => t.workId && workIds.includes(t.workId))
   return {
     project,
     works,
     tasks,
+    members,
   }
 }
 

@@ -269,7 +269,6 @@ export default function AddProjectModal({ open, onClose, onSuccess }: AddProject
         description: 'Tạo dự án thành công.',
       })
       if (onSuccess) {
-        // Truyền lại payload (project vừa tạo, đã có members) cho parent để cập nhật client
         onSuccess(payload)
       }
       onClose()

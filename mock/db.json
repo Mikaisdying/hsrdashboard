@@ -18,8 +18,7 @@
         "name": "Nguyễn Văn A",
         "avatar": "https://i.pravatar.cc/150?img=1",
         "email": "nguyenvana@example.com"
-      },
-      "members": []
+      }
     },
     {
       "id": "2",
@@ -39,8 +38,7 @@
         "name": "Trần Thị B",
         "avatar": "https://i.pravatar.cc/150?img=2",
         "email": "tranthib@example.com"
-      },
-      "members": []
+      }
     },
     {
       "id": "3",
@@ -61,7 +59,11 @@
         "avatar": "https://i.pravatar.cc/150?img=3",
         "email": "levanc@example.com"
       },
-      "members": []
+      "members": [
+        {
+          "id": "4"
+        }
+      ]
     },
     {
       "id": "4",
@@ -82,13 +84,17 @@
         "avatar": "https://i.pravatar.cc/150?img=1",
         "email": "nguyenvana@example.com"
       },
-      "members": []
+      "members": [
+        {
+          "id": "2"
+        }
+      ]
     },
     {
       "id": "5",
       "name": "Employee Portal",
       "code": "PRJ005",
-      "description": "Cổng nhân viênb",
+      "description": "Cổng nhân viên",
       "status": "NEW",
       "createdDate": "2024-08-01",
       "endDate": "2025-01-31",
@@ -103,7 +109,11 @@
         "avatar": "https://i.pravatar.cc/150?img=2",
         "email": "tranthib@example.com"
       },
-      "members": []
+      "members": [
+        {
+          "id": "1"
+        }
+      ]
     }
   ],
   "works": [
@@ -395,13 +405,6 @@
       "joinedAt": "2024-07-01"
     },
     {
-      "id": "9",
-      "project_id": 3,
-      "user_id": 2,
-      "role": "MEMBER",
-      "joinedAt": "2024-07-01"
-    },
-    {
       "id": "10",
       "project_id": 1,
       "user_id": 4,
@@ -414,6 +417,13 @@
       "user_id": 4,
       "role": null,
       "joinedAt": "2024-01-01"
+    },
+    {
+      "id": "71e0",
+      "project_id": "3",
+      "user_id": "4",
+      "role": "MEMBER",
+      "joinedAt": "2025-06-09"
     }
   ],
   "taskComments": [
