@@ -1,19 +1,17 @@
 import { ProConfigProvider } from '@ant-design/pro-components'
 import { useState } from 'react'
-import { Tabs, Button, message } from 'antd'
+import { Tabs, message } from 'antd'
 import LoginForm from './loginForm'
 import RegisterForm from './registerForm'
-import { register as registerService } from '../../apis/auth/authService'
+import { register } from '../../apis/auth'
+import { login } from '../../apis/auth'
 
 export type LoginType = 'account' | 'register'
 
 const useAuthHandlers = (setLoginType: (type: LoginType) => void) => {
   const handleLogin = async (values: { email: string; password: string }) => {
     try {
-      const res = await fetch(
-        `http://localhost:3001/users?email=${encodeURIComponent(values.email)}&password=${encodeURIComponent(values.password)}`
-      )
-      const users = await res.json()
+      const users = await login(values.email, values.password)
       if (users.length > 0) {
         message.success('Đăng nhập thành công!')
         localStorage.setItem('user', JSON.stringify(users[0]))
@@ -27,7 +25,7 @@ const useAuthHandlers = (setLoginType: (type: LoginType) => void) => {
   }
 
   const handleRegister = async (values: { fullName: string; mobile: string; password: string }) => {
-    const success = await registerService(values.fullName, values.mobile, values.password)
+    const success = await register(values.fullName, values.mobile, values.password)
     if (success) {
       message.success('Đăng ký thành công!')
       setLoginType('account')
@@ -90,16 +88,16 @@ const Page = () => {
           onChange={(activeKey) => setLoginType(activeKey as LoginType)}
         >
           <Tabs.TabPane key={'account'} tab={'Đăng nhập'}>
-            <LoginForm onSubmit={(values) => handleLogin(values)} />
-            <Button type="link" onClick={() => setLoginType('register')}>
-              Chưa có tài khoản? Đăng ký ngay
-            </Button>
+            <LoginForm
+              onSubmit={(values) => handleLogin(values)}
+              onSwitchToRegister={() => setLoginType('register')}
+            />
           </Tabs.TabPane>
           <Tabs.TabPane key={'register'} tab={'Đăng ký'}>
-            <RegisterForm onSubmit={(values) => handleRegister(values)} />
-            <Button type="link" onClick={() => setLoginType('account')}>
-              Đã có tài khoản? Đăng nhập
-            </Button>
+            <RegisterForm
+              onSubmit={(values) => handleRegister(values)}
+              onSwitchToLogin={() => setLoginType('account')}
+            />
           </Tabs.TabPane>
         </Tabs>
       </div>

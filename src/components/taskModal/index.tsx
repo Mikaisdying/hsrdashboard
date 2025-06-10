@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Modal, Steps, Form, Input, Button, DatePicker, Select, notification } from 'antd'
-import { createTaskApi } from '../../apis/tasks/task.api'
-import type { IProject } from '../../apis/projects/project.interface'
+import { Button, Modal, Select, Spin, Form, Input, notification } from 'antd'
+import { useEffect, useState } from 'react'
+import { IProject } from 'src/types/project'
+import { createTaskApi } from 'src/api/task'
+import { useSafeState } from 'src/hooks/useSafeState'
 
-const { Step } = Steps
-const { RangePicker } = DatePicker
+const { Option } = Select
 
 interface AddTaskModalProps {
   open: boolean
@@ -16,7 +16,6 @@ interface AddTaskModalProps {
   setTaskLoading?: React.Dispatch<React.SetStateAction<boolean>>
   workId?: string | number | null
   project: IProject
-  fetchDetail: () => void
 }
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({
@@ -29,29 +28,19 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
   setTaskLoading,
   workId,
   project,
-  fetchDetail,
 }) => {
-  const [current, setCurrent] = useState(0)
   const [form] = Form.useForm()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useSafeState<boolean>(false)
 
-  const setLoadingSafe = (val: boolean) => {
-    if (setTaskLoading) setTaskLoading(val)
-    setLoading(val)
-  }
-
-  const handleNext = async () => {
-    try {
-      await form.validateFields(['name', 'description'])
-      setCurrent(1)
-    } catch {}
-  }
-
-  const handlePrev = () => setCurrent(current - 1)
+  useEffect(() => {
+    if (open) {
+      form.resetFields()
+    }
+  }, [open])
 
   const handleAddTask = async (values: any) => {
     if (!project) return
-    setLoadingSafe(true)
+    setLoading(true)
     try {
       const task = await createTaskApi({
         ...values,
@@ -59,130 +48,69 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
         status: 'NEW',
         createdDate: new Date().toISOString(),
       })
-      setLoadingSafe(false)
+      setLoading(false)
       onClose()
-      setCurrent(0)
       form.resetFields()
-      fetchDetail()
       notification.success({ message: 'Tạo task thành công!' })
       onSuccess && onSuccess()
       return task
     } catch (e) {
-      setLoadingSafe(false)
+      setLoading(false)
       throw e
     }
   }
 
-  const stepContent = [
-    <>
-      <Form.Item
-        label="Tên Task"
-        name="name"
-        rules={[
-          { required: true, message: 'Nhập tên task' },
-          {
-            validator: (_, value) => {
-              if (typeof value === 'string' && value.trim().length === 0) {
-                return Promise.reject('Tên task không được chỉ chứa khoảng trắng')
-              }
-              return Promise.resolve()
-            },
-          },
-        ]}
-      >
-        <Input placeholder="Tên task" />
-      </Form.Item>
-      <Form.Item label="Mô tả" name="description">
-        <Input.TextArea placeholder="Mô tả task" />
-      </Form.Item>
-      {!workId && (
-        <Form.Item
-          label="Danh sách (Work)"
-          name="workId"
-          rules={[{ required: true, message: 'Chọn danh sách' }]}
-        >
-          <Select placeholder="Chọn danh sách" options={workOptions} />
-        </Form.Item>
-      )}
-      <Form.Item label="Độ ưu tiên" name="priority">
-        <Select placeholder="Chọn độ ưu tiên">
-          <Select.Option value="high">Cao</Select.Option>
-          <Select.Option value="medium">Trung bình</Select.Option>
-          <Select.Option value="low">Thấp</Select.Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Loại công việc" name="type">
-        <Select placeholder="Chọn loại">
-          <Select.Option value="feature">Tính năng</Select.Option>
-          <Select.Option value="bug">Bug</Select.Option>
-          <Select.Option value="improvement">Cải tiến</Select.Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Yêu cầu xác nhận" name="confirm_required" valuePropName="checked">
-        <Select placeholder="Yêu cầu xác nhận?">
-          <Select.Option value={true}>Có</Select.Option>
-          <Select.Option value={false}>Không</Select.Option>
-        </Select>
-      </Form.Item>
-    </>,
-    <>
-      <Form.Item label="Deadline" name="deadline">
-        <RangePicker style={{ width: '100%' }} />
-      </Form.Item>
-      <Form.Item label="Thành viên" name="assignees">
-        <Select mode="multiple" placeholder="Chọn thành viên" options={membersOptions} />
-      </Form.Item>
-    </>,
-  ]
-
   return (
-    <Modal open={open} onCancel={onClose} footer={null} title="Thêm Task mới" width={480}>
-      <Steps current={current} style={{ marginBottom: 24 }}>
-        <Step title="Thông tin" />
-        <Step title="Deadline & Thành viên" />
-      </Steps>
-      <Form form={form} layout="vertical" initialValues={{ name: '', description: '' }}>
-        <div style={{ minHeight: 120, marginBottom: 24 }}>{stepContent[current]}</div>
-        <div style={{ textAlign: 'right' }}>
-          {current > 0 && (
-            <Button onClick={handlePrev} style={{ marginRight: 8 }}>
-              Quay lại
-            </Button>
-          )}
-          {current < stepContent.length - 1 && (
-            <Button type="primary" onClick={handleNext}>
-              Tiếp tục
-            </Button>
-          )}
-          {current === stepContent.length - 1 && (
-            <Button
-              type="primary"
-              loading={typeof loadingProp === 'boolean' ? loadingProp : loading}
-              onClick={async () => {
-                const values = form.getFieldsValue(true)
-                const trimmedName = values.name?.trim() || ''
-                form.setFieldsValue({ name: trimmedName })
-                try {
-                  await form.validateFields()
-                  let submitValues = form.getFieldsValue(true)
-                  if (submitValues.deadline && Array.isArray(submitValues.deadline)) {
-                    const [start, end] = submitValues.deadline
-                    submitValues = {
-                      ...submitValues,
-                      startDate: start ? start.toISOString() : undefined,
-                      endDate: end ? end.toISOString() : undefined,
-                    }
-                    delete submitValues.deadline
-                  }
-                  if (workId) submitValues = { ...submitValues, workId }
-                  await handleAddTask(submitValues)
-                } catch (err) {}
-              }}
-            >
-              Tạo Task
-            </Button>
-          )}
-        </div>
+    <Modal
+      title="Tạo mới task"
+      open={open}
+      onCancel={onClose}
+      footer={null}
+      destroyOnClose
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleAddTask}
+        initialValues={{ status: 'NEW' }}
+      >
+        <Form.Item
+          label="Tên task"
+          name="name"
+          rules={[{ required: true, message: 'Tên task là bắt buộc' }]}
+        >
+          <Input placeholder="Nhập tên task" />
+        </Form.Item>
+
+        <Form.Item label="Thành viên" name="memberIds">
+          <Select
+            mode="multiple"
+            placeholder="Chọn thành viên"
+            options={membersOptions}
+          />
+        </Form.Item>
+
+        <Form.Item label="Công việc" name="workId">
+          <Select placeholder="Chọn công việc" options={workOptions} />
+        </Form.Item>
+
+        <Form.Item label="Trạng thái" name="status">
+          <Select>
+            <Option value="NEW">Mới</Option>
+            <Option value="IN_PROGRESS">Đang thực hiện</Option>
+            <Option value="DONE">Đã hoàn thành</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loadingProp || loading}
+          >
+            Tạo task
+          </Button>
+        </Form.Item>
       </Form>
     </Modal>
   )

@@ -1,22 +1,33 @@
 import React from 'react'
-import { Card, Typography } from 'antd'
+import { Card } from 'antd'
+import { BarsOutlined } from '@ant-design/icons'
+import type { ITask } from '../../apis/tasks/task.interface'
 
 interface TaskCardProps {
-  title: string
-  description?: string
+  task: ITask
+  onClick?: (task: ITask) => void
 }
 
-const { Title, Paragraph } = Typography
-
-const TaskCard: React.FC<TaskCardProps> = ({ title, description }) => (
-  <Card style={{ marginBottom: 12 }}>
-    <Title level={5} style={{ marginBottom: 8 }}>
-      {title}
-    </Title>
-    <Paragraph type="secondary" ellipsis={{ rows: 2 }}>
-      {description || 'Chưa có mô tả'}
-    </Paragraph>
-  </Card>
-)
+const TaskCard: React.FC<TaskCardProps> = ({ task, onClick }) => {
+  return (
+    <Card
+      style={{
+        border: 'none',
+        borderRadius: '10px',
+        padding: '6px 8px 6px 8px',
+        marginBottom: '2px',
+        cursor: onClick ? 'pointer' : undefined,
+      }}
+      styles={{ body: { padding: 0 } }}
+      onClick={() => onClick && onClick(task)}
+      hoverable={!!onClick}
+    >
+      <h4 style={{ fontSize: 14, margin: '2px 0 2px 4px', fontWeight: 600 }}>{task.name}</h4>
+      {task.description && (
+        <BarsOutlined style={{ color: '#b0b6be', fontSize: 18, marginTop: 2, marginBottom: 2 }} />
+      )}
+    </Card>
+  )
+}
 
 export default TaskCard

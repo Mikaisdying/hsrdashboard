@@ -17,3 +17,10 @@ export interface ITask {
   type: string | null
   tech_area?: string | null
 }
+
+export interface Comment {
+  id: string
+  author: string
+  content: string
+  createdAt: string
+}

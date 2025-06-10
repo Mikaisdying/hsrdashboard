@@ -1,27 +1,19 @@
 import { UserOutlined, MailOutlined, LockOutlined } from '@ant-design/icons'
 import { ProFormText, ProForm } from '@ant-design/pro-components'
 import { theme } from 'antd'
+import { Button } from 'antd'
 
 const RegisterForm = ({
   onSubmit,
+  onSwitchToLogin,
 }: {
   onSubmit: (values: { fullName: string; mobile: string; password: string }) => void
+  onSwitchToLogin?: () => void
 }) => {
   const { token } = theme.useToken()
 
   return (
-    <ProForm
-      onFinish={onSubmit}
-      submitter={{
-        searchConfig: {
-          submitText: 'Đăng ký',
-        },
-        resetButtonProps: false,
-        submitButtonProps: {
-          type: 'primary',
-        },
-      }}
-    >
+    <ProForm onFinish={onSubmit} submitter={false}>
       <ProFormText
         name="fullName"
         fieldProps={{
@@ -73,6 +65,33 @@ const RegisterForm = ({
           }),
         ]}
       />
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginTop: 8,
+        }}
+      >
+        <Button
+          type="link"
+          onClick={typeof onSwitchToLogin === 'function' ? onSwitchToLogin : undefined}
+        >
+          Đã có tài khoản? Đăng nhập
+        </Button>
+        <div style={{ flex: 1 }} />
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ minWidth: 100, justifySelf: 'flex-end' }}
+          onClick={() => {
+            const form = document.querySelector('form')
+            if (form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
+          }}
+        >
+          Đăng ký
+        </Button>
+      </div>
     </ProForm>
   )
 }

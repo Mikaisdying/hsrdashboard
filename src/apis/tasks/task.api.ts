@@ -61,19 +61,25 @@ export async function createTaskApi(payload: Partial<ITask>) {
   })
 }
 
-// Sửa task
 export async function updateTaskApi(id: string | number, payload: Partial<ITask>) {
   return apiService({
     url: `/tasks/${id}`,
-    method: 'PUT',
+    method: 'PATCH',
     body: payload,
   })
 }
 
-// Xóa task
 export async function deleteTaskApi(id: string | number) {
   return apiService({
     url: `/tasks/${id}`,
     method: 'DELETE',
+  })
+}
+
+// Lấy chi tiết 1 task
+export async function getTaskDetailApi(id: string | number) {
+  return apiService<ITask>({
+    url: `/tasks/${id}`,
+    method: 'GET',
   })
 }

@@ -136,8 +136,8 @@
   "tasks": [
     {
       "id": "1",
-      "name": "Create wireframes",
-      "description": "Design wireframes for the dashboard.",
+      "name": "Create wireframe",
+      "description": "Design wireframes for the database",
       "workId": "work1",
       "deadline": null,
       "status": null,
@@ -152,8 +152,8 @@
     },
     {
       "id": "2",
-      "name": "Design mockups",
-      "description": "Create high-fidelity mockups.",
+      "name": "Design mockup",
+      "description": "Create high-fidelity mockups",
       "workId": "work1",
       "deadline": null,
       "status": null,
@@ -168,9 +168,9 @@
     },
     {
       "id": "3",
-      "name": "Review UI with team",
-      "description": "Team review and feedback on UI.",
-      "workId": "work1",
+      "name": "Setup databases",
+      "description": "Configure the database schem",
+      "workId": "work2",
       "deadline": null,
       "status": null,
       "createdDate": null,
@@ -184,9 +184,9 @@
     },
     {
       "id": "4",
-      "name": "Update UI based on feedback",
-      "description": "Revise UI after team review.",
-      "workId": "work1",
+      "name": "Develop API",
+      "description": "Build RESTful APIs",
+      "workId": "work2",
       "deadline": null,
       "status": null,
       "createdDate": null,
@@ -201,7 +201,7 @@
     {
       "id": "5",
       "name": "Export UI assets",
-      "description": "Export images and icons for development.",
+      "description": "Export images and icons for development",
       "workId": "work1",
       "deadline": null,
       "status": null,
@@ -231,9 +231,9 @@
       "type": null
     },
     {
-      "id": "3",
-      "name": "Setup database",
-      "description": "Configure the database schema.",
+      "id": "7",
+      "name": "Setup backend server",
+      "description": "Initialize backend server and environment",
       "workId": "work2",
       "deadline": null,
       "status": null,
@@ -247,10 +247,74 @@
       "type": null
     },
     {
-      "id": "4",
-      "name": "Develop API",
-      "description": "Build RESTful APIs.",
+      "id": "8",
+      "name": "Database migration scripts",
+      "description": "Write migration scripts for database setup.",
       "workId": "work2",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
+      "isConfirmed": null,
+      "priority": null,
+      "type": null
+    },
+    {
+      "id": "9",
+      "name": "Test API endpoints",
+      "description": "Write and run tests for all API endpoints.",
+      "workId": "work2",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
+      "isConfirmed": null,
+      "priority": null,
+      "type": null
+    },
+    {
+      "id": "10",
+      "name": "Design logo",
+      "description": "Create a logo for the project.",
+      "workId": "dcf6",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
+      "isConfirmed": null,
+      "priority": null,
+      "type": null
+    },
+    {
+      "id": "11",
+      "name": "Write project documentation",
+      "description": "Document project requirements and architecture.",
+      "workId": "dcf6",
+      "deadline": null,
+      "status": null,
+      "createdDate": null,
+      "effort": null,
+      "assigneeIds": [],
+      "creatorId": null,
+      "confirm_required": null,
+      "isConfirmed": null,
+      "priority": null,
+      "type": null
+    },
+    {
+      "id": "12",
+      "name": "Setup CI/CD",
+      "description": "Configure continuous integration and deployment.",
+      "workId": "dcf6",
       "deadline": null,
       "status": null,
       "createdDate": null,
@@ -275,7 +339,8 @@
       "username": "nguyenvana",
       "password": "password123",
       "job": "SA",
-      "isApproved": true
+      "isApproved": true,
+      "status": 1
     },
     {
       "id": "2",
@@ -288,7 +353,8 @@
       "username": "tranthib",
       "password": "password456",
       "job": "DE",
-      "isApproved": true
+      "isApproved": true,
+      "status": 1
     },
     {
       "id": "3",
@@ -301,7 +367,8 @@
       "username": "levanc",
       "password": "password789",
       "job": "QC",
-      "isApproved": true
+      "isApproved": true,
+      "status": 1
     },
     {
       "id": "4",
@@ -314,7 +381,8 @@
       "username": "phamminhd",
       "password": "passwordpm",
       "job": "PM",
-      "isApproved": true
+      "isApproved": true,
+      "status": 1
     }
   ],
   "auth": [

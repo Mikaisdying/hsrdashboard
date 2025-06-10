@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col } from 'antd'
-import AddTaskModal from '../../../components/taskModal'
+import AddTaskModal from '../../../components/createTaskModal'
 import WorkCard from '../../../components/workCard'
 import AddWorkButton from '../../../components/AddWorkButton'
 import { createWorkApi, getWorksApi } from '../../../apis/tasks/task.api'
@@ -8,6 +8,7 @@ import type { IWork } from '../../../apis/tasks/work.interface'
 import type { IProject } from '../../../apis/projects/project.interface'
 import type { ITask } from '../../../apis/tasks/task.interface'
 import AddWorkForm from '../../../components/AddWorkForm'
+import TaskModal from '../../../components/taskCard/TaskModal'
 
 interface ProjectTaskTabProps {
   project: IProject
@@ -36,6 +37,16 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
   const [addWorkLoading, setAddWorkLoading] = React.useState(false)
   const [addWorkName, setAddWorkName] = React.useState('')
   const [currentWorkId, setCurrentWorkId] = React.useState<string | number | null>(null)
+
+  const [taskModal, setTaskModal] = React.useState<{
+    open: boolean
+    taskId?: string | number
+  }>({
+    open: false,
+    taskId: undefined,
+  })
+  const [modalTask, setModalTask] = React.useState<ITask | undefined>(undefined)
+  const [modalTaskLoading, setModalTaskLoading] = React.useState(false)
 
   React.useEffect(() => {
     setWorks(worksProp)
@@ -70,6 +81,23 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
     })
     return map
   }, [tasks])
+
+  // Khi mở modal, fetch lại task chi tiết từ danh sách tasks mới nhất
+  React.useEffect(() => {
+    if (taskModal.open && taskModal.taskId) {
+      setModalTaskLoading(true)
+      import('../../../apis/tasks/task.api').then(({ getTaskDetailApi }) => {
+        getTaskDetailApi(taskModal.taskId!)
+          .then((task) => {
+            setModalTask(task)
+          })
+          .finally(() => setModalTaskLoading(false))
+      })
+    } else {
+      setModalTask(undefined)
+      setModalTaskLoading(false)
+    }
+  }, [taskModal])
 
   return (
     <div
@@ -118,6 +146,7 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
                       setShowAddTask(true)
                     }}
                     onDeleted={onSuccess}
+                    onTaskClick={(task) => setTaskModal({ open: true, taskId: task.id })}
                   />
                 </div>
               </Col>
@@ -172,8 +201,28 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
         setTaskLoading={setTaskLoading}
         workId={currentWorkId}
         project={project}
-        fetchDetail={onSuccess || (() => {})}
       />
+      {taskModal.open && (
+        <TaskModal
+          open
+          onClose={() => setTaskModal({ open: false, taskId: undefined })}
+          title={modalTaskLoading ? 'Đang tải...' : modalTask?.name || ''}
+          description={modalTaskLoading ? 'Đang tải...' : modalTask?.description || ''}
+          createdBy={modalTask?.creatorId ? String(modalTask.creatorId) : ''}
+          createdAt={modalTask?.createdDate || ''}
+          taskId={taskModal.taskId ? String(taskModal.taskId) : ''}
+          onTaskUpdated={async () => {
+            if (taskModal.taskId) {
+              setModalTaskLoading(true)
+              const { getTaskDetailApi } = await import('../../../apis/tasks/task.api')
+              const updatedTask = await getTaskDetailApi(taskModal.taskId)
+              setModalTask(updatedTask)
+              setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)))
+              setModalTaskLoading(false)
+            }
+          }}
+        />
+      )}
     </div>
   )
 }

@@ -11,6 +11,7 @@ interface WorkCardProps {
   workId: string | number
   onAddTask?: (workId: string | number) => void
   onDeleted?: () => void
+  onTaskClick?: (task: ITask) => void
   children?: React.ReactNode
 }
 
@@ -20,6 +21,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
   workId,
   onAddTask,
   onDeleted,
+  onTaskClick,
   children,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null)
@@ -100,7 +102,7 @@ const WorkCard: React.FC<WorkCardProps> = ({
               marginBottom: '4px',
             }}
           >
-            <TaskCard title={task.name} description={task.description} />
+            <TaskCard task={task} onClick={onTaskClick} />
           </div>
         ))}
       </div>

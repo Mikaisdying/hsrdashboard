@@ -25,7 +25,7 @@ import {
   getProjectDetailApi,
   updateProjectDescriptionApi,
 } from '../../../apis/projects/project.api'
-import {} from '../../../components/taskModal'
+import {} from '../../../components/createTaskModal'
 import type { IProject } from '../../../apis/projects/project.interface'
 import type { IWork } from '../../../apis/tasks/work.interface'
 import type { ITask } from '../../../apis/tasks/task.interface'

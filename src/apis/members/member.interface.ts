@@ -8,6 +8,7 @@ export interface IMember {
   job?: string
   isApproved?: boolean
   role?: string
+  status?: number
 }
 
 export type IUser = IMember

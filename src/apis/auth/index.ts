@@ -1,24 +1,12 @@
 import { message } from 'antd'
+import { apiService } from '../apiService'
 
-export const login = async (email: string, password: string): Promise<boolean> => {
-  try {
-    const response = await fetch('/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-
-    if (response.ok) {
-      return true
-    } else {
-      const error = await response.json()
-      message.error(error.message || 'Đăng nhập thất bại!')
-      return false
-    }
-  } catch (error) {
-    message.error('Lỗi kết nối server!')
-    return false
-  }
+export const login = async (email: string, password: string): Promise<any[]> => {
+  return apiService({
+    url: '/users',
+    method: 'GET',
+    query: { email, password },
+  })
 }
 
 export const register = async (
