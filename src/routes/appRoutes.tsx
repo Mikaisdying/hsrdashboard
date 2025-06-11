@@ -14,15 +14,14 @@ import Dashboard from '../pages/dashboard'
 import { ProjectList } from '../pages/projectManagement'
 import ProjectDetailsPage from '../pages/projectManagement/projectDetails'
 import UserListPage from '../pages/system/user'
+import CalendarPage from '../pages/calendar'
 
 // Dummy pages
 const createPage = (label: string) => () => <div>{label}</div>
-
 const TaskList = createPage('Task List Page')
 const TaskDetail = createPage('Task Detail Page')
 const DocumentList = createPage('Document List Page')
 const MemberList = createPage('Member List Page')
-const NotificationPage = createPage('Notification Page')
 const AuditLogPage = createPage('System - Audit Log Page')
 const SettingPage = createPage('System - Settings Page')
 
@@ -88,9 +87,9 @@ const routes = [
   },
   {
     path: '/notifications',
-    element: <NotificationPage />,
+    element: <CalendarPage />,
     layout: 'main',
-    label: 'Thông báo / Lịch vận hành',
+    label: 'Lịch vận hành thử',
     icon: <BellOutlined />,
     roles: ['SA', 'PM', 'DE', 'QC'],
   },

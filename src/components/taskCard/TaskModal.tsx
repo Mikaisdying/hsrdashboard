@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Typography, Button, Divider, Input, List, message } from 'antd'
-import { BarsOutlined } from '@ant-design/icons'
+import { BarsOutlined, ProjectOutlined } from '@ant-design/icons'
 import { updateTaskApi } from '../../apis/tasks/task.api'
 import type { Comment } from '../../apis/tasks/task.interface'
 import {
@@ -206,8 +206,11 @@ const TaskModal: React.FC<TaskModalProps> = ({
               Ngày tạo: {createdAt}
             </Text>
           )}
-          <Divider style={{ margin: '12px 0' }} />
-          <div style={{ marginBottom: 8, fontWeight: 600 }}>Hoạt động</div>
+          <Divider style={{ margin: '15px 0' }} />
+          <div style={{ display: 'flex', gap: 6, margin: '5px 0 15px 0' }}>
+            <ProjectOutlined style={{ color: '#b0b6be' }} />
+            <div style={{ fontWeight: 600 }}>Hoạt động</div>
+          </div>
           <Input.TextArea
             value={comment}
             onChange={(e) => setComment(e.target.value)}

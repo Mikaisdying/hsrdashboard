@@ -37,6 +37,7 @@ const UserListPage = () => {
   const [editingUser, setEditingUser] = useState<IMember | null>(null)
   const [editLoading, setEditLoading] = useState(false)
   const [statusFilter, setStatusFilter] = useState<'all' | 1 | 0>(1)
+  const [approvedFilter, setApprovedFilter] = useState<'all' | 'approved' | 'pending'>('pending')
   const { notification, notificationContext } = useNotification()
 
   const fetchData = () => {
@@ -44,8 +45,14 @@ const UserListPage = () => {
     searchMembers('')
       .then((res: IMember[]) => {
         let filtered = res
+
         if (statusFilter !== 'all') {
-          filtered = res.filter((item) => item.status === statusFilter)
+          filtered = filtered.filter((item) => item.status === statusFilter)
+        }
+        if (approvedFilter === 'approved') {
+          filtered = filtered.filter((item) => item.isApproved === true)
+        } else if (approvedFilter === 'pending') {
+          filtered = filtered.filter((item) => item.isApproved !== true)
         }
         setData(
           filtered.map((item) => ({
@@ -63,7 +70,7 @@ const UserListPage = () => {
 
   useEffect(() => {
     fetchData()
-  }, [statusFilter])
+  }, [statusFilter, approvedFilter])
 
   const handleAdd = async () => {
     try {
@@ -187,7 +194,12 @@ const UserListPage = () => {
         <Select value={statusFilter} onChange={setStatusFilter} style={{ width: 180 }}>
           <Option value={1}>Đang hoạt động</Option>
           <Option value={0}>Không hoạt động</Option>
-          <Option value="all">Tất cả</Option>
+          <Option value="all">Tất cả trạng thái</Option>
+        </Select>
+        <Select value={approvedFilter} onChange={setApprovedFilter} style={{ width: 180 }}>
+          <Option value="pending">Chưa duyệt</Option>
+          <Option value="approved">Đã duyệt</Option>
+          <Option value="all">Tất cả trạng thái duyệt</Option>
         </Select>
         <Button type="primary" onClick={() => setModalOpen(true)} className="!ml-2">
           Thêm người dùng

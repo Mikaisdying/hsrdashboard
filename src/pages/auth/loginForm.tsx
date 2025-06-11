@@ -64,8 +64,8 @@ const LoginForm = ({
           htmlType="submit"
           style={{ minWidth: 100, justifySelf: 'flex-end' }}
           onClick={() => {
-            const form = document.querySelector('form')
-            if (form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
+            const formRef = ProForm.useFormInstance()
+            if (formRef) formRef.submit()
           }}
         >
           Đăng nhập

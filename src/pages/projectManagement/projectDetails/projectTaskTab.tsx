@@ -201,6 +201,7 @@ const ProjectTaskTab: React.FC<ProjectTaskTabProps> = ({
         setTaskLoading={setTaskLoading}
         workId={currentWorkId}
         project={project}
+        fetchDetail={onSuccess || (() => {})}
       />
       {taskModal.open && (
         <TaskModal

@@ -23,7 +23,7 @@ export async function createWorkApi(payload: { name: string; projectId: string |
 export async function updateWorkApi(id: string | number, payload: Partial<IWork>) {
   return apiService({
     url: `/works/${id}`,
-    method: 'PUT',
+    method: 'PATCH',
     body: payload,
   })
 }
